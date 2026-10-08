@@ -1,0 +1,20 @@
+# Local and private assets
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+models/
+artifacts/
+cache/
+.build/
+*.mlpackage/
+*.mlmodelc/
+*.aimodel/
+*.aimodelc/
+*.safetensors
+*.gguf
+*.pt
+*.pth
