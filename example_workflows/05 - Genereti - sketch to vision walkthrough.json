@@ -1,0 +1,349 @@
+{
+  "last_node_id": 5,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "Start here · Genereti sketch to local vision",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        310
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "DEMO: Observe a changing artwork. Genereti Livecode renders an authored orange circle; Local Vision analyzes one queued frame. The viewer displays its description. Rendering continues independently; no automatic per-frame inference occurs.\n\nRequires Genereti public + GeneretiCore.\n1. The saved sketch starts moving on open; use editor Run after code edits.\n2. Download Qwen3-VL 2B on local vision if missing.\n3. Press TOP Run to sample one frame and analyze it. The animation keeps moving while AI works.\n4. Change circle hue or motion in the editor and Run again.\nFor guided steps, scroll down to the walkthrough node and press its Run.\n\nNodes in this demo:\nꘇ livecode · moving circle · press editor Run\nꘅ Local Vision · inspect one queued frame\nꘅ Text / JSON Viewer · Read the result\nꘇ lesson · walkthrough · press its Run"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GeneretiLivecode",
+      "title": "ꘇ livecode · moving circle · press editor Run",
+      "pos": [
+        0,
+        390
+      ],
+      "size": [
+        410,
+        650
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "language",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "language"
+          }
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "name": "auto_update",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "auto_update"
+          }
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "performance",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "performance"
+          }
+        },
+        {
+          "name": "controls.value0",
+          "type": "FLOAT",
+          "label": "paletteHue",
+          "link": null,
+          "widget": {
+            "name": "controls.value0"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiLivecode",
+        "generetiLessonRef": "f37977de-ffc1-58cf-8fa1-a14bebbde963",
+        "genereti_widget_values": {
+          "language": "p5",
+          "width": 320,
+          "height": 240,
+          "auto_update": true,
+          "code": "let paletteHue = 30; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}",
+          "parameters": "{\"paletteHue\": 30}",
+          "performance": "{}",
+          "genereti_delivery": "Live"
+        },
+        "generetiLivecodeParameters": {
+          "values": {
+            "paletteHue": 30
+          },
+          "slots": {
+            "paletteHue": 0
+          }
+        },
+        "generetiLivecodeLastGood": {
+          "mode": "p5",
+          "source": "let paletteHue = 30; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}"
+        }
+      },
+      "widgets_values": [
+        "p5",
+        320,
+        240,
+        true,
+        "let paletteHue = 30; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}",
+        "{\"paletteHue\": 30}",
+        "{}",
+        "Live"
+      ],
+      "widgets_values_named": {
+        "language": "p5",
+        "width": 320,
+        "height": 240,
+        "auto_update": true,
+        "code": "let paletteHue = 30; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}",
+        "parameters": "{\"paletteHue\": 30}",
+        "performance": "{}",
+        "genereti_delivery": "Live"
+      }
+    },
+    {
+      "id": 3,
+      "type": "GeneretiCoreVision",
+      "title": "ꘅ Local Vision · inspect one queued frame",
+      "pos": [
+        470,
+        390
+      ],
+      "size": [
+        360,
+        400
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model"
+          }
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "max_tokens",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "max_tokens"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "metrics",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreVision",
+        "generetiLessonRef": "32a1f454-dc87-51a2-9cf8-dbf52ed21176",
+        "genereti_widget_values": {
+          "model": "qwen3-vl-2b",
+          "prompt": "Describe the shapes and colors in one sentence.",
+          "max_tokens": 64
+        }
+      },
+      "widgets_values": [
+        "qwen3-vl-2b",
+        "Describe the shapes and colors in one sentence.",
+        64
+      ],
+      "widgets_values_named": {
+        "model": "qwen3-vl-2b",
+        "prompt": "Describe the shapes and colors in one sentence.",
+        "max_tokens": 64
+      }
+    },
+    {
+      "id": 4,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · Read the result",
+      "pos": [
+        940,
+        390
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "1f7feb9e-b73a-5e76-908e-bf6c536a7a5c",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 5,
+      "type": "GeneretiDatLesson",
+      "title": "ꘇ lesson · walkthrough · press its Run",
+      "pos": [
+        0,
+        1540
+      ],
+      "size": [
+        600,
+        500
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "guide",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "guide"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "document",
+          "type": "GENERETI_DAT",
+          "links": []
+        },
+        {
+          "name": "markdown",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiDatLesson",
+        "generetiLessonRef": "76fe5195-9259-5520-a146-57980d1c30ed",
+        "genereti_widget_values": {
+          "guide": "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-04-genereti-vision\",\n  \"title\": \"Genereti sketch to local vision\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Start the artwork\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nThe saved sketch starts on open. Use editor Run after edits; an orange circle moves on blue.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 2,\n        \"ref\": \"f37977de-ffc1-58cf-8fa1-a14bebbde963\",\n        \"part\": \"code\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Prepare the local model\",\n      \"text\": \"ꘅ Local Vision · inspect one queued frame\\n\\nClick ↓ if the vision model is missing. No frame is sent to cloud inference.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreVision\",\n        \"nodeId\": 3,\n        \"ref\": \"32a1f454-dc87-51a2-9cf8-dbf52ed21176\",\n        \"part\": \"toolbar\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Sample a frame\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nPress the TOP Comfy Run. It captures one frame from p5 and submits local analysis.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 2,\n        \"ref\": \"f37977de-ffc1-58cf-8fa1-a14bebbde963\",\n        \"part\": \"preview\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Read the answer\",\n      \"text\": \"ꘅ Text / JSON Viewer · Read the result\\n\\nRead the result. Edit the p5 color and queue a second observation. Animation and inference have separate clocks.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreResult\",\n        \"nodeId\": 4,\n        \"ref\": \"1f7feb9e-b73a-5e76-908e-bf6c536a7a5c\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+          "genereti_delivery": "Live"
+        },
+        "generetiLessonStartup": "manual"
+      },
+      "widgets_values": [
+        "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-04-genereti-vision\",\n  \"title\": \"Genereti sketch to local vision\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Start the artwork\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nThe saved sketch starts on open. Use editor Run after edits; an orange circle moves on blue.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 2,\n        \"ref\": \"f37977de-ffc1-58cf-8fa1-a14bebbde963\",\n        \"part\": \"code\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Prepare the local model\",\n      \"text\": \"ꘅ Local Vision · inspect one queued frame\\n\\nClick ↓ if the vision model is missing. No frame is sent to cloud inference.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreVision\",\n        \"nodeId\": 3,\n        \"ref\": \"32a1f454-dc87-51a2-9cf8-dbf52ed21176\",\n        \"part\": \"toolbar\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Sample a frame\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nPress the TOP Comfy Run. It captures one frame from p5 and submits local analysis.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 2,\n        \"ref\": \"f37977de-ffc1-58cf-8fa1-a14bebbde963\",\n        \"part\": \"preview\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Read the answer\",\n      \"text\": \"ꘅ Text / JSON Viewer · Read the result\\n\\nRead the result. Edit the p5 color and queue a second observation. Animation and inference have separate clocks.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreResult\",\n        \"nodeId\": 4,\n        \"ref\": \"1f7feb9e-b73a-5e76-908e-bf6c536a7a5c\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+        "Live"
+      ],
+      "widgets_values_named": {
+        "guide": "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-04-genereti-vision\",\n  \"title\": \"Genereti sketch to local vision\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Start the artwork\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nThe saved sketch starts on open. Use editor Run after edits; an orange circle moves on blue.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 2,\n        \"ref\": \"f37977de-ffc1-58cf-8fa1-a14bebbde963\",\n        \"part\": \"code\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Prepare the local model\",\n      \"text\": \"ꘅ Local Vision · inspect one queued frame\\n\\nClick ↓ if the vision model is missing. No frame is sent to cloud inference.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreVision\",\n        \"nodeId\": 3,\n        \"ref\": \"32a1f454-dc87-51a2-9cf8-dbf52ed21176\",\n        \"part\": \"toolbar\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Sample a frame\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nPress the TOP Comfy Run. It captures one frame from p5 and submits local analysis.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 2,\n        \"ref\": \"f37977de-ffc1-58cf-8fa1-a14bebbde963\",\n        \"part\": \"preview\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Read the answer\",\n      \"text\": \"ꘅ Text / JSON Viewer · Read the result\\n\\nRead the result. Edit the p5 color and queue a second observation. Animation and inference have separate clocks.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreResult\",\n        \"nodeId\": 4,\n        \"ref\": \"1f7feb9e-b73a-5e76-908e-bf6c536a7a5c\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+        "genereti_delivery": "Live"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      3,
+      1,
+      "IMAGE"
+    ],
+    [
+      2,
+      3,
+      0,
+      4,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        70,
+        70
+      ]
+    }
+  },
+  "version": 0.4
+}

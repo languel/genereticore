@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "genereticore"
+version = "0.1.0"
+description = "Local asynchronous inference companion for Genereti and ComfyUI"
+requires-python = ">=3.11"
+license = {file = "LICENSE"}
+dependencies = []
+
+[project.scripts]
+genereticore = "genereticore.cli:main"
+
+[tool.setuptools]
+packages = ["genereticore"]
+
+[tool.setuptools.package-data]
+genereticore = ["catalog.json"]
+
+[tool.comfy]
+PublisherId = "liuboto"
+DisplayName = "ꘇ GeneretiCore"

@@ -1,0 +1,222 @@
+{
+  "last_node_id": 4,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "Start here · Choose from fixed options",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        310
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "DEMO: Ask Qwen for a bounded palette decision. A situation plus question and two allowed labels become a selected label and distribution. Unlike the supplied-score exercise, the model produces these scores. Keep labels unchanged; edit the situation to compare answers.\n\n1. Download Qwen 0.6B with ↓ if missing.\n2. Press the top Run button (or ▷ on the inference node). Follow the wires to the result. ϟ only previews locally on the inference node; it does not update connected nodes.\n3. Change the scene in prompt and compare the scores.\nThe model picks only a listed option. Scores are uncalibrated and the choice may be poor. No generated code runs.\n\nNodes in this demo:\nꘅ Local Decision · 1 · describe a scene\nꘅ Text / JSON Viewer · 2 · selected palette\nꘅ Text / JSON Viewer · 3 · scores and distribution"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GeneretiCoreDecision",
+      "title": "ꘅ Local Decision · 1 · describe a scene",
+      "pos": [
+        0,
+        380
+      ],
+      "size": [
+        360,
+        400
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model"
+          }
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "choices_json",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "choices_json"
+          }
+        },
+        {
+          "name": "max_tokens",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "max_tokens"
+          }
+        },
+        {
+          "name": "question",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "question"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "choice",
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "decision_json",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "metrics",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreDecision",
+        "generetiLessonRef": "25062e53-18c0-531d-a69c-a429cfc9e471",
+        "genereti_widget_values": {
+          "model": "qwen3-0.6b",
+          "prompt": "A quiet moonlit lake with soft ripples.",
+          "choices_json": "[\"blue\", \"orange\"]",
+          "max_tokens": 256,
+          "question": "Which option best fits the situation?"
+        }
+      },
+      "widgets_values": [
+        "qwen3-0.6b",
+        "A quiet moonlit lake with soft ripples.",
+        "[\"blue\", \"orange\"]",
+        256,
+        "Which option best fits the situation?"
+      ],
+      "widgets_values_named": {
+        "model": "qwen3-0.6b",
+        "prompt": "A quiet moonlit lake with soft ripples.",
+        "choices_json": "[\"blue\", \"orange\"]",
+        "max_tokens": 256,
+        "question": "Which option best fits the situation?"
+      }
+    },
+    {
+      "id": 3,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · 2 · selected palette",
+      "pos": [
+        840,
+        380
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 1
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "54a613b1-2dde-5bb0-82d6-a09f278356cc",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 4,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · 3 · scores and distribution",
+      "pos": [
+        840,
+        640
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "bd89b3db-e39f-5398-af2e-3218fa1ef45a",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      3,
+      0,
+      "STRING"
+    ],
+    [
+      2,
+      2,
+      1,
+      4,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        70,
+        70
+      ]
+    }
+  },
+  "version": 0.4
+}

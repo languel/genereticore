@@ -1,6 +1,6 @@
 # Architecture proposal
 
-One task interface, multiple capability-aware backends. This is a proposal, not an implemented API.
+One task interface, multiple capability-aware backends. The Core AI contributor path, scheduler and local Comfy API are now implemented; Core ML migration, portable backends and the complete creative image bridge remain proposed. See implementation.md and validation.md for exact boundaries.
 
 ## Components
 
@@ -31,3 +31,7 @@ Comfy's queued execution, Genereti's animation time and musical time remain sepa
 - Keep copied upstream code and notices identifiable. Prefer dependencies over wholesale forks when packaging permits.
 
 No automatic cloud fallback. Hosted adapters are separately enabled, show where inputs go, and read credentials from protected local settings/environment.
+
+Port labels follow the shared Genereti convention: lowercase descriptive input
+and output names; uppercase Comfy data types. Explicit output names preserve
+readability. Keep input IDs, node IDs and output order stable.

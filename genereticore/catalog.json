@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "sdk": {
+    "name": "CoreAIKit",
+    "version": "0.7.3",
+    "revision": "f32626037741222c17042cd1bc0301185c077e8e",
+    "license": "BSD-3-Clause"
+  },
+  "models": [
+    {
+      "id": "qwen3-0.6b",
+      "backend": "coreai",
+      "name": "Qwen3 0.6B",
+      "repo": "mlboydaisuke/qwen3-0.6b-CoreAI-official",
+      "revision": "943eb6a4f967de53d7e1458d75deac0b68ac3d85",
+      "paths": [
+        "macos"
+      ],
+      "estimated_bytes": 352000000,
+      "license": "Apache-2.0",
+      "upstream": "https://huggingface.co/Qwen/Qwen3-0.6B",
+      "tasks": [
+        "text.generate",
+        "decision.evaluate"
+      ],
+      "minimum_os": "macOS 27",
+      "architecture": "arm64",
+      "status": "experimental",
+      "files": [
+        {
+          "path": "macos/metadata.json",
+          "bytes": 568,
+          "sha256": "ac650a87d4fd25333ae5e02bb89039dcb409f5b5d6413bcc1ae88cf3091bd6de"
+        },
+        {
+          "path": "macos/qwen3_0_6b_4bit_dynamic.aimodel/main.hash",
+          "bytes": 32,
+          "sha256": "73669a06ee4f157578db3ed3f2363d347dde3ef363dda0088aff112d99d03a2a"
+        },
+        {
+          "path": "macos/qwen3_0_6b_4bit_dynamic.aimodel/main.mlirb",
+          "bytes": 335678144,
+          "sha256": "9752caf7f72d1d38e2f3e63409f70312f6791ca6772bbace4a0b364905fed8b8"
+        },
+        {
+          "path": "macos/qwen3_0_6b_4bit_dynamic.aimodel/metadata.json",
+          "bytes": 105,
+          "sha256": "8ddfc427fa510d0bd6dfc6fbae5524ca153ccb27ef3c1b2823169e70977f389c"
+        },
+        {
+          "path": "macos/tokenizer/added_tokens.json",
+          "bytes": 707,
+          "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+        },
+        {
+          "path": "macos/tokenizer/chat_template.jinja",
+          "bytes": 4168,
+          "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+        },
+        {
+          "path": "macos/tokenizer/merges.txt",
+          "bytes": 1671853,
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+        },
+        {
+          "path": "macos/tokenizer/special_tokens_map.json",
+          "bytes": 613,
+          "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+        },
+        {
+          "path": "macos/tokenizer/tokenizer.json",
+          "bytes": 11422654,
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+        },
+        {
+          "path": "macos/tokenizer/tokenizer_config.json",
+          "bytes": 5404,
+          "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+        },
+        {
+          "path": "macos/tokenizer/vocab.json",
+          "bytes": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        }
+      ],
+      "bytes": 351561081
+    },
+    {
+      "id": "qwen3-vl-2b",
+      "backend": "coreai",
+      "name": "Qwen3-VL 2B",
+      "repo": "mlboydaisuke/Qwen3-VL-2B-CoreAI",
+      "revision": "00ea47b018ebdaa439e4b8f583138369660c1396",
+      "paths": [
+        "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1",
+        "gpu-pipelined/qwen3_vl_2b_instruct_vision"
+      ],
+      "estimated_bytes": 3600000000,
+      "license": "Apache-2.0",
+      "upstream": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct",
+      "tasks": [
+        "vision.analyze"
+      ],
+      "minimum_os": "macOS 27",
+      "architecture": "arm64",
+      "status": "experimental",
+      "files": [
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/metadata.json",
+          "bytes": 614,
+          "sha256": "794358dffc18bca885e1e72ed6f3b0c1ae019a13ec7cf2b9de0e8923fe6fe084"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/qwen3_vl_2b_instruct_decode_int8hu_s1.aimodel/main.hash",
+          "bytes": 32,
+          "sha256": "19bfa4df308fc7129717c29bb4fa171744610205a2ba66a6e790a778b8d26c11"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/qwen3_vl_2b_instruct_decode_int8hu_s1.aimodel/main.mlirb",
+          "bytes": 2451187366,
+          "sha256": "481bf58ceb4db369f499fbb88580346b9e467453ccba068ffcf31662070e6e2a"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/qwen3_vl_2b_instruct_decode_int8hu_s1.aimodel/metadata.json",
+          "bytes": 105,
+          "sha256": "09800b2bf4813128595f5980a4962b8a7a977669f721a70fc4e4cf7a4d9bf66c"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/tokenizer/added_tokens.json",
+          "bytes": 707,
+          "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/tokenizer/chat_template.jinja",
+          "bytes": 5292,
+          "sha256": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/tokenizer/merges.txt",
+          "bytes": 1671853,
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/tokenizer/special_tokens_map.json",
+          "bytes": 613,
+          "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/tokenizer/tokenizer.json",
+          "bytes": 11422654,
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/tokenizer/tokenizer_config.json",
+          "bytes": 5404,
+          "sha256": "355f2b4e5bad7b01f11ef6cb68ebc176f61b95c3276092ea225b1bea0e01e95c"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_decode_int8hu_s1/tokenizer/vocab.json",
+          "bytes": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_vision/qwen3_vl_2b_instruct_vision.aimodel/main.hash",
+          "bytes": 32,
+          "sha256": "d498b99b8f8f6021b6cb5a43b18ae2c0930a12936687428f74683d8edf7f304b"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_vision/qwen3_vl_2b_instruct_vision.aimodel/main.mlirb",
+          "bytes": 811252641,
+          "sha256": "02f64292e6ea7272d9dafcf8d1dc24517a41db0ecd9db54b4e68cee066bb45af"
+        },
+        {
+          "path": "gpu-pipelined/qwen3_vl_2b_instruct_vision/qwen3_vl_2b_instruct_vision.aimodel/metadata.json",
+          "bytes": 105,
+          "sha256": "3b9985dee04d7c697082ef0fb4f5a24aec97003e718ae679fbb73df31465cb9f"
+        }
+      ],
+      "bytes": 3278324251
+    },
+    {
+      "id": "d1-omni-600m",
+      "backend": "coreml",
+      "name": "Liquid d1 omni 600M \u00b7 text decisions",
+      "repo": "FluidInference/d1-omni-600m-coreml",
+      "revision": "8ae382b1f2e5b9b7e33008515a40df4ecdfcebdb",
+      "paths": [
+        "d1-omni-text.mlpackage"
+      ],
+      "estimated_bytes": 769088919,
+      "license": "LFM Open License v1.0",
+      "upstream": "https://huggingface.co/LiquidAI/d1-omni-600M",
+      "tasks": [
+        "decision.evaluate"
+      ],
+      "minimum_os": "macOS 15",
+      "architecture": "arm64",
+      "status": "experimental",
+      "max_choices": 8,
+      "max_input_tokens": 256,
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 10572,
+          "sha256": "9953509cbd8c1c6ce7b06ddf74fcc204a892692316201dd8f7400a84790d4120"
+        },
+        {
+          "path": "config.json",
+          "bytes": 1993,
+          "sha256": "dfccae241822f81752426629c88c8b8d7efdd03dd19418b6645c604fad43d619"
+        },
+        {
+          "path": "d1-omni-text.mlpackage/Data/com.apple.CoreML/model.mlmodel",
+          "bytes": 2617758,
+          "sha256": "dcb6ee0574310a9d308a46722b201e28b18ff69acdcc21d19143f1cdc5dab8cf"
+        },
+        {
+          "path": "d1-omni-text.mlpackage/Data/com.apple.CoreML/weights/weight.bin",
+          "bytes": 761724608,
+          "sha256": "488fa28c27d64363f3c94ba6a99a2e34987b572785af64072d5045b84e80bbf9"
+        },
+        {
+          "path": "d1-omni-text.mlpackage/Manifest.json",
+          "bytes": 617,
+          "sha256": "9f86e7c8f5a1e65d3656d050be5ba0c5d4842eaaba3de255029522ee82c3acab"
+        },
+        {
+          "path": "tokenizer.json",
+          "bytes": 4733371,
+          "sha256": "1efc3a6609abf6b63b1f47188d139f3b59973a6a434dffe970a7261a51ed2711"
+        }
+      ]
+    }
+  ]
+}

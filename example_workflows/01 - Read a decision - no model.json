@@ -1,0 +1,184 @@
+{
+  "last_node_id": 4,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "Start here · No model needed",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        310
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "DEMO: Read the result contract, without AI. The Decision Scores Validator checks supplied example numbers and the selected label. The Text / JSON Viewer displays the validated answer. We supplied these scores; they were not inferred. Blue and orange are allowed labels. Editing the fixture tests consistency, not training. Read Tutorial 0 first.\n\n1. Press top Run. The validator checks the supplied fixture.\n2. Open scores in the viewer Tree mode. Blue has the larger score and is selected.\n3. Optional experiment: change blue to 0.1, keep orange at 0.2, AND change \"choice\":\"blue\" to \"choice\":\"orange\" in the same JSON. Run again: orange wins. Editing scores alone does not update choice.\n4. The scores need not sum to 1. The viewer normalizes 0.1/0.2 to about 0.333/0.667. This checks a supplied answer; it does not train a model. In model demos, edit the situation instead.\n\nNodes in this demo:\nꘅ Decision Scores Validator · supplied decision fixture (no AI)\nꘅ Text / JSON Viewer · 2 · normalized scores\nꘅ Text / JSON Viewer · 3 · selected choice"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GeneretiCoreValidateDecision",
+      "title": "ꘅ Decision Scores Validator · supplied decision fixture (no AI)",
+      "pos": [
+        0,
+        380
+      ],
+      "size": [
+        360,
+        400
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "choices_json",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "choices_json"
+          }
+        },
+        {
+          "name": "decision_json",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "decision_json"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "choice",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "decision_json",
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreValidateDecision",
+        "generetiLessonRef": "1ab27bac-f45d-556a-aa2e-ee5ed417ad2b",
+        "genereti_widget_values": {
+          "choices_json": "[\"blue\", \"orange\"]",
+          "decision_json": "{\"choice\":\"blue\",\"scores\":{\"blue\":0.8,\"orange\":0.2}}"
+        }
+      },
+      "widgets_values": [
+        "[\"blue\", \"orange\"]",
+        "{\"choice\":\"blue\",\"scores\":{\"blue\":0.8,\"orange\":0.2}}"
+      ],
+      "widgets_values_named": {
+        "choices_json": "[\"blue\", \"orange\"]",
+        "decision_json": "{\"choice\":\"blue\",\"scores\":{\"blue\":0.8,\"orange\":0.2}}"
+      }
+    },
+    {
+      "id": 3,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · 2 · normalized scores",
+      "pos": [
+        840,
+        380
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 1
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "f1de726a-d7f5-55bf-928f-4a28d96f6283",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 4,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · 3 · selected choice",
+      "pos": [
+        840,
+        640
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "06e1645f-d7a6-5cec-b7a1-8a0dbea4bf2f",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      1,
+      3,
+      0,
+      "STRING"
+    ],
+    [
+      2,
+      2,
+      0,
+      4,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        70,
+        70
+      ]
+    }
+  },
+  "version": 0.4
+}

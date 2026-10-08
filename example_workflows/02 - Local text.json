@@ -1,0 +1,206 @@
+{
+  "last_node_id": 4,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "Start here · Your first local text",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        310
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "DEMO: Generate an artwork title. Local Text reads a prompt and writes a short response using Qwen. Follow text to the Text / JSON Viewer; metrics reports timing. This is word generation, not a fixed-option decision.\n\n1. On local text, click ↓ only if the model is missing. Wait for installed.\n2. Press the top Run button (or ▷ on the inference node). Follow the wires to the result. ϟ only previews locally on the inference node; it does not update connected nodes.\n3. Change the prompt and Run again.\nA small model can give incorrect answers; this is an integration demo.\n\nNodes in this demo:\nꘅ Local Text · 1 · prompt and local model\nꘅ Text / JSON Viewer · Read the result\nꘅ Text / JSON Viewer · Timing and model"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GeneretiCoreText",
+      "title": "ꘅ Local Text · 1 · prompt and local model",
+      "pos": [
+        0,
+        380
+      ],
+      "size": [
+        360,
+        400
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model"
+          }
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "max_tokens",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "max_tokens"
+          }
+        },
+        {
+          "name": "temperature",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "temperature"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "metrics",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreText",
+        "generetiLessonRef": "76143942-5a21-5e8c-92e8-96941040cadb",
+        "genereti_widget_values": {
+          "model": "qwen3-0.6b",
+          "prompt": "Suggest one short title for an artwork about an orange circle on a blue field. /no_think",
+          "max_tokens": 96,
+          "temperature": 0.0
+        }
+      },
+      "widgets_values": [
+        "qwen3-0.6b",
+        "Suggest one short title for an artwork about an orange circle on a blue field. /no_think",
+        96,
+        0.0
+      ],
+      "widgets_values_named": {
+        "model": "qwen3-0.6b",
+        "prompt": "Suggest one short title for an artwork about an orange circle on a blue field. /no_think",
+        "max_tokens": 96,
+        "temperature": 0.0
+      }
+    },
+    {
+      "id": 3,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · Read the result",
+      "pos": [
+        840,
+        380
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 1
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "e63bf5bc-bb19-55fc-8b02-d52a60fde5a6",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 4,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · Timing and model",
+      "pos": [
+        840,
+        640
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 2
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "7689b119-af03-5cce-a64b-f4ace85b915a",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      3,
+      0,
+      "STRING"
+    ],
+    [
+      2,
+      2,
+      1,
+      4,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        70,
+        70
+      ]
+    }
+  },
+  "version": 0.4
+}

@@ -1,5 +1,7 @@
 # First milestones
 
+Implementation update: the Core AI contributor path and Comfy task/API interface are running locally. Read [implementation.md](implementation.md) and [validation.md](validation.md) for verified scope, model-quality failures and remaining work. These milestones are a roadmap, not all completed.
+
 ## 0. Establish evidence and boundaries
 
 Inventory the existing native Core ML pack and its engine imports in Genereti. Record model sizes, preprocessing, node IDs, dependencies, license provenance and current benchmarks. Avoid carrying conversion-only Torch/Diffusers pins into Comfy's runtime requirements. Check disk space before model downloads.

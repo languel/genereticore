@@ -18,3 +18,11 @@ cache/
 *.gguf
 *.pt
 *.pth
+native/bin/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+captures/
+*.log

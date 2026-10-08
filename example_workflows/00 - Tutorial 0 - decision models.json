@@ -1,0 +1,64 @@
+{
+  "last_node_id": 2,
+  "last_link_id": 0,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "Start here · What is a decision model?",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        310
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "\n\nREAD FIRST: We are building a moving artwork that responds to a described scene. A decision model reads a state and question, ranks allowed labels, and returns a distribution. A separate authored map converts the selected label to a creative control.\nOpen Tutorial 0 with the book button below. It explains the theory, each node type, why choices are authored, and how to read results. No model or download is needed.\n\nNodes in this demo:\nꘅ Tutorial · read the introduction"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GeneretiCoreTutorial",
+      "title": "ꘅ Tutorial · read the introduction",
+      "pos": [
+        0,
+        490
+      ],
+      "size": [
+        550,
+        200
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreTutorial",
+        "generetiLessonRef": "7e5918dc-120c-5c4e-b47d-757490cdb04b",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    }
+  ],
+  "links": [],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        70,
+        70
+      ]
+    }
+  },
+  "version": 0.4
+}

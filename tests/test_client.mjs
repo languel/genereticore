@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+const source = await readFile(new URL('../web/js/client.js', import.meta.url), 'utf8');
+const { ResultPair } = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
+const pair = new ResultPair();
+pair.accept('first', 1);
+pair.accept('second', 2, 'bar');
+pair.setPhase(1);
+assert.equal(pair.current, 'first');
+assert.equal(pair.trigger('beat'), false);
+assert.equal(pair.trigger('bar'), true);
+pair.setPhase(.5);
+assert.equal(pair.current, 'first');
+pair.setPhase(1);
+assert.equal(pair.current, 'second');
+assert.equal(pair.accept('obsolete', 1), false);
+console.log('ResultPair boundary, phase and stale-result tests passed');

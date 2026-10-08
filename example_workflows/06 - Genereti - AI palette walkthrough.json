@@ -1,0 +1,496 @@
+{
+  "last_node_id": 7,
+  "last_link_id": 4,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "Start here · A model chooses an artwork palette",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        310
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "DEMO: Use a bounded Qwen decision as a creative control. Local Decision selects blue or orange; Choice to Value maps that label to a numeric hue; Genereti Livecode applies it to a moving circle. The model never writes executable code.\n\nRequires Genereti public + GeneretiCore.\n1. The saved artwork starts on open; use editor Run after code edits.\n2. Download Qwen 0.6B on local decision if missing.\n3. Press TOP Run: the model chooses blue/orange; the map turns that label into a hue, which drives p5.\n4. Change the scene prompt and Run again.\nThe small model can choose poorly. The graph maps allowed labels to numbers; it never executes model-written code.\nScroll down and Run the walkthrough for guided steps.\n\nNodes in this demo:\nꘅ Local Decision · choose a palette\nꘅ Choice to Value · palette label → hue\nꘇ livecode · moving circle · press editor Run\nꘅ Text / JSON Viewer · Model scores · inspect the choice\nꘇ image preview · live artwork\nꘇ lesson · walkthrough · press its Run"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GeneretiCoreDecision",
+      "title": "ꘅ Local Decision · choose a palette",
+      "pos": [
+        0,
+        390
+      ],
+      "size": [
+        360,
+        400
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model"
+          }
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "choices_json",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "choices_json"
+          }
+        },
+        {
+          "name": "max_tokens",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "max_tokens"
+          }
+        },
+        {
+          "name": "question",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "question"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "choice",
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "decision_json",
+          "type": "STRING",
+          "links": [
+            3
+          ]
+        },
+        {
+          "name": "metrics",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreDecision",
+        "generetiLessonRef": "5d3efd43-da44-5d82-b995-8415c5f99cc3",
+        "genereti_widget_values": {
+          "model": "qwen3-0.6b",
+          "prompt": "An energetic warm sunrise performance. Choose the palette that fits.",
+          "choices_json": "[\"blue\", \"orange\"]",
+          "max_tokens": 128,
+          "question": "Which option best fits the situation?"
+        }
+      },
+      "widgets_values": [
+        "qwen3-0.6b",
+        "An energetic warm sunrise performance. Choose the palette that fits.",
+        "[\"blue\", \"orange\"]",
+        128,
+        "Which option best fits the situation?"
+      ],
+      "widgets_values_named": {
+        "model": "qwen3-0.6b",
+        "prompt": "An energetic warm sunrise performance. Choose the palette that fits.",
+        "choices_json": "[\"blue\", \"orange\"]",
+        "max_tokens": 128,
+        "question": "Which option best fits the situation?"
+      }
+    },
+    {
+      "id": 3,
+      "type": "GeneretiCoreChoiceValue",
+      "title": "ꘅ Choice to Value · palette label → hue",
+      "pos": [
+        420,
+        390
+      ],
+      "size": [
+        320,
+        220
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "choice",
+          "type": "STRING",
+          "link": 1
+        },
+        {
+          "name": "values_json",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "values_json"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value",
+          "type": "FLOAT",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreChoiceValue",
+        "generetiLessonRef": "0d714886-6129-569c-96dc-ea5482f65e7c",
+        "genereti_widget_values": {
+          "values_json": "{\"blue\":210,\"orange\":30}"
+        }
+      },
+      "widgets_values": [
+        "{\"blue\":210,\"orange\":30}"
+      ],
+      "widgets_values_named": {
+        "values_json": "{\"blue\":210,\"orange\":30}"
+      }
+    },
+    {
+      "id": 4,
+      "type": "GeneretiLivecode",
+      "title": "ꘇ livecode · moving circle · press editor Run",
+      "pos": [
+        810,
+        390
+      ],
+      "size": [
+        410,
+        650
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "language",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "language"
+          }
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "name": "auto_update",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "auto_update"
+          }
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "performance",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "performance"
+          }
+        },
+        {
+          "name": "controls.value0",
+          "type": "FLOAT",
+          "label": "paletteHue",
+          "link": 2,
+          "widget": {
+            "name": "controls.value0"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiLivecode",
+        "generetiLessonRef": "264194f7-9217-53a8-ad41-fbbba610954d",
+        "genereti_widget_values": {
+          "language": "p5",
+          "width": 320,
+          "height": 240,
+          "auto_update": true,
+          "code": "let paletteHue = 210; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}",
+          "parameters": "{\"paletteHue\": 210}",
+          "performance": "{}",
+          "genereti_delivery": "Live"
+        },
+        "generetiLivecodeParameters": {
+          "values": {
+            "paletteHue": 210
+          },
+          "slots": {
+            "paletteHue": 0
+          }
+        },
+        "generetiLivecodeLastGood": {
+          "mode": "p5",
+          "source": "let paletteHue = 210; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}"
+        }
+      },
+      "widgets_values": [
+        "p5",
+        320,
+        240,
+        true,
+        "let paletteHue = 210; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}",
+        "{\"paletteHue\": 210}",
+        "{}",
+        "Live"
+      ],
+      "widgets_values_named": {
+        "language": "p5",
+        "width": 320,
+        "height": 240,
+        "auto_update": true,
+        "code": "let paletteHue = 210; /* 0..360 */\nfunction setup(){ createCanvas(windowWidth,windowHeight); colorMode(HSB,360,100,100); }\nfunction draw(){\n  background(210,85,35); noStroke(); fill(paletteHue,85,100);\n  circle(width/2 + sin(frameCount*0.025)*width*0.12,height/2,min(width,height)*0.45);\n}",
+        "parameters": "{\"paletteHue\": 210}",
+        "performance": "{}",
+        "genereti_delivery": "Live"
+      }
+    },
+    {
+      "id": 5,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · Model scores · inspect the choice",
+      "pos": [
+        0,
+        840
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult",
+        "generetiLessonRef": "92ca4cf4-a71a-5dc5-9f96-e98d2db19cdd",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 6,
+      "type": "GeneretiLiveImagePreview",
+      "title": "ꘇ image preview · live artwork",
+      "pos": [
+        1280,
+        390
+      ],
+      "size": [
+        400,
+        480
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        },
+        {
+          "name": "preview_size",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "preview_size"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiLiveImagePreview",
+        "generetiLessonRef": "730d809b-e8ab-5c62-b42a-d2ec90528d10",
+        "genereti_widget_values": {
+          "preview_size": 320,
+          "genereti_delivery": "Live"
+        }
+      },
+      "widgets_values": [
+        320,
+        "Live"
+      ],
+      "widgets_values_named": {
+        "preview_size": 320,
+        "genereti_delivery": "Live"
+      }
+    },
+    {
+      "id": 7,
+      "type": "GeneretiDatLesson",
+      "title": "ꘇ lesson · walkthrough · press its Run",
+      "pos": [
+        0,
+        1540
+      ],
+      "size": [
+        600,
+        500
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "guide",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "guide"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "document",
+          "type": "GENERETI_DAT",
+          "links": []
+        },
+        {
+          "name": "markdown",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiDatLesson",
+        "generetiLessonRef": "fac10735-ab10-58bb-acd7-eda8b8e1f189",
+        "genereti_widget_values": {
+          "guide": "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-05-genereti-palette\",\n  \"title\": \"A model chooses an artwork palette\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Start the scene\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nThe saved artwork starts on open, with paletteHue at 210 (blue).\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 4,\n        \"ref\": \"264194f7-9217-53a8-ad41-fbbba610954d\",\n        \"part\": \"code\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Ask for a palette\",\n      \"text\": \"ꘅ Local Decision · choose a palette\\n\\nEdit the scene description, then press TOP Run. Inference starts only on that action.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecision\",\n        \"nodeId\": 2,\n        \"ref\": \"5d3efd43-da44-5d82-b995-8415c5f99cc3\",\n        \"part\": \"parameter\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Follow the typed control\",\n      \"text\": \"ꘅ Choice to Value · palette label → hue\\n\\nThe choice label maps to 210 or 30. That numeric wire drives the p5 hue parameter.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreChoiceValue\",\n        \"nodeId\": 3,\n        \"ref\": \"0d714886-6129-569c-96dc-ea5482f65e7c\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Inspect the answer\",\n      \"text\": \"ꘅ Text / JSON Viewer · Model scores · inspect the choice\\n\\nRead the scores and compare the artwork. Try a different prompt; no model-written code is evaluated.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreResult\",\n        \"nodeId\": 5,\n        \"ref\": \"92ca4cf4-a71a-5dc5-9f96-e98d2db19cdd\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+          "genereti_delivery": "Live"
+        },
+        "generetiLessonStartup": "manual"
+      },
+      "widgets_values": [
+        "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-05-genereti-palette\",\n  \"title\": \"A model chooses an artwork palette\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Start the scene\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nThe saved artwork starts on open, with paletteHue at 210 (blue).\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 4,\n        \"ref\": \"264194f7-9217-53a8-ad41-fbbba610954d\",\n        \"part\": \"code\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Ask for a palette\",\n      \"text\": \"ꘅ Local Decision · choose a palette\\n\\nEdit the scene description, then press TOP Run. Inference starts only on that action.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecision\",\n        \"nodeId\": 2,\n        \"ref\": \"5d3efd43-da44-5d82-b995-8415c5f99cc3\",\n        \"part\": \"parameter\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Follow the typed control\",\n      \"text\": \"ꘅ Choice to Value · palette label → hue\\n\\nThe choice label maps to 210 or 30. That numeric wire drives the p5 hue parameter.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreChoiceValue\",\n        \"nodeId\": 3,\n        \"ref\": \"0d714886-6129-569c-96dc-ea5482f65e7c\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Inspect the answer\",\n      \"text\": \"ꘅ Text / JSON Viewer · Model scores · inspect the choice\\n\\nRead the scores and compare the artwork. Try a different prompt; no model-written code is evaluated.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreResult\",\n        \"nodeId\": 5,\n        \"ref\": \"92ca4cf4-a71a-5dc5-9f96-e98d2db19cdd\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+        "Live"
+      ],
+      "widgets_values_named": {
+        "guide": "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-05-genereti-palette\",\n  \"title\": \"A model chooses an artwork palette\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Start the scene\",\n      \"text\": \"ꘇ livecode · moving circle · press editor Run\\n\\nThe saved artwork starts on open, with paletteHue at 210 (blue).\",\n      \"target\": {\n        \"nodeType\": \"GeneretiLivecode\",\n        \"nodeId\": 4,\n        \"ref\": \"264194f7-9217-53a8-ad41-fbbba610954d\",\n        \"part\": \"code\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Ask for a palette\",\n      \"text\": \"ꘅ Local Decision · choose a palette\\n\\nEdit the scene description, then press TOP Run. Inference starts only on that action.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecision\",\n        \"nodeId\": 2,\n        \"ref\": \"5d3efd43-da44-5d82-b995-8415c5f99cc3\",\n        \"part\": \"parameter\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Follow the typed control\",\n      \"text\": \"ꘅ Choice to Value · palette label → hue\\n\\nThe choice label maps to 210 or 30. That numeric wire drives the p5 hue parameter.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreChoiceValue\",\n        \"nodeId\": 3,\n        \"ref\": \"0d714886-6129-569c-96dc-ea5482f65e7c\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Inspect the answer\",\n      \"text\": \"ꘅ Text / JSON Viewer · Model scores · inspect the choice\\n\\nRead the scores and compare the artwork. Try a different prompt; no model-written code is evaluated.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreResult\",\n        \"nodeId\": 5,\n        \"ref\": \"92ca4cf4-a71a-5dc5-9f96-e98d2db19cdd\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+        "genereti_delivery": "Live"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      3,
+      0,
+      "STRING"
+    ],
+    [
+      2,
+      3,
+      0,
+      4,
+      6,
+      "FLOAT"
+    ],
+    [
+      3,
+      2,
+      1,
+      5,
+      0,
+      "STRING"
+    ],
+    [
+      4,
+      4,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        70,
+        70
+      ]
+    }
+  },
+  "version": 0.4
+}
