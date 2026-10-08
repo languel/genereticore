@@ -24,7 +24,9 @@ Genereti drawing/p5 source -> inference -> current/next image pair -> shader tra
 
 VLM image analysis -> structured controls; small local language model -> scene decisions. Evaluate Liquid local models and their individual licenses/runtime support. Make the decision task accept probabilities, choices and scores so it can accommodate specialist models and constrained LLM/VLM responses.
 
-Liquid D1's October 5 announcement describes text/image decisions in one forward pass, without token generation, and currently provides API access. It announces future open weights; do not assume D1 can be downloaded or converted today. Hosted APIs are not a current priority and are outside the initial milestones. Recheck for newer open-weight announcements before concluding availability; prioritize downloadable local Liquid models. Any later hosted adapter needs explicit user opt-in.
+Liquid released downloadable d1-3B and experimental d1-omni-600M on October 7, 2026. Prioritize local decision experiments: text/image state -> choice probabilities or scores -> creative controls. d1-omni also supports text/audio. Inspect the official runtime, model-specific Liquid license and MPS compatibility before choosing an adapter or converting to Apple formats. Published Jetson timings are not Mac measurements. The October 5 hosted d1 announcement predates these open-weight releases.
+
+Hosted APIs are optional later work, not a current priority. Free provider routes may be useful but availability, limits and data transmission must be explicit; no automatic cloud fallback.
 
 ## 6. Distribution readiness
 
@@ -38,7 +40,10 @@ MIT original code, third-party notices, model-specific licenses; package lightwe
 - https://huggingface.co/mlboydaisuke/FLUX.2-klein-4B-CoreAI — author reports ~17s cold-inclusive 1024 image on M4 Max; not a measured live loop here.
 - https://huggingface.co/mlboydaisuke/Qwen3-VL-2B-CoreAI — candidate for analysis; token throughput is not full response latency.
 - https://huggingface.co/mlboydaisuke/RGBA-Image-2.1-CoreAI — research-license candidate, not default redistribution; substantially slower generation.
-- https://www.liquid.ai/blog/d1-decision-model — currently hosted text/image decision model; future open weights announced.
+- https://www.liquid.ai/blog/d1-decision-model — October 5 hosted release.
+- https://huggingface.co/blog/LiquidAI/open-d1 — October 7 open-weight release.
+- https://huggingface.co/LiquidAI/d1-3B
+- https://huggingface.co/LiquidAI/d1-omni-600M
 - https://huggingface.co/docs/hub/en/models-uploading — standard publishing flow.
 
 Read current licenses and releases before adopting any dependency or distributing weights.

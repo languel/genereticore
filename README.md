@@ -19,7 +19,7 @@ The first demonstration will generate images asynchronously while a Genereti sha
 - Core ML: preserve the existing working Genereti SDXS path, macOS 14+ on Apple silicon.
 - Core AI: experimental native backend, currently macOS 27+; development requires Xcode 27. Local machine preflight on October 7, 2026: macOS 27.0.1, Xcode 27.0 (27A266a). Runtime compatibility and performance have not yet been tested.
 - Portable local runtimes: evaluate small Liquid models without requiring Apple-specific conversion.
-- Hosted providers: optional explicit opt-in; Liquid D1 is a candidate, not a bundled local model.
+- Hosted providers: optional explicit opt-in; Liquid hosted D1 is a candidate; downloadable d1-3B/d1-omni are separate local candidates. No weights are bundled.
 
 ## Distribution
 
