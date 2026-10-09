@@ -6,6 +6,7 @@ import tempfile
 from types import ModuleType, SimpleNamespace
 import unittest
 from unittest.mock import patch
+from aiohttp import web
 
 class ImageContractTests(unittest.TestCase):
     @classmethod
@@ -46,7 +47,6 @@ class ImageContractTests(unittest.TestCase):
             self.assertEqual(self.live.validate({'model_path':'256/unet.mlpackage'})['seed'],42)
             for invalid in [{'seed':True},{'noise_phase':float('nan')},{'image':'x'*2_800_001},{'family':'sd_turbo'},{'preprocess':'yes'}]:
                 with self.assertRaises(ValueError):self.live.validate({'model_path':'256/unet.mlpackage',**invalid})
-        from aiohttp import web
         self.live.local_only(SimpleNamespace(remote='127.0.0.1',headers={'Origin':'http://127.0.0.1:8188'},host='127.0.0.1:8188'))
         for remote,origin in [('192.0.2.1',None),('127.0.0.1','https://example.com')]:
             with self.assertRaises(web.HTTPForbidden):
