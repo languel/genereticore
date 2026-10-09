@@ -2,13 +2,13 @@
 
 Local asynchronous inference companion for [Genereti](https://github.com/languel/genereti) and ComfyUI.
 
-**Status: runnable experimental contributor milestone.** Core AI text, vision and scored decisions are implemented. Student distribution, Core ML migration, Liquid adapters and the complete image/shader demo remain on the [roadmap](docs/plan.md). Read the [implementation checkpoint](docs/implementation.md) and [local validation record](docs/validation.md) for measured behavior and limits.
+**Status: runnable experimental contributor milestone.** Core AI text, vision and scored decisions are implemented. The optional archived SDXS/SD Turbo image runtime is now ported with stable IDs; its Mac parity and the full shader-transition demo remain unverified. Student distribution and complete image bundle downloads remain on the [roadmap](docs/plan.md). Read the [implementation checkpoint](docs/implementation.md) and [local validation record](docs/validation.md) for measured behavior and limits.
 
 ## Learn by running a sample
 
-Read [Tutorial 0](docs/tutorial-0.md), or open **Workflows → GeneretiCore → 00 - Tutorial 0 - decision models** and click its book button. Eight installed samples explain the result contract, text generation, decisions, vision and Genereti walkthroughs. The d1 demo turns a scene description into an artwork palette through a bounded choice and authored numeric mapping. Each note defines its demo before giving instructions.
+Read [Tutorial 0](docs/tutorial-0.md), or open **Workflows → GeneretiCore → 00 - Tutorial 0 - decision models** and click its book button. Twelve installed samples explain the result contract, text generation, decisions, vision and Genereti walkthroughs. The d1 demo turns a scene description into an artwork palette through a bounded choice and authored numeric mapping. Each note defines its demo before giving instructions.
 
-Read the [getting-started guide](docs/getting-started.md) for exact steps and troubleshooting. **▷ runs connected workflow outputs; ϟ previews locally inside the inference node.** The **?** button opens a local guide. Samples 05/06/07 use Genereti's p5 editor and step-by-step lesson player; samples 00–04 work without Genereti public.
+Read the [getting-started guide](docs/getting-started.md) for exact steps and troubleshooting. **▷ runs connected workflow outputs; ϟ previews locally inside the inference node.** The header **?** opens authored references in Genereti’s shared Help panel (Reference, Contents, Assistant), or a local reference without Genereti. Samples 05/06/07 use Genereti's p5 editor and step-by-step lesson player; samples 00–04 work without Genereti public.
 
 ## Contributor setup
 
@@ -20,7 +20,7 @@ Clone this repository into your test Comfy installation's `custom_nodes/genereti
 python3 scripts/build_helper.py
 ```
 
-Restart Comfy. Search **Genereti / Inference** for `ꘇ local text`, `ꘇ local vision`, `ꘇ local decision`, and `ꘇ decision scores`. On an inference node, click **↓** to explicitly download the selected pinned model from Hugging Face. Progress is shown in the toolbar. Use **Run** for connected Comfy outputs or **ϟ** for an independent async text/decision preview. **▷** queues the connected workflow. **□** cancels that async task. Comfy interrupt cancels queued execution. No capture or inference starts on workflow load.
+Restart Comfy. Search **Genereti / Inference** for `ꘅ Local Text`, `ꘅ Local Vision`, `ꘅ Local Decision`, and `ꘅ Decision Scores Validator`. On an inference node, click **↓** to explicitly download the selected pinned model from Hugging Face. Progress is shown in the toolbar. Use **Run** for connected Comfy outputs or **ϟ** for an independent async text/decision preview. **▷** queues the connected workflow. **□** cancels that async task. Comfy interrupt cancels queued execution. No capture or inference starts on workflow load.
 
 Comfy models live under its configured `models/genereticore` path. Compiled Core AI artifacts are managed by the OS/SDK. Model files and helper binaries stay outside Git. A complete verified native release must replace the build step before student distribution through Manager.
 
@@ -61,3 +61,7 @@ Route tests use aiohttp from the Comfy environment. Bundled samples install on s
 The optional d1 backend is independent of Core AI: macOS 15+ Apple silicon, Swift 6, `python3 scripts/build_d1_helper.py`. This deployment target is declared by upstream; local tests were on macOS 27. The helper uses pinned MIT FluidUse d1 sources with their license included. Build products and weights stay outside Git. Download `d1-omni-600m` explicitly from Local Decision or the CLI. It supports text decisions only, 2–8 options and at most 256 combined input tokens; long requests fail without silent truncation to a smaller bucket. d1 generates zero output tokens and ignores the Qwen `max_tokens` setting. See [third-party terms](THIRD_PARTY_NOTICES.md) for the weights' LFM Open License.
 
 Example: `python3 -m genereticore.cli decision --model d1-omni-600m --prompt 'A quiet moonlit lake.' --choices '["blue", "orange"]' --repeat 3` after download. Local assets are SHA-256 verified. First compilation/loading is much slower than warm inference. The demo is an integration exercise, not a quality guarantee.
+
+## Realtime SDXS and SD Turbo samples
+
+Samples 08–11 connect Genereti livecode/drawing to Core’s preserved native image IDs and a separate Genereti image preview. They need the updated companion bridge, macOS 14+ Apple silicon, optional image dependencies and your existing converted bundles. Inference starts explicitly with the generator play glyph; queued mode uses Comfy Run. Do not enable the legacy `genereti_comfy_coreml` pack alongside Core. See [setup and demo controls](docs/realtime-image-demo.md) and [help/UI adoption and validation](docs/help-ui-integration.md). Model workflows have not been run in the cloud.

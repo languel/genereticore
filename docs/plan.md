@@ -20,6 +20,8 @@ Prepare one complete SDXS bundle locally; audit redistribution terms for every c
 
 ## 4. Realtime image demo
 
+October 9 cloud update: four editable livecode/drawing → SDXS/Turbo → preview graphs and a stable-ID image-runtime source migration are now authored. See [realtime-image-demo.md](realtime-image-demo.md). Mac parity/performance and the complete current/next shader transition remain unverified.
+
 Genereti drawing/p5 source -> inference -> current/next image pair -> shader transition -> output. Hold the previous image during inference; emit completion and support immediate/beat/bar transitions. Start with SDXS, then benchmark FLUX.2 klein at supported sizes. Do not promise near realtime before measurement.
 
 ## 5. Analysis and decisions

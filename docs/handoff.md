@@ -48,3 +48,9 @@ Compact viewer UI: node_type is metadata only, with no widget row. The native ma
 Visible node families use ꘅ for GeneretiCore and ꘇ for Genereti. Class names/catalog identifiers remain Latinized. Always list actual node labels in tutorial notes and name the target label in each walkthrough step. Sample titles map companion classes to ꘇ livecode, ꘇ image preview and ꘇ lesson; saved legacy family titles are compacted on configure, while authored custom titles remain intact.
 
 The public companion shared node-label formatter now recognizes GeneretiCore as a distinct family and collapses repeated ꘇ/ꘅ prefixes to the correct single glyph. Both formatters are idempotent so configure/reload cannot accumulate prefixes.
+
+## Cloud help/UI and image workflow handoff (2026-10-09)
+
+Authored help now lives in `help/docs`, with synchronized native web Markdown and a bundled catalog. Core registers it with the updated public Genereti shared Help bridge. See `docs/help-ui-integration.md` for the API and cloud checks. Compact controls, header help and viewer freeze/minimize are adopted; presentation reordering retains positional save values.
+
+The archived native image source is ported into `genereticore/image` with stable `GeneretiSDXSGenerate`/`GeneretiSDTurboGenerate` IDs and Core-family labels. An active legacy `genereti_comfy_coreml` installation is rejected before routes are registered. Existing bundle roots and explicit model paths are reused; the archive is untouched. Core routes use `/genereticore/coreml`. Four new samples 08–11 cover livecode/drawing with SDXS/Turbo. See `docs/realtime-image-demo.md`. No cloud models, weights or native inference were run. Mac parity, full Comfy UI checks, complete bundle distribution and current/next shader transitions remain unverified.

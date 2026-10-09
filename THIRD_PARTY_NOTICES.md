@@ -13,3 +13,15 @@ Pinned manifests describe downloaded upstream artifacts; they do not grant redis
 - Liquid d1-omni weights: LFM Open License v1.0, not MIT. Text-only Core ML conversion from FluidInference/d1-omni-600m-coreml, pinned to `8ae382b1f2e5b9b7e33008515a40df4ecdfcebdb` with per-file sizes/SHA-256 in the catalog. The manifest downloads the upstream LICENSE alongside assets. Commercial use has a revenue restriction; redistribution requires license/attribution preservation. Weights and compiled packages stay outside Git.
 
 Legacy SDXS/control/anime/Turbo assets have separate model-specific terms and remain outside this runtime.
+
+## Migrated Genereti image runtime
+
+`genereticore/image/{engine,guides,model_resolution,postprocess,nodes,live}.py`
+are adapted from the MIT-licensed public `languel/genereti` archive
+(`integrations/legacy-generator`, source commit recorded in
+`docs/help-ui-integration.md`). This migration includes source only. It conveys
+no model weights or new model redistribution rights. The optional runtime pins
+match the archive for Core ML, Transformers, Hugging Face Hub, NumPy, Pillow and
+OpenCV; Torch is supplied by Comfy. SDXS/DreamShaper, SD Turbo and optional guide
+models retain their upstream licenses and require an individual bundle audit
+before distribution. No conversion-only Diffusers/PEFT dependency is added.

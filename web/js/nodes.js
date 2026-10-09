@@ -1,13 +1,14 @@
 import { app } from "../../../scripts/app.js";
 import { GeneretiCoreClient } from "./client.js";
 import { resultViewer } from "./result-viewer.js";
+import {arrange} from "./layout.js";
 const client = new GeneretiCoreClient();
 const taskTypes = {GeneretiCoreText: "text.generate", GeneretiCoreVision: "vision.analyze", GeneretiCoreDecision: "decision.evaluate"};
 
 function button(glyph, title, action) {
   const b = document.createElement("button");
-  b.textContent = glyph; b.title = title; b.setAttribute("aria-label", title);
-  Object.assign(b.style, {border: "none", background: "transparent", color: "inherit", width: "30px", height: "30px", fontSize: "18px", borderRadius: "6px", cursor: "pointer"});
+  b.type="button"; b.textContent = glyph; b.title = title; b.setAttribute("aria-label", title);
+  Object.assign(b.style, {border: "none", background: "transparent", color: "inherit", display:"inline-flex", alignItems:"center", justifyContent:"center", padding:"0", width: "20px", height: "20px", fontSize: "12px", borderRadius: "6px", cursor: "pointer"});
   b.addEventListener("click", action);
   return b;
 }
@@ -64,17 +65,20 @@ app.registerExtension({
           }
         }
       };
+      let outputWidget;
       const addOutput = () => {
         const viewer = node.addDOMWidget("genereticore_result", "genereticore_result", output.element, {serialize: false, hideOnZoom: false});
+        outputWidget=viewer;
+        node._generetiPreviewFirstWidget=viewer;
         viewer.computeSize = () => [node.size[0], 210];
         viewer.options.getMinHeight = () => 210;
         viewer.options.getMaxHeight = () => 210;
       };
-      if (!task) { addOutput(); return result; }
+      if (!task) { addOutput(); arrange(node,[outputWidget]); return result; }
       const streamID = `node-${crypto.randomUUID()}`;
       const bar = document.createElement("div");
       bar.className = "genereticore-controls";
-      Object.assign(bar.style, {display: "flex", alignItems: "center", gap: "4px", color: "var(--input-text, currentColor)", font: "12px sans-serif", minHeight: "30px"});
+      Object.assign(bar.style, {display: "flex", alignItems: "center", gap: "0", color: "var(--input-text, currentColor)", font: "12px sans-serif", minHeight: "20px"});
       const status = document.createElement("span");
       status.setAttribute("role", "status"); status.setAttribute("aria-live", "polite");
       status.textContent = "local · idle";
@@ -123,12 +127,13 @@ app.registerExtension({
         ...(task === "vision.analyze" ? [] : [button("ϟ", "Local preview here only; connected nodes update with Run", () => run(false))]),
         button("□", "Cancel the active task and release the native helper", async () => {
           if (requestID) { try { await client.cancel(requestID); } catch (e) { status.textContent = e.message; } }
-        }), button("?", "Open the GeneretiCore getting-started guide", () => window.open(new URL("../getting-started.html", import.meta.url).href, "_blank")), status);
+        }), status);
       const widget = node.addDOMWidget("genereticore", "genereticore", bar, {serialize: false, hideOnZoom: false});
-      widget.computeSize = () => [node.size[0], 34];
-      widget.options.getMinHeight = () => 34;
-      widget.options.getMaxHeight = () => 34;
+      widget.computeSize = () => [node.size[0], 24];
+      widget.options.getMinHeight = () => 24;
+      widget.options.getMaxHeight = () => 24;
       addOutput();
+      arrange(node,[widget,outputWidget]);
       const priorExecuted = node.onExecuted;
       node.onExecuted = function(message) { priorExecuted?.apply(this, arguments); status.textContent = "workflow complete"; };
       const onRemoved = node.onRemoved;
@@ -138,14 +143,14 @@ app.registerExtension({
   },
   setup() {
     const style = document.createElement("style");
-    style.textContent = `.genereticore-result{height:100%;min-height:0;display:flex;flex-direction:column;color:var(--input-text,currentColor);background:var(--comfy-input-bg,#222);border-radius:6px;font:12px/1.5 monospace}.genereticore-result-body{overflow:auto;flex:1;padding:8px;min-height:0;user-select:text}.genereticore-result textarea{width:100%;height:100%;min-height:145px;box-sizing:border-box;border:0;resize:none;background:transparent;color:inherit;font:inherit}.genereticore-controls select{border:0;background:transparent;color:inherit;height:30px;border-radius:6px}.genereticore-children{padding-left:14px;border-left:1px solid color-mix(in srgb,currentColor 15%,transparent)}.genereticore-result summary{cursor:pointer}.genereticore-key{opacity:.8}.genereticore-string{color:var(--p-green-400,#9acfa3)}.genereticore-number{color:var(--p-blue-400,#97b7dc)}.genereticore-boolean,.genereticore-null{color:var(--p-purple-400,#c1a6d8)}.genereticore-controls button:hover {background:color-mix(in srgb,currentColor 10%,transparent)!important} .genereticore-controls button:focus-visible{outline:2px solid currentColor;outline-offset:-2px}.genereticore-controls span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}`;
+    style.textContent = `.genereticore-result{height:100%;min-height:0;display:flex;flex-direction:column;color:var(--input-text,currentColor);background:transparent;border-radius:0;font:12px/1.5 monospace}.genereticore-result-body{overflow:auto;flex:1;padding:8px;min-height:0;user-select:text}.genereticore-result textarea{width:100%;height:100%;min-height:145px;box-sizing:border-box;border:0;resize:none;background:transparent;color:inherit;font:inherit}.genereticore-controls select{border:0;background:transparent;color:inherit;height:20px;border-radius:6px}.genereticore-children{padding-left:14px;border-left:1px solid color-mix(in srgb,currentColor 15%,transparent)}.genereticore-result summary{cursor:pointer}.genereticore-key{opacity:.8}.genereticore-string{color:var(--p-green-400,#9acfa3)}.genereticore-number{color:var(--p-blue-400,#97b7dc)}.genereticore-boolean,.genereticore-null{color:var(--p-purple-400,#c1a6d8)}.genereticore-controls button:hover {background:color-mix(in srgb,currentColor 10%,transparent)!important} .genereticore-controls button[aria-pressed=true]{background:color-mix(in srgb,currentColor 12%,transparent)!important}.genereticore-controls button:focus-visible{outline:2px solid currentColor;outline-offset:-2px}.genereticore-controls span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}`;
     style.textContent += `
-    .genereticore-controls select{font:inherit;height:30px;border:0;box-shadow:none;padding:0 7px;color:var(--input-text,currentColor)}
+    .genereticore-controls select{font:inherit;height:20px;border:0;box-shadow:none;padding:0 7px;color:var(--input-text,currentColor)}
     .genereticore-controls select:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
     .genereticore-controls select:focus-visible{outline:2px solid currentColor;outline-offset:-2px}
     @supports(appearance:base-select){
       .genereticore-glyph-choice,.genereticore-glyph-choice::picker(select){appearance:base-select}
-      .genereticore-glyph-choice{width:30px;min-width:30px;padding:0 6px;font-size:0!important;gap:0}
+      .genereticore-glyph-choice{width:20px;min-width:20px;padding:0 2px;font-size:0!important;gap:0}
       .genereticore-glyph-choice::picker(select),.genereticore-glyph-choice option{font-size:12px}
       .genereticore-glyph-choice::picker-icon,.genereticore-glyph-choice option::checkmark{display:none}
       .genereticore-glyph-choice>button{display:contents}
@@ -154,7 +159,7 @@ app.registerExtension({
       .genereticore-choice-icon{display:inline-flex;align-items:center}
       .genereticore-glyph-choice::picker-icon{margin-left:0}
       .genereticore-glyph-choice::picker(select){min-width:160px;padding:4px;color:var(--input-text,currentColor);background:var(--comfy-input-bg,#222);border:1px solid var(--border-color,#555);border-radius:6px;font:inherit}
-      .genereticore-glyph-choice option{display:flex;align-items:center;gap:8px;min-height:30px;padding:0 8px;border-radius:6px}
+      .genereticore-glyph-choice option{display:flex;align-items:center;gap:8px;min-height:20px;padding:0 8px;border-radius:6px}
       .genereticore-glyph-choice option:hover,.genereticore-glyph-choice option:checked{background:color-mix(in srgb,currentColor 10%,transparent)}
     }`;
     document.head.append(style);
