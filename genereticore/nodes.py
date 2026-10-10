@@ -172,8 +172,18 @@ class GeneretiCoreTutorial:
     def INPUT_TYPES(cls): return {"required": {}}
     def read(self): return {"ui": {"text": ["Open Tutorial 0 from the book button on this node."]}, "result": ()}
 
-NODE_CLASS_MAPPINGS = {c.__name__: c for c in (GeneretiCoreText, GeneretiCoreVision, GeneretiCoreDecision, GeneretiCoreValidateDecision, GeneretiCoreResult, GeneretiCoreChoiceValue, GeneretiCoreTutorial)}
-NODE_DISPLAY_NAME_MAPPINGS = {"GeneretiCoreTutorial": "ꘅ Tutorial", "GeneretiCoreText": "ꘅ Local Text", "GeneretiCoreVision": "ꘅ Local Vision",
+class GeneretiCoreDecisionArcade:
+    DESCRIPTION = "Opens Blocks & Beats: a local decision-driven Tetris simulation and authored music sequencer. Start game explicitly in the demo page; audio has a separate Start audio control. Comfy Run does not start either."
+    CATEGORY = "Genereti / Inference"
+    FUNCTION = "open_demo"
+    RETURN_TYPES = ()
+    OUTPUT_NODE = True
+    @classmethod
+    def INPUT_TYPES(cls): return {"required": {}}
+    def open_demo(self): return {"ui": {"text": ["Open Blocks & Beats with the arcade button. Start game and audio separately."]}, "result": ()}
+
+NODE_CLASS_MAPPINGS = {c.__name__: c for c in (GeneretiCoreText, GeneretiCoreVision, GeneretiCoreDecision, GeneretiCoreValidateDecision, GeneretiCoreResult, GeneretiCoreChoiceValue, GeneretiCoreTutorial, GeneretiCoreDecisionArcade)}
+NODE_DISPLAY_NAME_MAPPINGS = {"GeneretiCoreDecisionArcade": "ꘅ Decision Arcade", "GeneretiCoreTutorial": "ꘅ Tutorial", "GeneretiCoreText": "ꘅ Local Text", "GeneretiCoreVision": "ꘅ Local Vision",
     "GeneretiCoreDecision": "ꘅ Local Decision", "GeneretiCoreValidateDecision": "ꘅ Decision Scores Validator", "GeneretiCoreResult": "ꘅ Text / JSON Viewer", "GeneretiCoreChoiceValue": "ꘅ Choice to Value"}
 
 # Comfy uses DESCRIPTION for the native title-dot hover and Info panel.

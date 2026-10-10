@@ -33,6 +33,11 @@ app.registerExtension({
       const result = original?.apply(this, arguments);
       const node = this;
       node.properties.node_type = nodeData.name;
+      if (nodeData.name === "GeneretiCoreDecisionArcade") {
+        const open=button("▦", "Open Blocks & Beats: local decision arcade", () => window.open(new URL("../blocks-beats.html",import.meta.url).href,"_blank"));
+        const widget=node.addDOMWidget("arcade","arcade",open,{serialize:false});
+        widget.options.getMinHeight=()=>34;widget.options.getMaxHeight=()=>34;
+      }
       if (nodeData.name === "GeneretiCoreTutorial") {
         const book = button("▤", "Open Tutorial 0: decision models and creative controls", () => window.open(new URL("../tutorial-0.html", import.meta.url).href, "_blank"));
         const tutorial=node.addDOMWidget("tutorial", "tutorial", book, {serialize:false});

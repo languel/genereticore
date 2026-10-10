@@ -3,7 +3,7 @@ import {resultViewer} from './result-viewer.js';
 import {W,H,SHAPES,emptyBoard,features,candidates,moveState,seededBag,PATTERNS,musicState,baselineMusic} from './blocks-engine.mjs';
 const $=id=>document.getElementById(id),client=new GeneretiCoreClient(),stream='arcade-'+crypto.randomUUID();
 const moveView=resultViewer({properties:{}}),musicView=resultViewer({properties:{}});$('move-result').append(moveView.element);$('music-result').append(musicView.element);
-let board=emptyBoard(),nextPiece=seededBag(),pieces=0,lines=0,epoch=0,revision=0,running=false,requestId=null,falling=null,options=[],lastMove=null;
+let board=emptyBoard(),nextPiece=seededBag(),pieces=0,lines=0,epoch=0,revision=0,running=false,requestId=null,falling=null,pendingPiece=null,options=[],lastMove=null;
 const music=new ResultPair();music.accept('calm',0);let audio=null,audioOn=false,step=0,nextTick=0,voices=new Set(),lastMetrics=null,frameAt=0;
 const colors=['#81a9ff','#8fdac4','#d5a6ff','#f2c96d','#fa9c86','#84c9ed','#ddec91'];
 function status(text){$('status').textContent=text;}
@@ -21,7 +21,7 @@ async function decide(prompt,question,choices,myEpoch,kind){
 }
 function showOptions(choice){$('options').replaceChildren(...options.map(c=>{const el=document.createElement('div');el.className='candidate'+(c.label===choice?' selected':'');const heading=document.createElement('b');heading.textContent=c.label+' · '+(c.r*90)+'° / column '+(c.x+1);const detail=document.createElement('small');detail.textContent=`${c.lines} rows · ${c.holes} holes · height ${c.height}`;el.append(heading,detail);return el;}));}
 async function turn(myEpoch){
-  const piece=nextPiece();options=candidates(board,piece);if(!options.length){pause();status('Top out · Reset to play the same seed again.');return;}
+  const piece=pendingPiece??=nextPiece();options=candidates(board,piece);if(!options.length){pause();status('Top out · Reset to play the same seed again.');return;}
   const prompt=moveState(board,piece,options);$('state').textContent=prompt;showOptions(null);status('Choosing a legal '+piece+' placement…');
   const decision=await decide(prompt,'Choose the best drop: maximize cleared rows; minimize holes, total column height and unevenness. Choose A, B, C or D.',options.map(c=>c.label),myEpoch,'move');
   if(myEpoch!==epoch)return;const choice=decision?.choice??options[0].label,selected=options.find(c=>c.label===choice);showOptions(choice);
@@ -31,7 +31,7 @@ async function turn(myEpoch){
   board=selected.board.map(row=>row.map(v=>v? v:0)); // placement occupancy is authoritative
   // Keep a color per landed tetromino without changing collision semantics.
   selected.shape.forEach((row,dy)=>row.forEach((v,dx)=>{if(v&&!selected.lines)board[selected.y+dy][selected.x+dx]=1+Object.keys(SHAPES).indexOf(piece);}));
-  falling=null;pieces++;lines+=selected.lines;lastMove={piece,choice,lines:selected.lines};stats();
+  falling=null;pendingPiece=null;pieces++;lines+=selected.lines;lastMove={piece,choice,lines:selected.lines};stats();
   if(pieces===1||pieces%4===0||selected.lines){
     const text=musicState(board,selected.lines,pieces),reply=await decide(text,'Choose one authored soundtrack: calm for low stack, drive for steady play, tense for danger, celebrate when rows clear.',['calm','drive','tense','celebrate'],myEpoch,'music');
     if(myEpoch!==epoch)return;const chosen=reply?.choice??baselineMusic(board,selected.lines);
@@ -47,7 +47,7 @@ async function play(){if(running){pause();return;}if($('player').value==='d1'){t
   try{while(running&&myEpoch===epoch)await turn(myEpoch);}catch(e){if(myEpoch===epoch){pause();status('Paused · '+e.message);}}
 }
 function pause(){running=false;epoch++;falling=null;$('play').textContent='▷ Start game';$('play').setAttribute('aria-pressed','false');$('player').disabled=false;if(requestId){client.cancel(requestId).catch(()=>{});requestId=null;}}
-$('play').onclick=play;$('reset').onclick=()=>{pause();board=emptyBoard();nextPiece=seededBag();pieces=lines=0;options=[];lastMove=null;stats();$('state').textContent='Reset to seed 7. Press Start game.';$('options').replaceChildren();moveView.show('Reset · no current decision');musicView.show('Reset · no current decision');music.current='calm';music.next=null;step=0;patterns();status('Reset · no inference until Start game');};
+$('play').onclick=play;$('reset').onclick=()=>{pause();board=emptyBoard();nextPiece=seededBag();pendingPiece=null;pieces=lines=0;options=[];lastMove=null;stats();$('state').textContent='Reset to seed 7. Press Start game.';$('options').replaceChildren();moveView.show('Reset · no current decision');musicView.show('Reset · no current decision');music.current='calm';music.next=null;step=0;patterns();status('Reset · no inference until Start game');};
 $('download').onclick=async()=>{if(running)return;try{$('download').disabled=true;status('Explicitly downloading pinned d1…');const r=await client.submit({task:'model.download',model:'d1-omni-600m',inputs:{},options:{},policy:'fifo',stream_id:stream+'-download',input_revision:++revision});let error=null;await client.follow(r.request_id,e=>{if(e.type==='download_progress')status('Downloading d1 · '+Math.round(e.payload.fraction*100)+'%');if(e.type==='failed')error=e.payload.message;});status(error??'d1 installed · press Start game');}catch(e){status(e.message);}finally{$('download').disabled=false;}};
 function note(freq,time,length,type='triangle',gain=.055){const osc=audio.createOscillator(),amp=audio.createGain();osc.type=type;osc.frequency.value=freq;osc.connect(amp);amp.connect(audio.destination);amp.gain.setValueAtTime(0,time);amp.gain.linearRampToValueAtTime(gain,time+.008);amp.gain.exponentialRampToValueAtTime(.0001,time+length);osc.start(time);osc.stop(time+length+.02);voices.add(osc);osc.onended=()=>{voices.delete(osc);amp.disconnect();osc.disconnect();};}
 function tick(){if(!audioOn)return;while(nextTick<audio.currentTime+.09){if(step===0){music.trigger('bar');music.setPhase(1);patterns();}const p=PATTERNS[music.current];if(p.beats.includes(step)){const index=p.beats.indexOf(step),midi=p.notes[index%p.notes.length];note(440*2**((midi-69)/12),nextTick,.18);}

@@ -10,7 +10,7 @@ def inline(value):
     value=re.sub(r'\[([^\]]+)\]\(([^ )]+)\)',lambda m:'<a href="'+html.escape(m[2],quote=True)+'">'+m[1]+'</a>',value)
     return value
 css='html{color-scheme:light dark;font:17px/1.7 system-ui}body{max-width:860px;margin:36px auto;padding:0 24px}h1,h2{line-height:1.3}h2{margin-top:2em}pre{padding:16px;overflow:auto;background:#8882;border-radius:8px}code{font-size:.9em}li{margin:.4em 0}table{border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #8885}a{color:inherit}'
-for source,target in [('docs/tutorial-0.md','web/tutorial-0.html')]:
+for source,target in [('docs/tutorial-0.md','web/tutorial-0.html'),('docs/tutorial-8.md','web/tutorial-8.html')]:
     lines=(root/source).read_text().splitlines();out=[];paragraph=[];listing=False;code=None
     def flush():
         if paragraph:out.append('<p>'+inline(' '.join(paragraph))+'</p>');paragraph.clear()

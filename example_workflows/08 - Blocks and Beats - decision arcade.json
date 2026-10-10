@@ -1,0 +1,119 @@
+{
+  "last_node_id": 3,
+  "last_link_id": 0,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "Start here · Blocks & Beats · a decision arcade",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        310
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "\n\nDEMO: A self-playing simplified Tetris game conducts an authored soundtrack. Open ꘅ Decision Arcade with ▦. In its page, the board rules shortlist four legal drops, d1 chooses one, and a separate d1 decision chooses calm/drive/tense/celebrate music. The game applies only validated labels. The renderer and audio scheduler run independently of the bounded local inference worker.\n1. Read Tutorial 8 in the demo page. Choose d1 or an explicit no-AI heuristic comparison.\n2. Start game. Watch candidate metrics, the chosen drop, distributions and timing.\n3. Start audio separately. A pending music pattern changes at the next bar.\n4. Pause/Reset cancels pending decisions and rejects old results; errors pause rather than falling back. No camera, microphone, cloud or generated code. Comfy Run does not start game/audio.\n\nNodes in this demo:\nꘅ Decision Arcade · open Blocks & Beats\nꘇ lesson · walkthrough · press its Run"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GeneretiCoreDecisionArcade",
+      "title": "ꘅ Decision Arcade · open Blocks & Beats",
+      "pos": [
+        0,
+        490
+      ],
+      "size": [
+        620,
+        180
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreDecisionArcade",
+        "generetiLessonRef": "8884c7f8-7510-59d5-b1b5-433db11bb533",
+        "genereti_widget_values": {}
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 3,
+      "type": "GeneretiDatLesson",
+      "title": "ꘇ lesson · walkthrough · press its Run",
+      "pos": [
+        0,
+        1540
+      ],
+      "size": [
+        600,
+        500
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "guide",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "guide"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "document",
+          "type": "GENERETI_DAT",
+          "links": []
+        },
+        {
+          "name": "markdown",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiDatLesson",
+        "generetiLessonRef": "1df29fae-7d46-58e1-b7dd-d290a1ddaf7b",
+        "genereti_widget_values": {
+          "guide": "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-08-arcade\",\n  \"title\": \"Blocks & Beats · a decision arcade\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Open the arcade\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nClick ▦. The demo opens locally and stays idle until Start game.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Follow a move\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nIn the demo page, compare A–D candidates and the JSON decision. These options are legal placements, not raw keypresses.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Conduct the soundtrack\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nStart audio explicitly. Compare current and next music patterns; changes land on bar boundaries.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Compare decision strategies\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nReset to seed 7 and select the heuristic player for a no-model baseline. Compare holes, height and cleared rows; d1 is not promised to win.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+          "genereti_delivery": "Live"
+        },
+        "generetiLessonStartup": "manual"
+      },
+      "widgets_values": [
+        "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-08-arcade\",\n  \"title\": \"Blocks & Beats · a decision arcade\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Open the arcade\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nClick ▦. The demo opens locally and stays idle until Start game.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Follow a move\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nIn the demo page, compare A–D candidates and the JSON decision. These options are legal placements, not raw keypresses.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Conduct the soundtrack\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nStart audio explicitly. Compare current and next music patterns; changes land on bar boundaries.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Compare decision strategies\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nReset to seed 7 and select the heuristic player for a no-model baseline. Compare holes, height and cleared rows; d1 is not promised to win.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+        "Live"
+      ],
+      "widgets_values_named": {
+        "guide": "{\n  \"format\": \"genereti-guide\",\n  \"version\": 1,\n  \"id\": \"genereticore-08-arcade\",\n  \"title\": \"Blocks & Beats · a decision arcade\",\n  \"summary\": \"Learn on this editable graph. Inference starts only when you press Run.\",\n  \"steps\": [\n    {\n      \"title\": \"Open the arcade\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nClick ▦. The demo opens locally and stays idle until Start game.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Follow a move\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nIn the demo page, compare A–D candidates and the JSON decision. These options are legal placements, not raw keypresses.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Conduct the soundtrack\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nStart audio explicitly. Compare current and next music patterns; changes land on bar boundaries.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    },\n    {\n      \"title\": \"Compare decision strategies\",\n      \"text\": \"ꘅ Decision Arcade · open Blocks & Beats\\n\\nReset to seed 7 and select the heuristic player for a no-model baseline. Compare holes, height and cleared rows; d1 is not promised to win.\",\n      \"target\": {\n        \"nodeType\": \"GeneretiCoreDecisionArcade\",\n        \"nodeId\": 2,\n        \"ref\": \"8884c7f8-7510-59d5-b1b5-433db11bb533\",\n        \"part\": \"node\"\n      },\n      \"hint\": \"Follow the note at the top of the workflow. Top Run updates connected nodes.\"\n    }\n  ]\n}",
+        "genereti_delivery": "Live"
+      }
+    }
+  ],
+  "links": [],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        70,
+        70
+      ]
+    }
+  },
+  "version": 0.4
+}
