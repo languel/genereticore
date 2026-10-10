@@ -1,25 +1,12 @@
 import {app} from '../../../scripts/app.js';
+import {createLiveImageInput} from './live-image-input.mjs';
 const families={GeneretiSDXSGenerate:'sdxs',GeneretiSDTurboGenerate:'sd_turbo'};
 const value=(node,name)=>node.widgets?.find(w=>w.name===name)?.value;
-function source(node){
- const slot=node.inputs?.find(i=>i.name==='image'),link=node.graph?.links?.[slot?.link];
- const parent=node.graph?.getNodeById(link?.origin_id);
- if(!parent)throw Error('Connect a livecode or drawing image. Use Comfy Run for other IMAGE sources.');
- if(parent._generetiLivePaused||parent._generetiExecutionMode==='Comfy Queue')return null;
- return parent;
-}
-async function capture(node){
- if(value(node,'mode')==='text')return undefined;
- const parent=source(node);if(!parent)return null;
- if(parent._generetiLivecode?.captureDataUrl)return parent._generetiLivecode.captureDataUrl({live:true});
- if(parent._generetiDrawing?.captureDataUrl)return parent._generetiDrawing.captureDataUrl();
- if(parent._generetiTexture?.captureDataUrl)return parent._generetiTexture.captureDataUrl();
- throw Error('Live input requires a running livecode, drawing or texture source. Queue accepts any IMAGE.');
-}
 function attach(node){
  if(node._genereticoreImageUI||!window.generetiCompanion)return;
  node._genereticoreImageUI=true;
  const bridge=window.generetiCompanion;bridge.attachExecutionMode(node);
+ const input=createLiveImageInput(node,{subscribeLive:bridge.subscribeLive});
  const bar=node._generetiExecutionModeElement;let running=false,pending=false,disposed=false,timer,epoch=0,phase=0;
  let applied=node.properties.genereti_applied_prompt??value(node,'prompt'),live=node.properties.genereti_live_prompt??true;
  const footer=document.createElement('div');footer.className='genereticore-image-status';
@@ -70,7 +57,7 @@ function attach(node){
 
  function button(glyph,title,fn){const b=document.createElement('button');b.type='button';b.textContent=glyph;b.title=b.ariaLabel=title;b.onclick=fn;bar.append(b);return b;}
  function state(){play.textContent=running?'Ⅱ':'▶';play.title=play.ariaLabel=running?'Pause image inference':'Start local image inference';play.setAttribute('aria-pressed',String(running));play.disabled=node._generetiExecutionMode==='Comfy Queue';promptToggle.setAttribute('aria-pressed',String(live));promptToggle.title=promptToggle.ariaLabel=live?'Apply prompt while typing':'Hold prompt draft until Send or Cmd/Ctrl+Enter';}
- function pause(){running=false;epoch++;clearTimeout(timer);state();report('Paused · last image held');}
+ function pause(){input.stop();running=false;epoch++;clearTimeout(timer);state();report('Paused · last image held');}
  function commit(){applied=value(node,'prompt');node.properties.genereti_applied_prompt=applied;}
  const play=button('▶','Start local image inference',()=>{if(running)pause();else{running=true;epoch++;hasImage=false;totalSum=modelSum=samples=modelSamples=0;lastTiming=lastLiveStatus=performance.now();state();report('Computing first image…');void tick();}});
  const promptToggle=button('ϟ','Apply prompt while typing',()=>{live=!live;node.properties.genereti_live_prompt=live;if(live)commit();state();});
@@ -99,7 +86,8 @@ function attach(node){
   if(pending){timer=setTimeout(tick,100);return;}
   pending=true;const session=epoch,start=performance.now();let delay=42;
   try{
-   const image=await capture(node);if(image===null){reportLive('Source delivery paused');delay=250;return;}
+   const textMode=value(node,'mode')==='text';if(textMode)input.stop();else input.start();
+   const image=textMode?undefined:await input.capture();if(image===null){reportLive('Waiting for connected live image · start the source and use Live delivery');delay=250;return;}
    if(!running||session!==epoch)return;
    const payload={blank_prompt_enabled:blankEnable.checked,blank_prompt:blankEditor.value,blank_action:blankAction.value,image,family:families[node.comfyClass],model_path:value(node,'model_path'),prompt:live?value(node,'prompt'):applied};
    for(const key of ['mode','seed','control_scale','invert','preprocess','strength']){const v=value(node,key);if(v!==undefined)payload[key]=v;}
@@ -132,6 +120,6 @@ function attach(node){
   if(entry.installed){const widget=node.widgets?.find(w=>w.name==='model_path');if(widget&&(!catalog.model_paths?.[widget.value]||widget.value==='not installed')){widget.value=entry.family==='sdxs'?'512/unet.mlpackage':'512/turbo_unet.mlpackage';updateWidgets();}}
  };
  const recovery=setInterval(()=>{update();if(Date.now()-lastCatalogCheck>2000){lastCatalogCheck=Date.now();void updateCatalog();}},500);void updateCatalog();state();report('Paused · press Start, or use Queue and Comfy Run');
- const removed=node.onRemoved;node.onRemoved=function(){disposed=true;pause();clearInterval(recovery);window.removeEventListener('pagehide',pause);return removed?.apply(this,arguments);};window.addEventListener('pagehide',pause);
+ const removed=node.onRemoved;node.onRemoved=function(){disposed=true;pause();input.dispose();clearInterval(recovery);window.removeEventListener('pagehide',pause);return removed?.apply(this,arguments);};window.addEventListener('pagehide',pause);
 }
 app.registerExtension({name:'GeneretiCore.NativeImages',setup(){window.addEventListener('genereti-companion-ready',()=>{for(const n of app.graph?._nodes??[])if(families[n.comfyClass])attach(n);});},nodeCreated(node){if(families[node.comfyClass]){requestAnimationFrame(()=>attach(node));}}});

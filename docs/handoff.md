@@ -171,3 +171,9 @@ the downloaded public archive matched that commit, including 15 workflows.
 Registry ingestion was Pending immediately after upload, so Manager availability
 is unconfirmed. See registry-release.md for the receipt, archive hash, run link
 and future release procedure. Browser perception/provider work remains planned.
+
+## Shared live IMAGE input fix (2026-10-10)
+
+Native SDXS/Turbo image delivery now uses Genereti's `subscribeLive` bridge rather than source-specific capture methods. Borrowed frames are copied synchronously into one owned canvas (maximum 512px longest side); PNG encoding occurs only when the inference loop is ready. Pause/removal releases the subscription, source changes clear the previous frame, and text mode does not subscribe. Queued IMAGE handling is unchanged. Update both packs and reload Comfy; older companion bridges report the missing export explicitly.
+
+Real Comfy browser checks on this Mac passed for direct 2D stream → SDXS, stream → Image Preview → SDXS, a retained static frame without playback, Livecode, texture filter and webcam. Camera capture was stopped after testing. Queued stream → preview → SDXS → preview execution completed successfully in Comfy history. Core's 40 Python tests and JS client/layout/live-input tests passed; Genereti's shared subscription regression covers synchronous first-frame delivery, preview traversal, pause/rebind and disposal. Test captures and fixture workflows remain outside Git.

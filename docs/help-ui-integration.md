@@ -16,9 +16,11 @@ The companion changes in Genereti expose two browser bridges:
 - `window.generetiReference`: `registerDocuments(documents)`, `toggle(node,button)`
   and `showDocument(document)`. `genereti-reference-ready` announces availability;
   `genereti-reference-catalog-changed` refreshes Contents after registration.
-- `window.generetiCompanion` version 1: `publishLive`, `attachExecutionMode`,
+- `window.generetiCompanion` version 1: `publishLive`, `subscribeLive`, `attachExecutionMode`,
   `visualNodeControls`, `ensureControlStyle`. `genereti-companion-ready` announces
   availability. Core does not hardcode the other pack's extension URL aliases.
+
+Native image Live delivery subscribes through `subscribeLive(node,onFrame,onStatus,{inputName:"image"})`. Frames are borrowed: Core copies them synchronously into one owned canvas and encodes only when inference is ready. Pause/removal releases the subscription. Update both packs to obtain this additive bridge export; old Genereti bridges produce an explicit update message. Queued IMAGE execution remains independent of this browser subscription.
 
 Core loads its catalog relative to its own browser module. Both load orders work:
 it registers immediately when the bridge exists, or on the ready event. Header ?
