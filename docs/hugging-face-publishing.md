@@ -79,4 +79,5 @@ override the saved login. For this setup use `env -u HF_TOKEN hf auth whoami` an
 prefix SDK publishing commands with `env -u HF_TOKEN`. This uses the saved login
 without reading, printing or changing the environment credential. If you manage
 your own shell setup, remove its obsolete override separately. The desired saved
-login is named `GeneretiCore`; the former liuboto publishing login is `hf-rw`.
+login is named `GeneretiCore`. The old liuboto model copies were deleted after
+verification; their saved publishing login is no longer available locally.

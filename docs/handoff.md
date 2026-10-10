@@ -118,3 +118,6 @@ troubleshooting. The saved languel login works; this running agent session still
 inherits an old liuboto HF_TOKEN override, so publishing used the saved login
 with that override unset. No credential values were inspected or printed.
 Python tests (36), JS client/layout checks and help synchronization passed.
+
+The two old liuboto model repositories were removed after destination verification
+and the updated Comfy links were pushed. The saved publishing login is languel.
