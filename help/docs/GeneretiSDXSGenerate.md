@@ -8,7 +8,7 @@ Inputs: model_path, prompt, mode (text/sketch), seed, influence (control_scale),
 
 ## Small example
 
-Open **09 - Livecode to SDXS** or **10 - Drawing to SDXS**. Use ↓ to download the public 512px bundle, leave sketch selected, then press ▶. A connected ꘇ image preview holds the latest completed frame while the next computes.
+Open **09 - Livecode to SDXS** or **10 - Drawing to SDXS**. Use ↓ to download the public 256px + 512px bundle, leave sketch selected, then press ▶. A connected ꘇ image preview holds the latest completed frame while the next computes.
 
 ## Requirements and limits
 
@@ -24,4 +24,8 @@ The bottom color dot shows the current state in its hover tip. Clicking it hides
 
 ## Credits and licenses
 
-[Published bundle, upstream credits and complete license notices](https://huggingface.co/liuboto/genereticore-sdxs-coreml/blob/108d9bd18460c2b65d87fe8dea0e61ba43ce5cad/Notice.txt). SDXS by IDKiro; teacher Stable Diffusion 2.1 by Stability AI; TAESD by madebyollin; CLIP and OpenCLIP contributors. The bundle preserves upstream license notices and source backlinks.
+[Published bundle, upstream credits and complete license notices](https://huggingface.co/languel/genereticore-sdxs-coreml/blob/86f20169b7f8d1855994ae9b98ab0b28557c7efe/Notice.txt). SDXS by IDKiro; teacher Stable Diffusion 2.1 by Stability AI; TAESD by madebyollin; CLIP and OpenCLIP contributors. The bundle preserves upstream license notices and source backlinks.
+
+## Native sizes
+
+Choose `256/unet.mlpackage` (SDXS) or `256/turbo_unet.mlpackage` (Turbo) for the faster 256px version. The corresponding `512/` path keeps 512px. Both use the same node; the explicit bundle download installs both size folders and shared text assets. 256px reuses the original 512-trained weights with smaller fixed shapes, so appearance can differ. Both resolutions were exercised on this Mac.

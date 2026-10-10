@@ -51,7 +51,7 @@ def copy_verified(source, destination, manifest, revision):
     targets = []
     for entry in manifest['files']:
         relative = Path(entry['path'])
-        target = destination / relative if relative.parts[0] in ('512', 'assets') else notices / relative
+        target = destination / relative if relative.parts[0] in ('256', '512', 'assets') else notices / relative
         targets.append((entry, target))
         if target.exists() and (not target.is_file() or digest(target) != entry['sha256']):
             raise FileExistsError(f'Conflicting installed file: {target}')
@@ -106,7 +106,7 @@ class DownloadManager:
             if receipt['revision'] != entry['revision']:
                 return False
             return all((root / item['path']).is_file() and (root / item['path']).stat().st_size == item['bytes']
-                       for item in receipt['files'] if item['path'].startswith(('512/', 'assets/')))
+                       for item in receipt['files'] if item['path'].startswith(('256/', '512/', 'assets/')))
         except (OSError, ValueError, KeyError):
             return False
 

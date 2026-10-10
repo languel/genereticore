@@ -113,3 +113,21 @@ class DownloadManagerTests(unittest.TestCase):
             self.assertEqual(repairs,[manifest['files'][0]['path']])
             self.assertEqual(manager.states['sdxs']['phase'],'complete')
             self.assertEqual((source/'installed'/manifest['files'][0]['path']).read_bytes(),b'original')
+
+    def test_256_packages_install_beside_512_and_are_required_by_receipt(self):
+        from genereticore.image import bundles
+        with tempfile.TemporaryDirectory() as folder:
+            source=Path(folder)/'source';source.mkdir()
+            manifest=ImageBundleTests().fixture(source)
+            model=source/'256/unet.mlpackage/data';model.parent.mkdir(parents=True);model.write_bytes(b'small-model')
+            manifest['sizes']=[256,512]
+            manifest['files'].append({'path':'256/unet.mlpackage/data','bytes':model.stat().st_size,'sha256':bundle.digest(model)})
+            (source/'manifest.json').write_text(json.dumps(manifest))
+            destination=Path(folder)/'models'
+            bundles.copy_verified(source,destination,bundles.verify(source),'e'*40)
+            self.assertEqual((destination/'256/unet.mlpackage/data').read_bytes(),b'small-model')
+            self.assertTrue((destination/'512/unet.mlpackage/data').exists())
+            manager=bundles.DownloadManager(lambda:destination);entry={'family':'sdxs','revision':'e'*40}
+            self.assertTrue(manager.installed(entry))
+            (destination/'256/unet.mlpackage/data').unlink()
+            self.assertFalse(manager.installed(entry))

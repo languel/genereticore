@@ -102,3 +102,19 @@ paused. No download on workflow load. Missing payloads invalidate the installed
 receipt; retry reuses the Hub cache and refuses conflicting existing files.
 Actual anonymous SDK installs and browser Download → Installed → Start flows
 for both bundles passed. Corrupt cached files get one fresh-download repair attempt. Broad Manager/older-macOS/install-interruption testing remains pending.
+
+## 256px bundles and account migration (2026-10-10)
+
+SDXS and SD Turbo public bundles now belong to `languel`, with both `256/` and
+`512/` packages in each repository. Existing generator IDs select either size
+through `model_path`; no separate nodes are needed. Local 256px text, sketch and
+Turbo image inference passed on this Mac; timings and limitations are recorded
+in realtime-image-demo.md. Both pinned languel bundles passed anonymous clean
+installation and checksum verification, and the active Comfy installation has
+updated receipts. Credits, upstream licenses and source backlinks are retained.
+
+See hugging-face-publishing.md for future local publishing and account/login
+troubleshooting. The saved languel login works; this running agent session still
+inherits an old liuboto HF_TOKEN override, so publishing used the saved login
+with that override unset. No credential values were inspected or printed.
+Python tests (36), JS client/layout checks and help synchronization passed.

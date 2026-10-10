@@ -109,3 +109,29 @@ Queued graphs also produced exact white using their saved node properties.
 Browser verification covered the enabled option, action selector, collapsible
 field, and inline dot/timings. Credits and license links live in each node's
 reference documentation rather than its toolbar.
+
+
+## 256px native packages
+
+Public `languel/genereticore-sdxs-coreml` and
+`languel/genereticore-sd-turbo-coreml` now contain `256/` and `512/` packages in
+the same repositories. No extra Comfy nodes are registered. Use the model path
+picker to select resolution; the pinned family download installs both sizes.
+The contributor converter is `scripts/convert_native_images.py`, with weights
+and generated packages kept in an external `--output-root`.
+
+Local 256px validation on this Apple silicon Mac used four requests per mode:
+first use in an already running Comfy process, followed by three warm requests.
+These are local observations, not a clean-process startup benchmark.
+
+| Mode | First observed HTTP time | Warm HTTP median | Warm model median |
+| --- | ---: | ---: | ---: |
+| SDXS text | 2739 ms | 12 ms | 10 ms |
+| SDXS sketch | 154 ms | 17 ms | 14 ms |
+| SD Turbo image | 2597 ms | 24 ms | 21 ms |
+
+All outputs were verified at 256 × 256. The first request at a new size includes
+model loading/compilation; sketch shares already loaded base components. Smaller
+shapes reuse the original 512-trained weights and can change image quality.
+macOS 14+ remains the package target; this is a test on one current Mac, not
+verification on older macOS releases or a classroom installer.

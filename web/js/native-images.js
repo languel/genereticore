@@ -126,9 +126,9 @@ function attach(node){
   const anyBusy=catalog.bundles.some(b=>['download','verify','install'].includes(b.phase));
   download.disabled=anyBusy||entry.installed;if(entry.installed){download.innerHTML='<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8 L6 11 L13 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg>';}else download.textContent='↓';
   const label=entry.family==='sdxs'?'SDXS':'SD Turbo';
-  download.title=download.ariaLabel=entry.installed?`${label} bundle installed`:`Download ${label} · ${(entry.download_bytes/1e9).toFixed(2)} GB · local model`;
+  download.title=download.ariaLabel=entry.installed?`${label} 256px + 512px bundle installed`:`Download ${label} 256px + 512px · ${(entry.download_bytes/1e9).toFixed(2)} GB · local model`;
   if(busy){downloadPending=true;report(`${entry.phase==='verify'?'Verifying':entry.phase==='install'?'Installing':'Downloading'} ${label} · ${Math.round(100*entry.done/entry.total)}%`);}
-  else if(downloadPending){downloadPending=false;report(entry.phase==='error'?entry.detail:`${label} installed · choose 512px and press Start`,entry.phase==='error');}
+  else if(downloadPending){downloadPending=false;report(entry.phase==='error'?entry.detail:`${label} installed · choose 256px or 512px and press Start`,entry.phase==='error');}
   if(entry.installed){const widget=node.widgets?.find(w=>w.name==='model_path');if(widget&&(!catalog.model_paths?.[widget.value]||widget.value==='not installed')){widget.value=entry.family==='sdxs'?'512/unet.mlpackage':'512/turbo_unet.mlpackage';updateWidgets();}}
  };
  const recovery=setInterval(()=>{update();if(Date.now()-lastCatalogCheck>2000){lastCatalogCheck=Date.now();void updateCatalog();}},500);void updateCatalog();state();report('Paused · press Start, or use Queue and Comfy Run');

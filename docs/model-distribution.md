@@ -21,9 +21,9 @@ That automatic on-device compilation is different from converting PyTorch weight
 No separate Genereti hosting is needed for the existing upstream catalog entries.
 
 SDXS and SD Turbo now have complete **public evaluation bundles** on Hugging
-Face: [SDXS](https://huggingface.co/liuboto/genereticore-sdxs-coreml) and
-[SD Turbo](https://huggingface.co/liuboto/genereticore-sd-turbo-coreml). Both include
-512px converted Core ML packages, tokenizer and text encoder. SDXS supports text
+Face: [SDXS](https://huggingface.co/languel/genereticore-sdxs-coreml) and
+[SD Turbo](https://huggingface.co/languel/genereticore-sd-turbo-coreml). Both include
+256px and 512px converted Core ML packages, tokenizer and text encoder. SDXS supports text
 and sketch; Turbo supports image-to-image. The repositories do not run inference.
 No Space or hosted endpoint is needed. Each bundle contains provenance, upstream
 notices and a byte-size/SHA-256 manifest. Pinned releases are recorded in
@@ -40,13 +40,13 @@ For contributor command-line setup, use a Python environment with
 Comfy's model directory (substitute your actual Comfy path):
 
 ```sh
-python scripts/image_bundle.py install liuboto/genereticore-sdxs-coreml 108d9bd18460c2b65d87fe8dea0e61ba43ce5cad /path/to/ComfyUI/models/genereticore/images
-python scripts/image_bundle.py install liuboto/genereticore-sd-turbo-coreml 983f426420362fda151adff2922d8f24d5f560b5 /path/to/ComfyUI/models/genereticore/images
+python scripts/image_bundle.py install languel/genereticore-sdxs-coreml 86f20169b7f8d1855994ae9b98ab0b28557c7efe /path/to/ComfyUI/models/genereticore/images
+python scripts/image_bundle.py install languel/genereticore-sd-turbo-coreml fd78b21b29cec891fb09d87c76233ddb44c6edb3 /path/to/ComfyUI/models/genereticore/images
 ```
 
 The installer validates the entire download before copying and refuses conflicting
 existing files. Repeating the command reuses byte-identical files and the SDK's
-download cache. Downloads are about 2.14GB and 3.55GB respectively; some assets
+download cache. Downloads are about 3.78GB and 5.92GB respectively; some assets
 are shared in the installed root. Keep adequate space for downloads, installation
 and first-run compiler caches. Choose `512/unet.mlpackage` or
 `512/turbo_unet.mlpackage` in the generator. Students **do not convert weights**;
@@ -86,3 +86,5 @@ cache need extra disk space beyond the download sizes.
 If a component requires upstream access approval, make that requirement visible
 instead of embedding credentials or bypassing it through a mirror. All inference
 stays local; downloading a model does not upload student drawings or prompts.
+
+Local publisher setup and account switching: [hugging-face-publishing.md](hugging-face-publishing.md). Choose resolution with the existing generator model path; no separate Comfy nodes are needed.

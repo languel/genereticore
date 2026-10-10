@@ -8,7 +8,7 @@ Inputs: model_path, prompt, mode, seed, preprocess, strength, influence (control
 
 ## Small example
 
-Open **11 - Livecode to SD Turbo** or **12 - Drawing to SD Turbo**. Use ↓ to download the public 512px bundle, choose image mode and strength 0.95, then press ▶. Optional Canny needs separately sourced control weights. Use Queue plus Comfy Run for a single frame.
+Open **11 - Livecode to SD Turbo** or **12 - Drawing to SD Turbo**. Use ↓ to download the public 256px + 512px bundle, choose image mode and strength 0.95, then press ▶. Optional Canny needs separately sourced control weights. Use Queue plus Comfy Run for a single frame.
 
 ## Requirements and limits
 
@@ -24,4 +24,8 @@ The bottom color dot shows the current state in its hover tip. Clicking it hides
 
 ## Credits and licenses
 
-[Published bundle, upstream credits and complete license notices](https://huggingface.co/liuboto/genereticore-sd-turbo-coreml/blob/983f426420362fda151adff2922d8f24d5f560b5/Notice.txt). SD Turbo by Stability AI; TAESD by madebyollin; CLIP and OpenCLIP contributors. Powered by Stability AI. The bundle preserves upstream license notices and source backlinks.
+[Published bundle, upstream credits and complete license notices](https://huggingface.co/languel/genereticore-sd-turbo-coreml/blob/fd78b21b29cec891fb09d87c76233ddb44c6edb3/Notice.txt). SD Turbo by Stability AI; TAESD by madebyollin; CLIP and OpenCLIP contributors. Powered by Stability AI. The bundle preserves upstream license notices and source backlinks.
+
+## Native sizes
+
+Choose `256/unet.mlpackage` (SDXS) or `256/turbo_unet.mlpackage` (Turbo) for the faster 256px version. The corresponding `512/` path keeps 512px. Both use the same node; the explicit bundle download installs both size folders and shared text assets. 256px reuses the original 512-trained weights with smaller fixed shapes, so appearance can differ. Both resolutions were exercised on this Mac.
