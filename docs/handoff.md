@@ -131,3 +131,30 @@ bundle was shipped. Prefer spatial cleanup in Genereti, optional change-aware
 temporal averaging, then small independently converted models in GeneretiCore.
 The old preconverted exports were evaluated outside Git; public mirrors should
 use reviewed official weights and our own contributor conversion recipe.
+
+## Compact Real-ESRGAN shipped and locally tested (2026-10-10)
+
+Supersedes the research-only upscaling checkpoint above. GeneretiCoreUpscale is a
+V3 native node with AnimeVideo/General, source/2x/4x output and one/two same-image
+refinement passes. The public revision-pinned bundle contains both 256px and
+512px exports, independently converted from official BSD weights. All four
+exports passed numerical parity; fresh anonymous download, checksum verification
+and receipt invalidation for missing payloads passed. Credits and full notices
+are in help/docs and the HF bundle, rather than extra toolbar links.
+
+Native warm 2x totals: AnimeVideo 256px 16.66 ms, 512px 51.72 ms;
+General 256px 15.88 ms, 512px 65.27 ms. First use can compile/load much more slowly.
+These are native measurements, not full-pipeline/display FPS. Queued execution,
+non-square source/2x/4x two-pass output, local PNG endpoint, invalid pass rejection
+and foreign-origin rejection passed. Browser example 14 showed separate original
+and cleaned live previews, both model choices, editable pass count and pause/restart.
+Live one-pass Total was roughly 30–33 ms during this browser run, excluding busy
+retry waiting from the per-request estimate. No GPU-only texture input or large-image
+tiling is claimed. Wider installation/OS and motion-quality tests remain pending.
+
+Forty Python tests, JS client/layout checks, upscaler syntax and help synchronization
+passed. Models/cache/captures stayed outside Git. No student token or conversion is
+needed. See esrgan.md for setup/provenance and genereti-cleanup-handoff.md for the
+next session: spatial cleanup, antialiasing and separate temporal smoothing belong
+in Genereti. Browser MediaPipe/segmentation is a future direction, with per-model
+license/performance audits; native/heavy models remain in GeneretiCore.

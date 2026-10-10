@@ -35,6 +35,24 @@
       "download_bytes": 5915233287,
       "manifest_sha256": "d0f7b7d50a344c3f3da9c5d52b185a0b567a713f4747b33ad7e881968ea87959",
       "status": "public evaluation bundle; upstream use terms retained"
+    },
+    {
+      "family": "esrgan",
+      "repo": "languel/genereticore-upscalers-coreml",
+      "revision": "101d1754bbdd0e9b5945699db1f535249923bff3",
+      "private": false,
+      "size": 512,
+      "sizes": [
+        256,
+        512
+      ],
+      "modes": [
+        "animevideo",
+        "general"
+      ],
+      "download_bytes": 7552271,
+      "manifest_sha256": "27f34ad49ecfb6b888f9841bda605129b0606eb7258cfdfd5b63702fcdbe1faf",
+      "status": "Public compact Real-ESRGAN; BSD-3-Clause terms retained"
     }
   ]
 }

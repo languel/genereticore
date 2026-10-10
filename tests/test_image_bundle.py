@@ -131,3 +131,20 @@ class DownloadManagerTests(unittest.TestCase):
             self.assertTrue(manager.installed(entry))
             (destination/'256/unet.mlpackage/data').unlink()
             self.assertFalse(manager.installed(entry))
+
+    def test_upscaler_payload_install_and_receipt(self):
+        from genereticore.image import bundles
+        with tempfile.TemporaryDirectory() as folder:
+            source=Path(folder)/'source';source.mkdir()
+            model=source/'upscalers/animevideo/256.mlpackage/data';model.parent.mkdir(parents=True);model.write_bytes(b'upscaler')
+            notice=source/'LICENSE.txt';notice.write_text('BSD notice')
+            manifest={'format':1,'family':'esrgan','files':[{'path':str(p.relative_to(source)),'bytes':p.stat().st_size,'sha256':bundle.digest(p)} for p in (model,notice)]}
+            (source/'manifest.json').write_text(json.dumps(manifest))
+            destination=Path(folder)/'models';revision='f'*40
+            bundles.copy_verified(source,destination,bundles.verify(source),revision)
+            self.assertEqual((destination/'upscalers/animevideo/256.mlpackage/data').read_bytes(),b'upscaler')
+            self.assertEqual((destination/'licenses/esrgan'/revision/'LICENSE.txt').read_text(),'BSD notice')
+            manager=bundles.DownloadManager(lambda:destination);entry={'family':'esrgan','revision':revision}
+            self.assertTrue(manager.installed(entry))
+            (destination/'upscalers/animevideo/256.mlpackage/data').unlink()
+            self.assertFalse(manager.installed(entry))

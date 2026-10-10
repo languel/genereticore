@@ -73,3 +73,12 @@ Start with a model-free Genereti cleanup/upscale comparison, then add optional
 change-aware temporal smoothing and benchmark compact native models. Separate
 same-image recursive refinement from previous-frame smoothing. Publish only
 reviewed converted bundles with complete provenance and anonymous verification.
+
+October 10 compact-upscaler milestone: shipped the V3 GeneretiCoreUpscale node,
+explicit public verified downloads for independent AnimeVideo/General Core ML
+256/512 exports, source/2x/4x output and same-image refinement. Native, queued,
+anonymous installation and live browser comparison were exercised locally.
+See esrgan.md and handoff.md for actual measurements/limits. Next Genereti work
+is model-free spatial cleanup and separately resettable temporal smoothing;
+see genereti-cleanup-handoff.md. Segmentation/MediaPipe remains planned research,
+not a shipped capability.

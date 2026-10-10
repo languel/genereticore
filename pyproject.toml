@@ -17,7 +17,7 @@ image = ["coremltools==8.3.0; sys_platform == 'darwin' and python_version < '3.1
 genereticore = "genereticore.cli:main"
 
 [tool.setuptools]
-packages = ["genereticore", "genereticore.image"]
+packages = ["genereticore", "genereticore.image", "genereticore.upscale"]
 
 [tool.setuptools.package-data]
 genereticore = ["catalog.json"]

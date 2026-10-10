@@ -146,3 +146,11 @@ upscaler publication in this checkpoint.
 - [AMD FSR 2 input contract](https://github.com/GPUOpen-Effects/FidelityFX-FSR2#input-resources)
 - [SMAA source and license](https://github.com/iryoku/smaa)
 - [NVIDIA FXAA whitepaper](https://developer.download.nvidia.com/assets/gamedev/files/sdk/11/FXAA_WhitePaper.pdf)
+
+## Implemented compact-model checkpoint
+
+The independently converted official AnimeVideo/General exports, public bundle,
+V3 upscale node and live comparison are now implemented and tested locally.
+See [esrgan.md](esrgan.md) for current setup, pins and actual measurements; the
+older third-party export measurements above are historical comparisons.
+The Genereti follow-up is documented in [genereti-cleanup-handoff.md](genereti-cleanup-handoff.md).
