@@ -121,3 +121,13 @@ Python tests (36), JS client/layout checks and help synchronization passed.
 
 The two old-account model repositories were removed after destination verification
 and the updated Comfy links were pushed. The saved login belongs to the current publishing account.
+
+## Realtime cleanup/upscaling exploration (2026-10-10)
+
+Read realtime-upscaling.md for original upscale/refinement behavior, current
+Genereti feedback limitations, shader/model ownership, primary sources and
+local AnimeVideo/General Core ML smoke timings. No new upscale node or HF
+bundle was shipped. Prefer spatial cleanup in Genereti, optional change-aware
+temporal averaging, then small independently converted models in GeneretiCore.
+The old preconverted exports were evaluated outside Git; public mirrors should
+use reviewed official weights and our own contributor conversion recipe.

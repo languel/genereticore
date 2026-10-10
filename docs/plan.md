@@ -67,3 +67,9 @@ control. Canny is not mirrored; original-source setup and compatible alternative
 are documented. Verify broad student installation and interrupted downloads on a
 separate machine next. Never infer a legal prohibition merely from private staging;
 use the source-by-source published terms in image-license-review.md.
+
+Realtime cleanup/upscaling research: see [realtime-upscaling.md](realtime-upscaling.md).
+Start with a model-free Genereti cleanup/upscale comparison, then add optional
+change-aware temporal smoothing and benchmark compact native models. Separate
+same-image recursive refinement from previous-frame smoothing. Publish only
+reviewed converted bundles with complete provenance and anonymous verification.
