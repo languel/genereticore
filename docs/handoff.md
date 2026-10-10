@@ -162,3 +162,12 @@ license/performance audits; native/heavy models remain in GeneretiCore.
 ## Browser perception and provider direction (2026-10-10)
 
 See browser-perception-plan.md for the agreed package boundary and perception → decision → action pipeline. Genereti owns interaction, assistant/tools and routing; Core owns optional model downloads, licenses and browser/native execution. Start with object detection, segmentation and structured vision analysis; pumpkin presence selects a Halloween palette and sends a prompt once on stable entry. Use deterministic rules before adding interpretive decision models. These browser features are planned and excluded from the 0.1.0 early-alpha Registry release. See release-0.1.0.md for shipped scope and platform/helper limitations.
+
+## Registry 0.1.0 publication checkpoint (2026-10-10)
+
+Source commit c871d66 was published successfully through the new manual workflow.
+The actual publishing credential worked; CI checks passed and all 156 files in
+the downloaded public archive matched that commit, including 15 workflows.
+Registry ingestion was Pending immediately after upload, so Manager availability
+is unconfirmed. See registry-release.md for the receipt, archive hash, run link
+and future release procedure. Browser perception/provider work remains planned.
