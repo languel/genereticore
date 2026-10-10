@@ -15,13 +15,18 @@ export function resultViewer(node) {
     for(const option of mode.options){
       const label=option.textContent;option.dataset.label=label;
       const icon=document.createElement('span');icon.className='genereticore-choice-icon';
-      icon.innerHTML=`<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[option.value]}</svg>`;
+      icon.innerHTML=`<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[option.value]}</svg>`;
       const text=document.createElement('span');text.className='genereticore-choice-label';text.textContent=label;
       option.replaceChildren(icon,text);
     }
   }
   function choiceTip(){mode.title='Result display · '+(mode.selectedOptions[0]?.dataset.label??mode.selectedOptions[0]?.textContent)+' · Tree, Pretty or Minified';}
   choiceTip();
+  let minimized=false,frozen=false,pending;
+  const minimize=document.createElement('button'),freeze=document.createElement('button');
+  for(const b of [minimize,freeze]){b.type='button';b.style.cssText='width:20px;height:20px;padding:0;border:0;border-radius:6px;background:transparent;color:inherit;font-size:12px;display:inline-flex;align-items:center;justify-content:center';}
+  function state(){minimize.textContent=minimized?'›':'⌄';minimize.title=minimize.ariaLabel=minimized?'Restore local preview':'Minimize local preview · inference continues';minimize.setAttribute('aria-expanded',String(!minimized));freeze.textContent='❄';freeze.title=freeze.ariaLabel='Freeze local preview · inference continues';freeze.setAttribute('aria-pressed',String(frozen));body.hidden=minimized;}
+  minimize.onclick=()=>{minimized=!minimized;state();};freeze.onclick=()=>{frozen=!frozen;state();if(!frozen&&pending!==undefined){const value=pending;pending=undefined;show(value);}};
   const body=document.createElement('div');body.className='genereticore-result-body';
   const text=document.createElement('textarea');text.readOnly=true;text.setAttribute('aria-label','Result text');text.placeholder='Run the workflow to see the result here.';
   let raw='',parsed,valid=false;const expanded=new Map();let count=0;
@@ -40,6 +45,9 @@ export function resultViewer(node) {
     else {text.value=valid?JSON.stringify(parsed,null,mode.value==='minified'?undefined:2):raw;body.append(text);body.removeAttribute('aria-label');}
   }
   mode.addEventListener('change',()=>{node.properties.genereticoreResultMode=mode.value;choiceTip();render();});
-  bar.append(mode);root.append(bar,body);render();
-  return {element:root,show(value){raw=String(value);valid=false;try{parsed=JSON.parse(raw);valid=true;}catch{}render();}};
+  bar.append(minimize,freeze,mode);root.append(bar,body);state();render();
+  let view;const attach=()=>{if(!view&&window.generetiCompanion){window.generetiCompanion.ensureControlStyle();bar.classList.add("genereti-node-controls");view=window.generetiCompanion.visualNodeControls(node,body,bar);}};
+  window.addEventListener("genereti-companion-ready",attach);queueMicrotask(attach);const removed=node.onRemoved;node.onRemoved=function(){window.removeEventListener("genereti-companion-ready",attach);return removed?.apply(this,arguments);};
+  function show(value){if(frozen){pending=value;return;}raw=String(value);valid=false;try{parsed=JSON.parse(raw);valid=true;}catch{}render();}
+  return {element:root,show};
 }

@@ -1,0 +1,267 @@
+{
+  "last_node_id": 5,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "GeneretiDrawing",
+      "pos": [
+        0,
+        330
+      ],
+      "size": [
+        960,
+        680
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": []
+        },
+        {
+          "name": "svg",
+          "type": "STRING",
+          "slot_index": 2,
+          "links": []
+        },
+        {
+          "name": "json",
+          "type": "STRING",
+          "slot_index": 3,
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiDrawing"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "Live"
+      ],
+      "widgets_values_named": {
+        "drawing": "",
+        "capture": "",
+        "genereti_delivery": "Live"
+      },
+      "title": "ꘇ drawing · live sketch"
+    },
+    {
+      "id": 2,
+      "type": "GeneretiSDXSGenerate",
+      "title": "ꘅ SDXS generator",
+      "pos": [
+        650,
+        330
+      ],
+      "size": [
+        410,
+        420
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "metrics",
+          "type": "STRING",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiSDXSGenerate",
+        "genereti_widget_values": {
+          "model_path": "256/unet.mlpackage",
+          "prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
+          "mode": "sketch",
+          "seed": 42,
+          "control_scale": 1.0,
+          "invert": false,
+          "movement": 0.0
+        },
+        "genereti_live_prompt": true,
+        "genereti_applied_prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition"
+      },
+      "widgets_values": [
+        "256/unet.mlpackage",
+        "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
+        "sketch",
+        42,
+        "fixed",
+        1.0,
+        false,
+        0.0,
+        "Live"
+      ],
+      "widgets_values_named": {
+        "model_path": "256/unet.mlpackage",
+        "prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
+        "mode": "sketch",
+        "seed": 42,
+        "control_scale": 1.0,
+        "invert": false,
+        "movement": 0.0,
+        "genereti_delivery": "Live"
+      }
+    },
+    {
+      "id": 3,
+      "type": "GeneretiLiveImagePreview",
+      "pos": [
+        1100,
+        330
+      ],
+      "size": [
+        450,
+        680
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiLiveImagePreview"
+      },
+      "widgets_values": [
+        512,
+        "Live"
+      ],
+      "widgets_values_named": {
+        "preview_size": 512,
+        "genereti_delivery": "Live"
+      },
+      "title": "ꘇ image preview · latest completed image"
+    },
+    {
+      "id": 4,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · queued timings",
+      "pos": [
+        650,
+        820
+      ],
+      "size": [
+        410,
+        240
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5,
+      "type": "Note",
+      "title": "Start here · Drawing → SDXS",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        1500,
+        290
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "Experimental local image demo. Requires updated Genereti + GeneretiCore companion bridge. Native inference: macOS 14+ Apple silicon, optional image dependencies and existing converted bundles. No weights included. Do not enable the legacy genereti_comfy_coreml pack at the same time.\n1. Choose your installed model_path on the ꘅ generator. Draw bold shapes on ꘇ drawing (transparent paper composites on white).\n2. Leave source, generator and image preview in Live. Press the generator ▶ explicitly. Opening this workflow never starts inference. The viewer holds the last completed image during computation.\n3. Change one source shape or prompt. Generator Ⅱ pauses new inference; a running native call finishes and its stale output is discarded. Preview freeze/minimize only changes local display.\n4. For one frame, switch generator to Comfy Queue and press Comfy Run. The queued image and metrics update through their wires. Metrics below describe queued work; live timings appear in the generator status.\n5. ? opens authored reference. On the image preview use Alt-O for visual view or Alt-W for overlay. Models remain local; no cloud fallback.\nThis migration and its model workflows have not been exercised on Mac. See docs/realtime-image-demo.md."
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      2,
+      1,
+      4,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [
+        60,
+        60
+      ]
+    }
+  },
+  "version": 0.4
+}

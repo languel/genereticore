@@ -1,0 +1,263 @@
+{
+  "last_node_id": 5,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "GeneretiLivecode",
+      "pos": [
+        0,
+        330
+      ],
+      "size": [
+        510,
+        780
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiLivecode",
+        "generetiLivecodeLastGood": {
+          "mode": "p5",
+          "source": "function setup(){createCanvas(windowWidth,windowHeight);}\nfunction draw(){\n background(255); noFill(); stroke(0); strokeWeight(7);\n const t=frameCount*0.015;\n ellipse(width*0.5+sin(t)*width*0.08,height*0.45,width*0.48,height*0.5);\n rect(width*0.18,height*0.7,width*0.64,height*0.13,12);\n}"
+        }
+      },
+      "widgets_values": [
+        "p5",
+        256,
+        256,
+        true,
+        "function setup(){createCanvas(windowWidth,windowHeight);}\nfunction draw(){\n background(255); noFill(); stroke(0); strokeWeight(7);\n const t=frameCount*0.015;\n ellipse(width*0.5+sin(t)*width*0.08,height*0.45,width*0.48,height*0.5);\n rect(width*0.18,height*0.7,width*0.64,height*0.13,12);\n}",
+        "{}",
+        "Live"
+      ],
+      "title": "ꘇ livecode · live sketch"
+    },
+    {
+      "id": 2,
+      "type": "GeneretiSDTurboGenerate",
+      "title": "ꘅ SD Turbo generator",
+      "pos": [
+        650,
+        330
+      ],
+      "size": [
+        410,
+        420
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "metrics",
+          "type": "STRING",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiSDTurboGenerate",
+        "genereti_widget_values": {
+          "model_path": "256/turbo_unet.mlpackage",
+          "prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
+          "mode": "canny",
+          "seed": 42,
+          "preprocess": true,
+          "strength": 0.65,
+          "control_scale": 1.0,
+          "invert": false,
+          "movement": 0.0
+        },
+        "genereti_live_prompt": true,
+        "genereti_applied_prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition"
+      },
+      "widgets_values": [
+        "256/turbo_unet.mlpackage",
+        "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
+        "canny",
+        42,
+        "fixed",
+        true,
+        0.65,
+        1.0,
+        false,
+        0.0,
+        "Live"
+      ],
+      "widgets_values_named": {
+        "model_path": "256/turbo_unet.mlpackage",
+        "prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
+        "mode": "canny",
+        "seed": 42,
+        "preprocess": true,
+        "strength": 0.65,
+        "control_scale": 1.0,
+        "invert": false,
+        "movement": 0.0,
+        "genereti_delivery": "Live"
+      }
+    },
+    {
+      "id": 3,
+      "type": "GeneretiLiveImagePreview",
+      "pos": [
+        1100,
+        330
+      ],
+      "size": [
+        510,
+        670
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiLiveImagePreview"
+      },
+      "widgets_values": [
+        512,
+        "Live"
+      ],
+      "title": "ꘇ image preview · latest completed image",
+      "widgets_values_named": {
+        "preview_size": 512,
+        "genereti_delivery": "Live"
+      }
+    },
+    {
+      "id": 4,
+      "type": "GeneretiCoreResult",
+      "title": "ꘅ Text / JSON Viewer · queued timings",
+      "pos": [
+        650,
+        820
+      ],
+      "size": [
+        410,
+        240
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "GeneretiCoreResult"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5,
+      "type": "Note",
+      "title": "Start here · Livecode → SD Turbo",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        1500,
+        290
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "Experimental local image demo. Requires updated Genereti + GeneretiCore companion bridge. Native inference: macOS 14+ Apple silicon, optional image dependencies and existing converted bundles. No weights included. Do not enable the legacy genereti_comfy_coreml pack at the same time.\n1. Choose your installed model_path on the ꘅ generator. The authored ꘇ livecode sketch can render independently; use its editor Run if needed.\n2. Leave source, generator and image preview in Live. Press the generator ▶ explicitly. Opening this workflow never starts inference. The viewer holds the last completed image during computation.\n3. Change one source shape or prompt. Generator Ⅱ pauses new inference; a running native call finishes and its stale output is discarded. Preview freeze/minimize only changes local display.\n4. For one frame, switch generator to Comfy Queue and press Comfy Run. The queued image and metrics update through their wires. Metrics below describe queued work; live timings appear in the generator status.\n5. ? opens authored reference. On the image preview use Alt-O for visual view or Alt-W for overlay. Models remain local; no cloud fallback.\nThis migration and its model workflows have not been exercised on Mac. See docs/realtime-image-demo.md."
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      2,
+      1,
+      4,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [
+        60,
+        60
+      ]
+    }
+  },
+  "version": 0.4
+}

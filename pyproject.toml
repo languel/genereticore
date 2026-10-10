@@ -10,15 +10,18 @@ requires-python = ">=3.11"
 license = {file = "LICENSE"}
 dependencies = []
 
+[project.optional-dependencies]
+image = ["coremltools==8.3.0; sys_platform == 'darwin'", "transformers==4.51.3", "huggingface-hub==0.36.2", "numpy==1.26.4", "Pillow==12.3.0", "opencv-python==4.11.0.86"]
+
 [project.scripts]
 genereticore = "genereticore.cli:main"
 
 [tool.setuptools]
-packages = ["genereticore"]
+packages = ["genereticore", "genereticore.image"]
 
 [tool.setuptools.package-data]
 genereticore = ["catalog.json"]
 
 [tool.comfy]
 PublisherId = "liuboto"
-DisplayName = "ꘇ GeneretiCore"
+DisplayName = "ꘅ GeneretiCore"
