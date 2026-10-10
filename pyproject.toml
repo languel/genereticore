@@ -5,13 +5,17 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "genereticore"
 version = "0.1.0"
-description = "Local asynchronous inference companion for Genereti and ComfyUI"
+description = "EARLY ALPHA: optional local inference companion for Genereti and ComfyUI. Native macOS requirements; explicit model downloads."
 requires-python = ">=3.11"
 license = {file = "LICENSE"}
 dependencies = []
 
 [project.optional-dependencies]
 image = ["coremltools==8.3.0; sys_platform == 'darwin' and python_version < '3.13'", "coremltools==9.0; sys_platform == 'darwin' and python_version >= '3.13'", "transformers==4.51.3", "huggingface-hub==0.36.2", "numpy==1.26.4; python_version < '3.13'", "numpy==2.5.2; python_version >= '3.13'", "Pillow==12.3.0", "opencv-python==4.11.0.86"]
+
+[project.urls]
+Repository = "https://github.com/languel/genereticore"
+Documentation = "https://github.com/languel/genereticore/blob/main/README.md"
 
 [project.scripts]
 genereticore = "genereticore.cli:main"

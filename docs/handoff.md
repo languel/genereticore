@@ -158,3 +158,7 @@ needed. See esrgan.md for setup/provenance and genereti-cleanup-handoff.md for t
 next session: spatial cleanup, antialiasing and separate temporal smoothing belong
 in Genereti. Browser MediaPipe/segmentation is a future direction, with per-model
 license/performance audits; native/heavy models remain in GeneretiCore.
+
+## Browser perception and provider direction (2026-10-10)
+
+See browser-perception-plan.md for the agreed package boundary and perception → decision → action pipeline. Genereti owns interaction, assistant/tools and routing; Core owns optional model downloads, licenses and browser/native execution. Start with object detection, segmentation and structured vision analysis; pumpkin presence selects a Halloween palette and sends a prompt once on stable entry. Use deterministic rules before adding interpretive decision models. These browser features are planned and excluded from the 0.1.0 early-alpha Registry release. See release-0.1.0.md for shipped scope and platform/helper limitations.

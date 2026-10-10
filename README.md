@@ -64,8 +64,12 @@ Example: `python3 -m genereticore.cli decision --model d1-omni-600m --prompt 'A 
 
 ## Realtime SDXS and SD Turbo samples
 
-Samples 09–12 connect Genereti livecode/drawing to Core’s preserved native image IDs and a separate Genereti image preview. They need the updated companion bridge, macOS 14+ Apple silicon, optional image dependencies and the public converted bundles available through ↓. ⓘ links model credits, sources and terms. Students do not convert weights; first-use compilation happens locally. Inference starts explicitly with the generator play glyph; queued mode uses Comfy Run. Do not enable the legacy `genereti_comfy_coreml` pack alongside Core. See [setup and demo controls](docs/realtime-image-demo.md) and [help/UI adoption and validation](docs/help-ui-integration.md). Model workflows have not been run in the cloud.
+Samples 09–12 connect Genereti livecode/drawing to Core’s preserved native image IDs and a separate Genereti image preview. They need the updated companion bridge, macOS 14+ Apple silicon, optional image dependencies and the public converted bundles available through ↓. Model credits, sources and terms are in each node's documentation. Students do not convert weights; first-use compilation happens locally. Inference starts explicitly with the generator play glyph; queued mode uses Comfy Run. Do not enable the legacy `genereti_comfy_coreml` pack alongside Core. See [setup and demo controls](docs/realtime-image-demo.md) and [help/UI adoption and validation](docs/help-ui-integration.md). Model workflows have not been run in the cloud.
 
 ## Compact image cleanup
 
 The `ꘅ Real-ESRGAN upscale` node provides local AnimeVideo/General cleanup, source-size/2x/4x output and optional same-image refinement on macOS 14+ Apple silicon. Start with **14 - Real-ESRGAN cleanup comparison**. Public verified downloads need no student login. See [setup, measurements and limits](docs/esrgan.md).
+
+## Direction and release status
+
+Genereti remains the lightweight realtime framework and assistant. GeneretiCore manages optional models, downloads, licenses and browser/native providers. The planned perception → decision → action pipeline is described in [browser-perception-plan.md](docs/browser-perception-plan.md); browser providers and segmentation are not yet implemented. See [0.1.0 early-alpha release scope](docs/release-0.1.0.md).
