@@ -24,18 +24,25 @@ function attach(node){
  let applied=node.properties.genereti_applied_prompt??value(node,'prompt'),live=node.properties.genereti_live_prompt??true;
  const footer=document.createElement('div');footer.className='genereticore-image-status';
  footer.style.cssText='font-size:12px;line-height:1.5;padding:2px 8px;box-sizing:border-box;color:inherit;width:100%';
- const toggle=document.createElement('button');toggle.type='button';toggle.title=toggle.ariaLabel='Show or hide image status and timings';toggle.style.cssText='border:0;background:transparent;color:inherit;padding:0;cursor:pointer;font:inherit';
+ const toggle=document.createElement('button');toggle.type='button';toggle.title='Paused · click to show or hide timings';toggle.ariaLabel=toggle.title;toggle.textContent='●';toggle.setAttribute('aria-live','polite');toggle.style.cssText='border:0;background:transparent;color:inherit;padding:0;cursor:pointer;font:inherit;width:20px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center';
  const details=document.createElement('div');
- const status=document.createElement('div');status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.style.cssText='overflow-wrap:anywhere';
+ const status=document.createElement('div');status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.style.cssText='overflow-wrap:anywhere';status.hidden=true;
  const timing=document.createElement('div');timing.style.cssText='font-variant-numeric:tabular-nums;white-space:normal';timing.textContent='Total — ms · Model — ms';
  details.append(status,timing);footer.append(toggle,details);
  const statusWidget=node.addDOMWidget('genereticore_image_status','GENERETICORE_IMAGE_STATUS',footer,{serialize:false,hideOnZoom:false});
- const height=()=>details.hidden?26:Math.max(68,footer.scrollHeight);
+ const height=()=>details.hidden?26:Math.max(48,footer.scrollHeight);
  statusWidget.computeSize=width=>[width,height()];statusWidget.options.getMinHeight=height;statusWidget.options.getMaxHeight=height;
- function expand(expanded){details.hidden=!expanded;toggle.textContent=expanded?'⌄ Status':'› Status';toggle.setAttribute('aria-expanded',String(expanded));node.properties.genereticore_status_collapsed=!expanded;node.setDirtyCanvas?.(true,true);}
+ function expand(expanded){details.hidden=!expanded;toggle.setAttribute('aria-expanded',String(expanded));node.properties.genereticore_status_collapsed=!expanded;node.setDirtyCanvas?.(true,true);}
  expand(!node.properties.genereticore_status_collapsed);
  toggle.onclick=()=>{expand(details.hidden);node.setSize?.([node.size[0],node.computeSize()[1]]);};
- function report(text,error=false){if(status.textContent!==text)status.textContent=text;status.title=text;if(error){expand(true);node.setSize?.([node.size[0],node.computeSize()[1]]);}}
+ function report(text,error=false){
+  const phase=error?'error':/^Running/.test(text)?'running':/paused/i.test(text)?'paused':/waiting|busy/i.test(text)?'waiting':/Computing|Downloading|Verifying|Installing/.test(text)?'working':'ready';
+  const colors={running:'#69c58a',paused:'#9a9a9a',waiting:'#dfb75e',working:'#7caee8',ready:'#69c58a',error:'#ee7979'};
+  toggle.style.color=colors[phase];toggle.dataset.state=phase;
+  toggle.title=text+' · click to show or hide timings';toggle.ariaLabel=toggle.title;
+  status.hidden=!error;if(status.textContent!==text)status.textContent=text;
+  if(error){expand(true);node.setSize?.([node.size[0],node.computeSize()[1]]);}
+ }
  let lastLiveStatus=0;
  function reportLive(text){const now=performance.now();if(now-lastLiveStatus<1000)return;lastLiveStatus=now;report(text);}
  let lastTiming=0,totalSum=0,modelSum=0,samples=0,modelSamples=0,hasImage=false;
