@@ -78,7 +78,8 @@ def get_engine(root, size):
 
 
 def generate(model_path, prompt, mode, seed=42, control_scale=1., invert=False,
-             movement=0., image=None, preprocess=False, strength=.65, noise_phase=0., family=None):
+             movement=0., image=None, preprocess=False, strength=.65, noise_phase=0., family=None, blank_prompt_enabled=False,
+             blank_prompt='solid white background, empty, no objects, no shadows', blank_action='prompt'):
     if platform.system() != 'Darwin' or platform.machine() != 'arm64':
         raise RuntimeError('GeneretiCore image inference requires macOS 14+ on Apple silicon.')
     if int(platform.mac_ver()[0].split('.')[0]) < 14:
@@ -90,10 +91,19 @@ def generate(model_path, prompt, mode, seed=42, control_scale=1., invert=False,
         raise ValueError(f"{model_path} supports: {', '.join(profile['modes'])}. Select a supported mode.")
     start = perf_counter()
     with _LOCK:
-        engine = get_engine(model_root(), int(profile['size']))
         picture = None if mode == 'text' else tensor_image(image)
         if mode != 'text' and picture is None:
             raise ValueError('This mode requires an IMAGE input.')
+        blank = bool(blank_prompt_enabled and picture is not None and local_module('blank').is_blank(picture))
+        if blank and blank_action == 'solid':
+            size = int(profile['size'])
+            result = torch.ones((1, size, size, 3), dtype=torch.float32)
+            return result, json.dumps({'inference_ms':0, 'size':size, 'blank_input':True,
+                'blank_action':'solid', 'backend':'Solid white', 'model_path':model_path,
+                'family':profile['family'], 'node_ms':round((perf_counter()-start)*1000,2)})
+        if blank:
+            prompt = blank_prompt
+        engine = get_engine(model_root(), int(profile['size']))
         if preprocess and mode in ('canny', 'depth'):
             if not hasattr(engine, '_genereti_guides'):
                 engine._genereti_guides = local_module('guides').GuideProcessor()
@@ -105,7 +115,7 @@ def generate(model_path, prompt, mode, seed=42, control_scale=1., invert=False,
             seed=seed, strength=strength, control_scale=control_scale, noise_phase=noise_phase)
         result = torch.from_numpy(np.asarray(output.convert('RGB'), dtype=np.float32).copy() / 255)[None]
         return (result, json.dumps({**metrics, 'backend':'Core ML in Comfy',
-            'size':engine.size, 'model_path':model_path, 'family':profile['family'],
+            'size':engine.size, 'blank_input':blank, 'blank_action':blank_action if blank else None, 'model_path':model_path, 'family':profile['family'],
             'node_ms':round((perf_counter()-start)*1000,2)}))
 
 
@@ -114,7 +124,7 @@ class FamilyGenerator:
     FUNCTION = 'execute'
     RETURN_TYPES = ('IMAGE', 'STRING')
     RETURN_NAMES = ('image', 'metrics')
-    DESCRIPTION = 'Local Core ML on macOS 14+ Apple silicon. Choose installed packages. Live starts explicitly; Queue uses Comfy Run. Download 512px models explicitly with ↓; ⓘ opens credits and license terms. No automatic inference on load.'
+    DESCRIPTION = 'Local Core ML on macOS 14+ Apple silicon. Choose installed packages. Live starts explicitly; Queue uses Comfy Run. Download 512px models explicitly with ↓. Credits and license terms are in the node reference. No automatic inference on load.'
     family = None
 
     @classmethod
@@ -138,10 +148,20 @@ class FamilyGenerator:
             'control_scale': ('FLOAT', {'default':1.,'min':0.,'max':65504.,'step':.05,'tooltip':'Guide influence.'}),
             'invert': ('BOOLEAN', {'default':False,'tooltip':'Invert after preprocessing.'}),
             'movement': ('FLOAT', {'default':0.,'min':0.,'max':100.,'step':.01,'tooltip':'Live seed-noise rotation speed. Zero holds noise fixed.'})})
-        return {'required':required, 'optional':{'image':('IMAGE',)}}
+        return {'required':required, 'optional':{'image':('IMAGE',)},
+            'hidden':{'unique_id':'UNIQUE_ID', 'extra_pnginfo':'EXTRA_PNGINFO'}}
 
     @classmethod
     def execute(cls, **kwargs):
+        unique_id = kwargs.pop('unique_id', None)
+        metadata = kwargs.pop('extra_pnginfo', None) or {}
+        for node in metadata.get('workflow', {}).get('nodes', []):
+            if str(node.get('id')) == str(unique_id):
+                props = node.get('properties', {})
+                kwargs.update(blank_prompt_enabled=bool(props.get('genereticore_blank_enabled', False)),
+                    blank_prompt=props.get('genereticore_blank_prompt', 'solid white background, empty, no objects, no shadows'),
+                    blank_action=props.get('genereticore_blank_action', 'prompt'))
+                break
         return generate(**kwargs, family=cls.family)
 
 class GeneretiSDXSGenerate(FamilyGenerator):

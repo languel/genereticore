@@ -90,3 +90,22 @@ The legacy live endpoint stays in the archive; Core uses its own route namespace
 
 Rebuild graphs without a running server:
 `python scripts/build_image_demos.py /path/to/public/genereti`.
+
+
+## Blank-canvas performance controls
+
+Both generator nodes have a saved, initially disabled **Blank input** option.
+Expand its chevron to choose an alternate prompt or **Solid white**. The option
+checks the original composited IMAGE before guide processing/inversion: each RGB
+channel must vary by no more than 3/255 over the whole frame. A contrasting mark,
+even one pixel, restores the main prompt. Text mode bypasses this check.
+Alternate-prompt generation can still add texture; Solid white bypasses inference
+and publishes exact white at the selected native model size. The setting is
+shared by Live payloads and queued workflow metadata; main/held prompts are kept.
+
+Local verification: SDXS and SD Turbo, 512px, blank → alternate prompt, blank →
+exact white (all output channels 255; zero model time), marked → main prompt.
+Queued graphs also produced exact white using their saved node properties.
+Browser verification covered the enabled option, action selector, collapsible
+field, and inline dot/timings. Credits and license links live in each node's
+reference documentation rather than its toolbar.

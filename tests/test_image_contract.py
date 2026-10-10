@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 from types import ModuleType, SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from aiohttp import web
 
 class ImageContractTests(unittest.TestCase):
@@ -51,3 +51,34 @@ class ImageContractTests(unittest.TestCase):
         for remote,origin in [('192.0.2.1',None),('127.0.0.1','https://example.com')]:
             with self.assertRaises(web.HTTPForbidden):
                 self.live.local_only(SimpleNamespace(remote=remote,headers={'Origin':origin} if origin else {},host='127.0.0.1:8188'))
+
+    def test_blank_prompt_switches_back_to_main_prompt(self):
+        import numpy as np
+        from PIL import Image
+        engine = Mock(size=16)
+        engine.generate.return_value = (Image.new('RGB', (16,16), 'white'), {'inference_ms':1})
+        picture = Image.new('RGB', (16,16), 'white')
+        with patch.object(self.nodes.platform, 'system', return_value='Darwin'), \
+             patch.object(self.nodes.platform, 'machine', return_value='arm64'), \
+             patch.object(self.nodes.platform, 'mac_ver', return_value=('14.0', (), '')), \
+             patch.object(self.nodes, 'model_paths', return_value={'16/unet.mlpackage':{'family':'sdxs','size':'16','modes':['sketch'],'style':'base'}}), \
+             patch.object(self.nodes, 'get_engine', return_value=engine), \
+             patch.object(self.nodes, 'tensor_image', return_value=picture), \
+             patch.object(self.nodes.torch, 'from_numpy', side_effect=lambda x:x, create=True):
+            args=dict(model_path='16/unet.mlpackage',prompt='ink wash',mode='sketch',blank_prompt_enabled=True,blank_prompt='empty white')
+            result=self.nodes.generate(**args)
+            self.assertEqual(engine.generate.call_args.args[0], 'empty white')
+            self.assertTrue(json.loads(result[1])['blank_input'])
+            picture.putpixel((8,8), (0,0,0))
+            result=self.nodes.generate(**args)
+            self.assertEqual(engine.generate.call_args.args[0], 'ink wash')
+            self.assertFalse(json.loads(result[1])['blank_input'])
+
+    def test_queue_reads_only_its_own_saved_blank_settings(self):
+        metadata={'workflow':{'nodes':[{'id':7,'properties':{'genereticore_blank_enabled':True,'genereticore_blank_prompt':'empty','genereticore_blank_action':'solid'}},{'id':8,'properties':{'genereticore_blank_enabled':False}}]}}
+        with patch.object(self.nodes, 'generate') as generate:
+            self.nodes.GeneretiSDXSGenerate.execute(unique_id='7',extra_pnginfo=metadata,prompt='main')
+            self.assertEqual(generate.call_args.kwargs['blank_prompt'], 'empty')
+            self.assertEqual(generate.call_args.kwargs['blank_action'], 'solid')
+            self.nodes.GeneretiSDXSGenerate.execute(unique_id='8',extra_pnginfo=metadata,prompt='main')
+            self.assertFalse(generate.call_args.kwargs['blank_prompt_enabled'])

@@ -32,6 +32,15 @@ def validate(data):
     if not isinstance(prompt, str) or len(prompt) > 2000:
         raise ValueError('Prompt must be text up to 2000 characters.')
     result['prompt'] = prompt
+    result['blank_prompt_enabled'] = data.get('blank_prompt_enabled', False)
+    if not isinstance(result['blank_prompt_enabled'], bool):
+        raise ValueError('Invalid blank-input toggle.')
+    result['blank_prompt'] = data.get('blank_prompt', 'solid white background, empty, no objects, no shadows')
+    if not isinstance(result['blank_prompt'], str) or len(result['blank_prompt']) > 2000:
+        raise ValueError('Blank prompt must be text up to 2000 characters.')
+    result['blank_action'] = data.get('blank_action', 'prompt')
+    if result['blank_action'] not in ('prompt', 'solid'):
+        raise ValueError('Invalid blank-input action.')
     path = data.get('model_path')
     if path not in model_paths() or model_paths()[path]['family'] != result['family']:
         raise ValueError('Invalid model path.')

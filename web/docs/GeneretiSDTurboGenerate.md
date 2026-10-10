@@ -12,4 +12,16 @@ Open **11 - Livecode to SD Turbo** or **12 - Drawing to SD Turbo**. Use ↓ to d
 
 ## Requirements and limits
 
-macOS 14+ Apple silicon and optional image dependencies required. ↓ explicitly downloads the verified public bundle; no HF login or conversion is needed. ⓘ links credits, sources and license terms. Guide modes need control_<mode> and turbo_residual_unet beside encoder/decoder/base UNet. Depth preprocessing requires its separately cached pinned model. Pose accepts a prepared guide and starts no device. Preview freeze/minimize does not stop inference. Pause prevents new requests and drops stale completion; it cannot interrupt an already running Core ML call. 512px image and Canny were tested locally on one Mac; broader parity and older OS validation remain pending. Powered by Stability AI; upstream use terms apply.
+macOS 14+ Apple silicon and optional image dependencies required. ↓ explicitly downloads the verified public bundle; no HF login or conversion is needed. Guide modes need control_<mode> and turbo_residual_unet beside encoder/decoder/base UNet. Depth preprocessing requires its separately cached pinned model. Pose accepts a prepared guide and starts no device. Preview freeze/minimize does not stop inference. Pause prevents new requests and drops stale completion; it cannot interrupt an already running Core ML call. 512px image and Canny were tested locally on one Mac; broader parity and older OS validation remain pending. Powered by Stability AI; upstream use terms apply.
+
+## Blank input during performance
+
+Enable **Blank input** to use a second prompt when the connected image is a uniform background. The chevron shows or hides its field; collapsing does not disable the option. It starts disabled and is saved with the workflow. This works in Live and Comfy Queue. Detection happens before guide preprocessing or inversion and requires every pixel to be nearly the same color; even a small contrasting mark keeps the normal prompt. Text mode has no image to check.
+
+Choose **Alternate prompt** to generate an empty scene (the default is “solid white background, empty, no objects, no shadows”). Models may still invent shadows or texture. Choose **Solid white** for an exact white frame without inference while the input is blank. Drawing again automatically resumes the main prompt. The main prompt and held draft remain unchanged.
+
+The bottom color dot shows the current state in its hover tip. Clicking it hides or shows the timings beside it. Timings are rounded averages updated once a second; errors remain visible.
+
+## Credits and licenses
+
+[Published bundle, upstream credits and complete license notices](https://huggingface.co/liuboto/genereticore-sd-turbo-coreml/blob/983f426420362fda151adff2922d8f24d5f560b5/Notice.txt). SD Turbo by Stability AI; TAESD by madebyollin; CLIP and OpenCLIP contributors. Powered by Stability AI. The bundle preserves upstream license notices and source backlinks.

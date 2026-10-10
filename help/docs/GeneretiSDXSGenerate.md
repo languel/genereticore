@@ -12,4 +12,16 @@ Open **09 - Livecode to SDXS** or **10 - Drawing to SDXS**. Use ↓ to download 
 
 ## Requirements and limits
 
-macOS 14+ Apple silicon and optional image dependencies are required. ↓ explicitly downloads the verified public bundle; no HF login or conversion is needed. ⓘ links credits, sources and license terms. Sketch needs controlled_unet; anime needs its own controlled package. Only the first queued IMAGE is used; alpha composites on white. In-flight native work completes after pause; stale results are discarded. Live inference is loopback-only, bounded to one request at a time. No cloud fallback or model downloads on workflow load. 512px text/sketch and the live bridge were tested locally on one Mac; broader parity and older OS validation remain pending.
+macOS 14+ Apple silicon and optional image dependencies are required. ↓ explicitly downloads the verified public bundle; no HF login or conversion is needed. Sketch needs controlled_unet; anime needs its own controlled package. Only the first queued IMAGE is used; alpha composites on white. In-flight native work completes after pause; stale results are discarded. Live inference is loopback-only, bounded to one request at a time. No cloud fallback or model downloads on workflow load. 512px text/sketch and the live bridge were tested locally on one Mac; broader parity and older OS validation remain pending.
+
+## Blank input during performance
+
+Enable **Blank input** to use a second prompt when the connected image is a uniform background. The chevron shows or hides its field; collapsing does not disable the option. It starts disabled and is saved with the workflow. This works in Live and Comfy Queue. Detection happens before guide preprocessing or inversion and requires every pixel to be nearly the same color; even a small contrasting mark keeps the normal prompt. Text mode has no image to check.
+
+Choose **Alternate prompt** to generate an empty scene (the default is “solid white background, empty, no objects, no shadows”). Models may still invent shadows or texture. Choose **Solid white** for an exact white frame without inference while the input is blank. Drawing again automatically resumes the main prompt. The main prompt and held draft remain unchanged.
+
+The bottom color dot shows the current state in its hover tip. Clicking it hides or shows the timings beside it. Timings are rounded averages updated once a second; errors remain visible.
+
+## Credits and licenses
+
+[Published bundle, upstream credits and complete license notices](https://huggingface.co/liuboto/genereticore-sdxs-coreml/blob/108d9bd18460c2b65d87fe8dea0e61ba43ce5cad/Notice.txt). SDXS by IDKiro; teacher Stable Diffusion 2.1 by Stability AI; TAESD by madebyollin; CLIP and OpenCLIP contributors. The bundle preserves upstream license notices and source backlinks.

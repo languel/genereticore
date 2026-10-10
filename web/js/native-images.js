@@ -23,14 +23,34 @@ function attach(node){
  const bar=node._generetiExecutionModeElement;let running=false,pending=false,disposed=false,timer,epoch=0,phase=0;
  let applied=node.properties.genereti_applied_prompt??value(node,'prompt'),live=node.properties.genereti_live_prompt??true;
  const footer=document.createElement('div');footer.className='genereticore-image-status';
- footer.style.cssText='font-size:12px;line-height:1.5;padding:2px 8px;box-sizing:border-box;color:inherit;width:100%';
+ footer.style.cssText='font-size:12px;line-height:1.5;padding:2px 0;box-sizing:border-box;color:inherit;width:100%;display:flex;align-items:center;gap:4px';
  const toggle=document.createElement('button');toggle.type='button';toggle.title='Paused · click to show or hide timings';toggle.ariaLabel=toggle.title;toggle.textContent='●';toggle.setAttribute('aria-live','polite');toggle.style.cssText='border:0;background:transparent;color:inherit;padding:0;cursor:pointer;font:inherit;width:20px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center';
- const details=document.createElement('div');
+ const details=document.createElement('div');details.style.cssText='flex:1;min-width:0';
  const status=document.createElement('div');status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.style.cssText='overflow-wrap:anywhere';status.hidden=true;
  const timing=document.createElement('div');timing.style.cssText='font-variant-numeric:tabular-nums;white-space:normal';timing.textContent='Total — ms · Model — ms';
  details.append(status,timing);footer.append(toggle,details);
+ const blankPanel=document.createElement('div');blankPanel.style.cssText='font-size:12px;padding:2px 0;width:100%;box-sizing:border-box';
+ const blankRow=document.createElement('div');blankRow.style.cssText='display:flex;align-items:center;gap:6px';
+ const blankExpand=document.createElement('button');blankExpand.type='button';blankExpand.style.cssText='border:0;background:transparent;color:inherit;width:20px;height:20px;padding:0;cursor:pointer';
+ blankExpand.title=blankExpand.ariaLabel='Show or hide blank-input prompt';
+ const blankLabel=document.createElement('label');blankLabel.style.cssText='display:flex;align-items:center;gap:6px';
+ const blankEnable=document.createElement('input');blankEnable.type='checkbox';blankEnable.checked=!!node.properties.genereticore_blank_enabled;blankEnable.ariaLabel='Use alternate prompt on blank input';blankEnable.title='Use alternate prompt when every input pixel is nearly the same color';
+ blankLabel.append(blankEnable,document.createTextNode('Blank input'));blankRow.append(blankExpand,blankLabel);
+ const blankBody=document.createElement('div');blankBody.style.cssText='padding-left:26px';
+ const blankAction=document.createElement('select');blankAction.ariaLabel='Blank-input action';blankAction.style.cssText='background:transparent;color:inherit;border:0;font:inherit';
+ for(const [v,label]of [['prompt','Alternate prompt'],['solid','Solid white']]){const o=document.createElement('option');o.value=v;o.textContent=label;blankAction.append(o);}
+ blankAction.value=node.properties.genereticore_blank_action??'prompt';
+ const blankEditor=document.createElement('textarea');blankEditor.ariaLabel='Blank-input prompt';blankEditor.maxLength=2000;blankEditor.rows=2;blankEditor.value=node.properties.genereticore_blank_prompt??'solid white background, empty, no objects, no shadows';blankEditor.style.cssText='width:100%;box-sizing:border-box;resize:vertical;background:transparent;color:inherit;border:0;font:inherit;min-height:48px';
+ blankBody.append(blankAction,blankEditor);blankPanel.append(blankRow,blankBody);
+ const blankWidget=node.addDOMWidget('genereticore_blank_controls','GENERETICORE_BLANK_CONTROLS',blankPanel,{serialize:false,hideOnZoom:false});
+ const blankHeight=()=>blankBody.hidden?26:Math.max(100,blankPanel.scrollHeight);blankWidget.computeSize=width=>[width,blankHeight()];blankWidget.options.getMinHeight=blankHeight;blankWidget.options.getMaxHeight=blankHeight;
+ function blankState(){blankBody.hidden=node.properties.genereticore_blank_collapsed??true;blankExpand.textContent=blankBody.hidden?'›':'⌄';blankExpand.setAttribute('aria-expanded',String(!blankBody.hidden));blankEditor.hidden=blankAction.value==='solid';blankAction.disabled=blankEditor.disabled=!blankEnable.checked;}
+ blankExpand.onclick=()=>{node.properties.genereticore_blank_collapsed=!blankBody.hidden;blankState();node.setSize?.([node.size[0],node.computeSize()[1]]);node.graph?.change?.(node);};
+ blankEnable.onchange=()=>{node.properties.genereticore_blank_enabled=blankEnable.checked;blankState();node.graph?.change?.(node);};
+ blankAction.onchange=()=>{node.properties.genereticore_blank_action=blankAction.value;blankState();node.graph?.change?.(node);};
+ blankEditor.oninput=()=>{node.properties.genereticore_blank_prompt=blankEditor.value;node.graph?.change?.(node);};blankState();
  const statusWidget=node.addDOMWidget('genereticore_image_status','GENERETICORE_IMAGE_STATUS',footer,{serialize:false,hideOnZoom:false});
- const height=()=>details.hidden?26:Math.max(48,footer.scrollHeight);
+ const height=()=>Math.max(26,footer.scrollHeight);
  statusWidget.computeSize=width=>[width,height()];statusWidget.options.getMinHeight=height;statusWidget.options.getMaxHeight=height;
  function expand(expanded){details.hidden=!expanded;toggle.setAttribute('aria-expanded',String(expanded));node.properties.genereticore_status_collapsed=!expanded;node.setDirtyCanvas?.(true,true);}
  expand(!node.properties.genereticore_status_collapsed);
@@ -65,7 +85,7 @@ function attach(node){
    downloadPending=true;await updateCatalog();
   }catch(error){report(error.message,true);}
  });
- const terms=document.createElement('a');terms.textContent='ⓘ';terms.target='_blank';terms.rel='noopener';terms.title=terms.ariaLabel='Model credits, source links and license terms';bar.append(terms);
+
  bar.style.flexWrap='wrap';
  const delivery=node.widgets?.find(w=>w.name==='genereti_delivery');if(delivery)delivery.computeSize=width=>[width,Math.max(32,bar.scrollHeight)];
  node._generetiLiveSource={retain(){},release(){}}; // Connecting/opening a viewer never starts inference.
@@ -81,7 +101,7 @@ function attach(node){
   try{
    const image=await capture(node);if(image===null){reportLive('Source delivery paused');delay=250;return;}
    if(!running||session!==epoch)return;
-   const payload={image,family:families[node.comfyClass],model_path:value(node,'model_path'),prompt:live?value(node,'prompt'):applied};
+   const payload={blank_prompt_enabled:blankEnable.checked,blank_prompt:blankEditor.value,blank_action:blankAction.value,image,family:families[node.comfyClass],model_path:value(node,'model_path'),prompt:live?value(node,'prompt'):applied};
    for(const key of ['mode','seed','control_scale','invert','preprocess','strength']){const v=value(node,key);if(v!==undefined)payload[key]=v;}
    phase=(phase+Number(value(node,'movement')??0)*.035)%(2*Math.PI);payload.noise_phase=phase;
    if(hasImage)reportLive('Running · last image held while computing');
@@ -100,11 +120,11 @@ function attach(node){
  update=function(){
   updateWidgets();
   const entry=catalog?.bundles?.find(b=>b.family===(families[node.comfyClass]==='sd_turbo'?'sd-turbo':'sdxs'));
-  if(!entry){download.hidden=true;terms.hidden=true;return;}
-  download.hidden=false;terms.hidden=false;terms.href=`https://huggingface.co/${entry.repo}/blob/${entry.revision}/Notice.txt`;
+  if(!entry){download.hidden=true;return;}
+  download.hidden=false;
   const busy=['download','verify','install'].includes(entry.phase);
   const anyBusy=catalog.bundles.some(b=>['download','verify','install'].includes(b.phase));
-  download.disabled=anyBusy||entry.installed;download.textContent=entry.installed?'✓':'↓';
+  download.disabled=anyBusy||entry.installed;if(entry.installed){download.innerHTML='<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8 L6 11 L13 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg>';}else download.textContent='↓';
   const label=entry.family==='sdxs'?'SDXS':'SD Turbo';
   download.title=download.ariaLabel=entry.installed?`${label} bundle installed`:`Download ${label} · ${(entry.download_bytes/1e9).toFixed(2)} GB · local model`;
   if(busy){downloadPending=true;report(`${entry.phase==='verify'?'Verifying':entry.phase==='install'?'Installing':'Downloading'} ${label} · ${Math.round(100*entry.done/entry.total)}%`);}
