@@ -26,8 +26,9 @@ async function turn(myEpoch){
   const decision=options.length===1?null:await decide(prompt,'Choose the best drop: maximize cleared rows; minimize holes, total column height and unevenness. Choose A, B, C or D.',options.map(c=>c.label),myEpoch,'move');
   if(myEpoch!==epoch)return;const choice=decision?.choice??options[0].label,selected=options.find(c=>c.label===choice);showOptions(choice);
   if(!decision)moveView.show(JSON.stringify({source:options.length===1?'only legal placement · no decision needed':'authored heuristic · no AI',choice,utility:selected.utility,features:{lines:selected.lines,holes:selected.holes,height:selected.height}}));
-  const start=performance.now(),duration=Number($('pace').value);falling={...selected,piece,start,duration};
-  await new Promise(resolve=>setTimeout(resolve,duration));if(myEpoch!==epoch)return;
+  const start=performance.now(),duration=Number($('pace').value),rotateMs=selected.r?420:120,travelMs=180;falling={...selected,piece,start,duration,rotateMs,travelMs};
+  status(`${piece} → ${choice} · turn ${selected.r*90}°, then drop`);
+  await new Promise(resolve=>setTimeout(resolve,rotateMs+travelMs+duration));if(myEpoch!==epoch)return;
   board=selected.board.map(row=>row.map(v=>v? v:0)); // placement occupancy is authoritative
   // Keep a color per landed tetromino without changing collision semantics.
   selected.shape.forEach((row,dy)=>row.forEach((v,dx)=>{if(v&&!selected.lines)board[selected.y+dy][selected.x+dx]=1+Object.keys(SHAPES).indexOf(piece);}));
@@ -56,6 +57,27 @@ function tick(){if(!audioOn)return;while(nextTick<audio.currentTime+.09){if(step
  Array.from($('pattern').children).forEach((el,i)=>el.classList.toggle('playing',i===step));step=(step+1)%16;nextTick+=60/p.bpm/4;}}
 setInterval(tick,25);
 $('audio').onclick=async()=>{if(audioOn){audioOn=false;await audio.suspend();$('audio').textContent='♫ Start audio';$('audio').setAttribute('aria-pressed','false');$('music-clock').textContent='audio off';}else{audio??=new AudioContext();await audio.resume();audioOn=true;step=0;nextTick=audio.currentTime+.05;$('audio').textContent='■ Stop audio';$('audio').setAttribute('aria-pressed','true');}patterns();};
-const ctx=$('board').getContext('2d');function draw(time){const cell=32;ctx.fillStyle='#0f131b';ctx.fillRect(0,0,320,640);for(let y=0;y<H;y++)for(let x=0;x<W;x++){ctx.strokeStyle='#ffffff08';ctx.strokeRect(x*cell,y*cell,cell,cell);if(board[y][x])block(x,y,colors[(board[y][x]-1)%colors.length]);}if(falling){const progress=Math.min(1,(time-falling.start)/falling.duration);const y=falling.y*(1-(1-progress)**2);falling.shape.forEach((row,dy)=>row.forEach((v,dx)=>{if(v){ctx.globalAlpha=.20;block(falling.x+dx,falling.y+dy,'#fff');ctx.globalAlpha=1;block(falling.x+dx,y+dy,PATTERNS[music.current].color);}}));}frameAt=time;requestAnimationFrame(draw);}
+const ctx=$('board').getContext('2d');
+function draw(time){
+  const cell=32;ctx.fillStyle='#0f131b';ctx.fillRect(0,0,320,640);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){ctx.strokeStyle='#ffffff08';ctx.strokeRect(x*cell,y*cell,cell,cell);if(board[y][x])block(x,y,colors[(board[y][x]-1)%colors.length]);}
+  if(falling){
+    const f=falling,elapsed=time-f.start,color=PATTERNS[music.current].color;
+    ctx.globalAlpha=.20;f.shape.forEach((row,dy)=>row.forEach((v,dx)=>{if(v)block(f.x+dx,f.y+dy,'#fff');}));ctx.globalAlpha=1;
+    if(elapsed<f.rotateMs){
+      const progress=Math.min(1,elapsed/f.rotateMs),ease=progress*progress*(3-2*progress),shape=SHAPES[f.piece];
+      // Rotate around the bounding-box center in a clear staging area at the top.
+      ctx.save();ctx.translate(W*cell/2,2.5*cell);ctx.rotate((f.r===3?-1:f.r)*Math.PI/2*ease);
+      shape.forEach((row,dy)=>row.forEach((v,dx)=>{if(v)block(dx-shape[0].length/2,dy-shape.length/2,color);}));ctx.restore();
+    }else{
+      const travel=Math.min(1,(elapsed-f.rotateMs)/f.travelMs),ease=travel*travel*(3-2*travel);
+      const x=(W/2-f.shape[0].length/2)*(1-ease)+f.x*ease;
+      const drop=Math.max(0,Math.min(1,(elapsed-f.rotateMs-f.travelMs)/f.duration));
+      const y=(2.5-f.shape.length/2)*(1-ease)+f.y*(1-(1-drop)**2);
+      f.shape.forEach((row,dy)=>row.forEach((v,dx)=>{if(v)block(x+dx,y+dy,color);}));
+    }
+  }
+  frameAt=time;requestAnimationFrame(draw);
+}
 function block(x,y,color){ctx.fillStyle=color;ctx.fillRect(x*32+2,y*32+2,28,28);ctx.fillStyle='#ffffff24';ctx.fillRect(x*32+4,y*32+4,24,4);}
 window.addEventListener('pagehide',()=>{pause();audioOn=false;audio?.close();});stats();patterns();requestAnimationFrame(draw);

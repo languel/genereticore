@@ -21,8 +21,10 @@ The run exposed a one-candidate edge case, now handled by taking the sole legal
 placement without calling a model that requires at least two options.
 Browser replay verified the sole placement was taken and the game stopped normally
 at top-out after 36 pieces. It cleared zero rows on this seed, so successful
-inference does not establish good gameplay. Rotation is chosen before each drop;
-the current demo does not animate turning or lateral movement.
+inference does not establish good gameplay. Rotation is chosen before each drop.
+The subsequent presentation update animates that chosen turn at the top, slides
+the piece to its selected column, then drops it. Browser verification captured a
+J piece visibly midway through a 180° turn; the heuristic replay cleared rows.
 
 26 Python tests and the existing client/layout JavaScript checks passed.
 Comfy startup/asset console warnings were present, so this is not a clean-console
