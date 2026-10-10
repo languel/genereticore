@@ -11,7 +11,7 @@ license = {file = "LICENSE"}
 dependencies = []
 
 [project.optional-dependencies]
-image = ["coremltools==8.3.0; sys_platform == 'darwin'", "transformers==4.51.3", "huggingface-hub==0.36.2", "numpy==1.26.4", "Pillow==12.3.0", "opencv-python==4.11.0.86"]
+image = ["coremltools==8.3.0; sys_platform == 'darwin' and python_version < '3.13'", "coremltools==9.0; sys_platform == 'darwin' and python_version >= '3.13'", "transformers==4.51.3", "huggingface-hub==0.36.2", "numpy==1.26.4; python_version < '3.13'", "numpy==2.5.2; python_version >= '3.13'", "Pillow==12.3.0", "opencv-python==4.11.0.86"]
 
 [project.scripts]
 genereticore = "genereticore.cli:main"

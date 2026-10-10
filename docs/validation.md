@@ -88,3 +88,42 @@ Final queued artwork check: the moonlit scene returned blue (0.9986), then editi
 Graceful validator check: mismatched selected labels and malformed JSON both completed the Comfy queue without an execution-error dialog. Inline feedback explained the correction; downstream GeneretiCore viewers replaced stale answers with “Not updated”. Correcting the fixture restored normal output in the same graph. 23 Python tests pass, including silent blocker behavior and recovery.
 
 Compact viewer UI: node_type is metadata only, with no widget row. The native main-dot/Info description starts with the saved class name. Tree/Pretty/Minified uses a 30px themed native customizable select: selected outline glyph and chevron when closed, glyph plus label in its menu, accessible name and selected-mode hover tip. Older browsers retain a labeled native select. Mode persistence and read-only data remain unchanged.
+
+## SDXS / SD Turbo private bundle setup — October 10, 2026
+
+On this Apple silicon Mac, the port-8188 Comfy Python is 3.13.12, Torch 2.12.1,
+Transformers 5.16.1 and NumPy 2.5.2. Core ML 8.3 has no compatible native Python
+3.13 wheel here; coremltools 9.0 and OpenCV 4.11.0.86 enabled actual inference
+without replacing Comfy's Torch. coremltools warns this Torch is newer than its
+tested version. A separate Python 3.11 conversion environment uses coremltools
+8.3, Torch 2.5.1, Diffusers 0.32.2 and Transformers 4.51.3. Conversion dependencies
+were kept out of Comfy. Python 3.13 optional dependency markers now select 9.0.
+
+Recovered SDXS staging packages passed every recorded checksum. Turbo UNet and
+Canny control/residual packages were converted locally. Direct native calls in
+Comfy's actual Python produced 512px SDXS text/sketch and Turbo image/Canny images.
+Illustrative warm samples: SDXS text 19ms, Turbo image 50ms, Canny 56ms. These are
+single inference samples with cached prompts, not sustained browser rates. First
+Turbo mode calls took about 3 seconds including model preparation. UI workflows
+09/11 separately produced visible images from an animated p5 sketch through the
+live source → generator → image preview bridge; pause retained the latest image.
+Canny followed the source silhouette. Drawing workflows and queued parity were
+not exercised in this validation pass.
+
+Complete private SDXS (text/sketch) and Turbo (image) bundles were uploaded to the
+pinned revisions in docs/image-bundles.json. Canny is deliberately excluded from
+hosting pending unambiguous redistribution terms. Both bundles were downloaded
+into a fresh Hugging Face cache, verified file by file, installed into a fresh
+root, and checked against the source manifests again. With HF_HUB_OFFLINE=1 and a
+separate empty upstream cache, that root generated SDXS text/sketch and Turbo
+image outputs. This confirms bundled tokenizer/text encoder dependencies suffice;
+no hidden upstream cache or hosted inference was needed. First clean calls were
+551ms text, 267ms sketch and 4380ms Turbo image (including lazy Turbo compilation).
+Initial base package compilation precedes the engine's inference timer.
+
+28 Python tests pass, including checksum tampering, traversal rejection, conflict
+preflight and identical install retry. Existing workflow-preservation and native
+image contract checks also pass. Public model license/notice clearance, image-node
+Download UI, broad clean Manager installation, older macOS versions and sustained
+creative rendering benchmarks remain release work. No model weights, compiler
+caches, credentials or captures are committed.

@@ -54,3 +54,9 @@ MIT original code, third-party notices, model-specific licenses; package lightwe
 - https://huggingface.co/docs/hub/en/models-uploading — standard publishing flow.
 
 Read current licenses and releases before adopting any dependency or distributing weights.
+
+October 10 checkpoint: complete private 512px SDXS text/sketch and Turbo image
+bundles are uploaded, revision-pinned and validated through fresh downloads and
+offline local inference. Live Comfy source/generator/preview was exercised. See
+model-distribution.md and validation.md. Public notice/license clearance and an
+image-node Download UI are next; Canny hosting remains blocked by unclear terms.

@@ -7,13 +7,15 @@ GeneretiCore's migrated native image generators:
 | --- | --- | --- |
 | 09 - Livecode to SDXS | Authored moving p5 sketch | SDXS sketch |
 | 10 - Drawing to SDXS | Interactive drawing | SDXS sketch |
-| 11 - Livecode to SD Turbo | Authored moving p5 sketch | SD Turbo Canny |
-| 12 - Drawing to SD Turbo | Interactive drawing | SD Turbo Canny |
+| 11 - Livecode to SD Turbo | Authored moving p5 sketch | SD Turbo image |
+| 12 - Drawing to SD Turbo | Interactive drawing | SD Turbo image |
 
-These are model-free workflow files, not cloud-tested inference demos. The
-migration preserves the archived engine's operations, IDs and package layout;
-local Mac parity and performance must still be checked. No realtime rate is
-promised. The image preview keeps the last completed frame during inference.
+The workflows contain no weights. On October 10, 512px SDXS sketch and Turbo
+image/Canny produced visible images through the live Comfy bridge on one Apple
+silicon Mac. Turbo samples default to image mode to match the private hosted
+bundle; optional Canny still requires separate control weights. Broader parity,
+older OS testing and sustained performance measurements remain pending. The image preview keeps the last completed frame during
+inference.
 
 ## Contributor setup on the Mac
 
@@ -43,13 +45,16 @@ reuses `ComfyUI/models/genereti` if present, or discovers
   also requires the pinned depth model already cached locally.
 
 The denoiser dropdown shows relative installed package paths and filters modes by
-companions. The engine also reads previously cached tokenizer/text encoder assets
-for `IDKiro/sdxs-512-dreamshaper` at revision
+companions. Complete bundles carry `assets/sdxs/{tokenizer,text_encoder}` and
+`assets/sd-turbo/{tokenizer,text_encoder}` beside the numeric size directory. The
+engine prefers those assets and supports previously cached tokenizer/text encoder
+assets for `IDKiro/sdxs-512-dreamshaper` at revision
 `76f720262bb051da75666b22c902a78c8e16c763` and, for Turbo,
 `stabilityai/sd-turbo` at `b261bac6fd2cf515557d5d0707481eafa0485ec2`.
-Those reads use `local_files_only=True`; there is no implicit download. Reuse the
-working archive's cache and bundles. This change does not provide a complete
-bundle downloader or establish redistribution rights. Conversion instructions and
+Those reads use `local_files_only=True`; there is no implicit download. For complete
+pinned private downloads, use the contributor installer in
+[model-distribution.md](model-distribution.md). A student-facing Download button
+and public redistribution clearance remain pending. Conversion instructions and
 model provenance remain in Genereti's `integrations/legacy-generator/docs/models.md`.
 
 Restart Comfy after Python changes; refresh the frontend after browser changes.
@@ -58,7 +63,9 @@ They can also be opened directly from this repository.
 
 ## Running and displaying
 
-Select an installed model package. Livecode evaluates its authored drawing
+Select an installed model package. Turbo image samples use strength 0.95 for a
+visible transformation; 0.65 preserved much of the simple black-and-white input
+in this test. Canny is the optional path for stronger silhouette guidance. Livecode evaluates its authored drawing
 independently; drawing is immediately editable. Leave source, generator and viewer
 in Live, then explicitly press the generator's play glyph. A new workflow never
 starts inference. Queue mode uses Comfy Run for one frame and updates the metrics

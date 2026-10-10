@@ -20,21 +20,50 @@ Its first local run compiles the downloaded Core ML package and caches the resul
 That automatic on-device compilation is different from converting PyTorch weights.
 No separate Genereti hosting is needed for the existing upstream catalog entries.
 
-SDXS and SD Turbo currently expect existing converted packages and locally cached
-tokenizer/text-encoder assets. They have no complete bundle download control yet.
-See [realtime-image-demo.md](realtime-image-demo.md) for the exact current contract.
-The image runtime requires macOS 14+ Apple silicon; that is a platform requirement,
-not confirmation of inference on every supported OS.
+SDXS and SD Turbo now have complete **private contributor bundles** on Hugging
+Face: [SDXS](https://huggingface.co/liuboto/genereticore-sdxs-coreml) and
+[SD Turbo](https://huggingface.co/liuboto/genereticore-sd-turbo-coreml). Both include
+512px converted Core ML packages, tokenizer and text encoder. SDXS supports text
+and sketch; Turbo supports image-to-image. The repositories do not run inference.
+No Space or hosted endpoint is needed. Each bundle contains provenance, upstream
+notices and a byte-size/SHA-256 manifest. Pinned releases are recorded in
+[image-bundles.json](image-bundles.json).
+
+Use a Python environment with `huggingface-hub==0.36.2` and an existing SDK login
+that can read these private repositories. From this checkout, install both into
+Comfy's model directory (substitute your actual Comfy path):
+
+```sh
+python scripts/image_bundle.py install liuboto/genereticore-sdxs-coreml c33a8705b08d5ebc30b7274da731f5ed3771fd7f /path/to/ComfyUI/models/genereticore/images
+python scripts/image_bundle.py install liuboto/genereticore-sd-turbo-coreml 7f6fae19e26d8194d9a1867f55b6c7d95b0d92db /path/to/ComfyUI/models/genereticore/images
+```
+
+The installer validates the entire download before copying and refuses conflicting
+existing files. Repeating the command reuses byte-identical files and the SDK's
+download cache. Downloads are about 2.14GB and 3.55GB respectively; some assets
+are shared in the installed root. Keep adequate space for downloads, installation
+and first-run compiler caches. Choose `512/unet.mlpackage` or
+`512/turbo_unet.mlpackage` in the generator. Students **do not convert weights**;
+first use compiles native packages locally and subsequent runs reuse that cache.
+No token belongs in a workflow, source file or command argument.
+
+Public redistribution clearance and an image-node Download button remain release
+work. SDXS/sketch upstream cards declare OpenRAIL++; Turbo includes its upstream
+Stability AI Community License. The Tiny VAE and all transitive dependencies need
+a complete notice audit before public publication. Canny weights were converted
+and tested locally but are excluded from hosting because the upstream terms are
+ambiguous. Turbo samples now default to image mode so they match the hosted bundle.
+See [realtime-image-demo.md](realtime-image-demo.md) for optional control packages.
+Native inference requires macOS 14+ Apple silicon; older supported OS versions
+have not been tested on this machine.
 
 ## Distribution work next
 
-1. Prepare and test one complete SDXS bundle, including all dependencies needed by
-   its shipped sample. Include tokenizer/text encoder assets in the download
-   contract; a UNet package alone is insufficient. Add Turbo and optional controls
-   only after their complete bundles are tested.
+1. Extend the verified private 512px SDXS/Turbo bundles only after any added modes
+   have complete dependencies, license clearance and local tests.
 2. Audit every component's redistribution terms and retain licenses, notices,
    upstream revisions, conversion recipe, supported sizes and local measurements.
-3. Publish our converted bundles in versioned Hugging Face **model repositories**.
+3. After license clearance, publish our converted bundles in versioned Hugging Face **model repositories**.
    An organization is useful for shared ownership but not mandatory. These are
    downloadable files used for local inference; a Space or hosted inference
    endpoint is unnecessary. Hugging Face supports custom package files:

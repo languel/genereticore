@@ -64,3 +64,22 @@ The archived native image source is ported into `genereticore/image` with stable
 Local Blocks & Beats changes were committed before merging the cloud Help/UI and native image branch. Sample 08 remains the arcade; cloud image samples are now 09–12. The shared Help catalog includes Decision Arcade and Tutorial 8. The public companion currently resides at `/Users/liuboto/dev/genereti` on main; its cloud bridge was merged locally. The earlier `/Users/liuboto/dev/genereti-public` path and documented Comfy test Python are absent on this machine. Local model inference and full Comfy UI parity still require validation here.
 
 Post-merge checks passed: 26 Python unit tests, JS client/layout checks, browser-module syntax, workflow link integrity, 13 unique sample numbers, and authored Help coverage for all Core nodes. Companion reference index/context/follow/label tests and both catalog synchronization checks passed. Validation used a temporary Python 3.13 environment with aiohttp 3.13.3, NumPy 2.2.6 and Pillow 12.3.0; this does not validate the optional native image dependency pins or real inference. No models were downloaded or run.
+
+## Private image bundles and local inference (2026-10-10)
+
+SDXS text/sketch and Turbo image/Canny now run locally in the actual port-8188
+Comfy environment; live workflows 09/11 displayed images and paused cleanly.
+Complete private 512px SDXS and Turbo bundles are on Hugging Face, pinned in
+`docs/image-bundles.json`; `scripts/image_bundle.py` installs with full byte/SHA
+validation and refuses conflicting files. Fresh downloads generated images with
+HF offline and an empty upstream cache. The engine now prefers bundled text assets
+while preserving old cache-only installations. Students need no weight conversion;
+native compilation is automatic on first use. See `docs/model-distribution.md`.
+
+The current Comfy uses Python 3.13: coremltools 9.0 is needed for native wheels.
+Conversion used a separate pinned Python 3.11 environment; existing Comfy Torch
+was preserved. Samples default to verified 512px packages; Turbo uses image mode
+to match its hosted bundle. Canny remains available locally but its weights are
+excluded from hosting pending a license audit. Both HF repositories remain private.
+No student Download button or public release is claimed. Actual measurements and
+remaining checks are recorded in `docs/validation.md`.

@@ -33,7 +33,7 @@ class Engine:
                 raise FileNotFoundError(f'{path} missing. See docs/realtime-image-demo.md for required existing bundles.')
             print(f'Loading Core ML {name}', flush=True)
             self.models[name] = self.load_compiled(path)
-        path = snapshot_download(MODEL, revision=REVISION, local_files_only=True)
+        path = self.text_assets('sdxs', MODEL, REVISION)
         self.tokenizer = CLIPTokenizer.from_pretrained(path, subfolder='tokenizer', local_files_only=True)
         if threads is not None:
             torch.set_num_threads(threads)
@@ -44,6 +44,16 @@ class Engine:
         self.alphas = np.cumprod(1-betas)
         self.previous = None
         self.previous_key = None
+
+    def text_assets(self, name, repo, revision):
+        # Complete distributed bundles carry text dependencies beside size folders.
+        # Preserve the existing upstream-cache path for older local installations.
+        path = self.directory.parent / 'assets' / name
+        if path.is_dir():
+            if not all((path / part).is_dir() for part in ('tokenizer', 'text_encoder')):
+                raise FileNotFoundError(f'Incomplete {name} text assets at {path}')
+            return str(path)
+        return snapshot_download(repo, revision=revision, local_files_only=True)
 
     def load_compiled(self, path):
         # Reuse compiled assets across restarts instead of duplicating multi-GB
@@ -68,7 +78,7 @@ class Engine:
 
     def encode_prompt(self, prompt, turbo=False):
         if turbo and self.turbo_tokenizer is None:
-            path=snapshot_download('stabilityai/sd-turbo', revision='b261bac6fd2cf515557d5d0707481eafa0485ec2',local_files_only=True)
+            path=self.text_assets('sd-turbo', 'stabilityai/sd-turbo', 'b261bac6fd2cf515557d5d0707481eafa0485ec2')
             self.turbo_tokenizer=CLIPTokenizer.from_pretrained(path,subfolder='tokenizer',local_files_only=True)
             self.turbo_text_encoder=CLIPTextModel.from_pretrained(path,subfolder='text_encoder',variant='fp16',local_files_only=True).float().eval()
         key=('turbo' if turbo else 'sdxs',prompt)

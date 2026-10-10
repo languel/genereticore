@@ -30,8 +30,8 @@ for number,kind,turbo in [(9,'Livecode',False),(10,'Drawing',False),(11,'Livecod
  viewer['inputs'][0]['link']=2;viewer['outputs'][0]['links']=[]
  viewer['widgets_values']=[512,'Live'];viewer['widgets_values_named']={'preview_size':512,'genereti_delivery':'Live'}
  typ='GeneretiSDTurboGenerate' if turbo else 'GeneretiSDXSGenerate'
- values={'model_path':'256/turbo_unet.mlpackage' if turbo else '256/unet.mlpackage','prompt':prompt,'mode':'canny' if turbo else 'sketch','seed':42}
- if turbo:values.update(preprocess=True,strength=.65)
+ values={'model_path':'512/turbo_unet.mlpackage' if turbo else '512/unet.mlpackage','prompt':prompt,'mode':'image' if turbo else 'sketch','seed':42}
+ if turbo:values.update(preprocess=True,strength=.95)
  values.update(control_scale=1.,invert=False,movement=0.)
  saved=[]
  for name,value in values.items():
@@ -47,7 +47,7 @@ for number,kind,turbo in [(9,'Livecode',False),(10,'Drawing',False),(11,'Livecod
 3. Change one source shape or prompt. Generator Ⅱ pauses new inference; a running native call finishes and its stale output is discarded. Preview freeze/minimize only changes local display.
 4. For one frame, switch generator to Comfy Queue and press Comfy Run. The queued image and metrics update through their wires. Metrics below describe queued work; live timings appear in the generator status.
 5. ? opens authored reference. On the image preview use Alt-O for visual view or Alt-W for overlay. Models remain local; no cloud fallback.
-This migration and its model workflows have not been exercised on Mac. See docs/realtime-image-demo.md.''']}
+512px SDXS sketch and Turbo image inference were exercised locally on one Mac. Download setup: docs/model-distribution.md. Other controls require additional packages. See docs/realtime-image-demo.md.''']}
  source['outputs'][0]['links']=[1]
  graph={'last_node_id':5,'last_link_id':3,'nodes':[source,generator,viewer,metrics,note],'links':[[1,1,0,2,0,'IMAGE'],[2,2,0,3,0,'IMAGE'],[3,2,1,4,0,'STRING']],'groups':[],'config':{},'extra':{'ds':{'scale':.6,'offset':[60,60]}},'version':.4}
  name=f'{number:02} - {kind} to '+('SD Turbo' if turbo else 'SDXS')+'.json'

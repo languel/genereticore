@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "bundles": [
+    {
+      "family": "sdxs",
+      "repo": "liuboto/genereticore-sdxs-coreml",
+      "revision": "c33a8705b08d5ebc30b7274da731f5ed3771fd7f",
+      "private": true,
+      "size": 512,
+      "modes": [
+        "text",
+        "sketch"
+      ],
+      "download_bytes": 2135842879,
+      "status": "contributor staging; public license audit pending"
+    },
+    {
+      "family": "sd-turbo",
+      "repo": "liuboto/genereticore-sd-turbo-coreml",
+      "revision": "7f6fae19e26d8194d9a1867f55b6c7d95b0d92db",
+      "private": true,
+      "size": 512,
+      "modes": [
+        "image"
+      ],
+      "download_bytes": 3545737343,
+      "status": "contributor staging; public license audit pending"
+    }
+  ]
+}

@@ -102,7 +102,7 @@
       "properties": {
         "Node name for S&R": "GeneretiSDXSGenerate",
         "genereti_widget_values": {
-          "model_path": "256/unet.mlpackage",
+          "model_path": "512/unet.mlpackage",
           "prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
           "mode": "sketch",
           "seed": 42,
@@ -114,7 +114,7 @@
         "genereti_applied_prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition"
       },
       "widgets_values": [
-        "256/unet.mlpackage",
+        "512/unet.mlpackage",
         "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
         "sketch",
         42,
@@ -125,7 +125,7 @@
         "Live"
       ],
       "widgets_values_named": {
-        "model_path": "256/unet.mlpackage",
+        "model_path": "512/unet.mlpackage",
         "prompt": "A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition",
         "mode": "sketch",
         "seed": 42,
@@ -222,7 +222,7 @@
       "mode": 0,
       "properties": {},
       "widgets_values": [
-        "Experimental local image demo. Requires updated Genereti + GeneretiCore companion bridge. Native inference: macOS 14+ Apple silicon, optional image dependencies and existing converted bundles. No weights included. Do not enable the legacy genereti_comfy_coreml pack at the same time.\n1. Choose your installed model_path on the ꘅ generator. Draw bold shapes on ꘇ drawing (transparent paper composites on white).\n2. Leave source, generator and image preview in Live. Press the generator ▶ explicitly. Opening this workflow never starts inference. The viewer holds the last completed image during computation.\n3. Change one source shape or prompt. Generator Ⅱ pauses new inference; a running native call finishes and its stale output is discarded. Preview freeze/minimize only changes local display.\n4. For one frame, switch generator to Comfy Queue and press Comfy Run. The queued image and metrics update through their wires. Metrics below describe queued work; live timings appear in the generator status.\n5. ? opens authored reference. On the image preview use Alt-O for visual view or Alt-W for overlay. Models remain local; no cloud fallback.\nThis migration and its model workflows have not been exercised on Mac. See docs/realtime-image-demo.md."
+        "Experimental local image demo. Requires updated Genereti + GeneretiCore companion bridge. Native inference: macOS 14+ Apple silicon, optional image dependencies and existing converted bundles. No weights included. Do not enable the legacy genereti_comfy_coreml pack at the same time.\n1. Choose your installed model_path on the ꘅ generator. Draw bold shapes on ꘇ drawing (transparent paper composites on white).\n2. Leave source, generator and image preview in Live. Press the generator ▶ explicitly. Opening this workflow never starts inference. The viewer holds the last completed image during computation.\n3. Change one source shape or prompt. Generator Ⅱ pauses new inference; a running native call finishes and its stale output is discarded. Preview freeze/minimize only changes local display.\n4. For one frame, switch generator to Comfy Queue and press Comfy Run. The queued image and metrics update through their wires. Metrics below describe queued work; live timings appear in the generator status.\n5. ? opens authored reference. On the image preview use Alt-O for visual view or Alt-W for overlay. Models remain local; no cloud fallback.\n512px SDXS sketch and Turbo image inference were exercised locally on one Mac. Download setup: docs/model-distribution.md. Other controls require additional packages. See docs/realtime-image-demo.md."
       ]
     }
   ],
