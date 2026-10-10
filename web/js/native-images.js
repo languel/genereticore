@@ -27,7 +27,7 @@ function attach(node){
  const toggle=document.createElement('button');toggle.type='button';toggle.title='Paused · click to show or hide timings';toggle.ariaLabel=toggle.title;toggle.textContent='●';toggle.setAttribute('aria-live','polite');toggle.style.cssText='border:0;background:transparent;color:inherit;padding:0;cursor:pointer;font:inherit;width:20px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center';
  const details=document.createElement('div');details.style.cssText='flex:1;min-width:0';
  const status=document.createElement('div');status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.style.cssText='overflow-wrap:anywhere';status.hidden=true;
- const timing=document.createElement('div');timing.style.cssText='font-variant-numeric:tabular-nums;white-space:normal';timing.textContent='Total — ms · Model — ms';
+ const timing=document.createElement('div');timing.style.cssText='font-variant-numeric:tabular-nums;white-space:normal';timing.textContent='Total — ms · ≈ — FPS · Model — ms';timing.title='Total: input capture, local request, inference, image decoding and publication. FPS estimate: 1000 / average total milliseconds; excludes the pause between requests and display refresh.';
  details.append(status,timing);footer.append(toggle,details);
  const blankPanel=document.createElement('div');blankPanel.style.cssText='font-size:12px;padding:2px 0;width:100%;box-sizing:border-box';
  const blankRow=document.createElement('div');blankRow.style.cssText='display:flex;align-items:center;gap:6px';
@@ -66,7 +66,7 @@ function attach(node){
  let lastLiveStatus=0;
  function reportLive(text){const now=performance.now();if(now-lastLiveStatus<1000)return;lastLiveStatus=now;report(text);}
  let lastTiming=0,totalSum=0,modelSum=0,samples=0,modelSamples=0,hasImage=false;
- function measure(total,model){totalSum+=total;samples++;if(model!==null&&Number.isFinite(Number(model))){modelSum+=Number(model);modelSamples++;}const now=performance.now();if(now-lastTiming<1000)return;timing.textContent=`Total ${Math.round(totalSum/samples)} ms · Model ${modelSamples?Math.round(modelSum/modelSamples):'—'} ms`;lastTiming=now;totalSum=modelSum=samples=modelSamples=0;}
+ function measure(total,model){totalSum+=total;samples++;if(model!==null&&Number.isFinite(Number(model))){modelSum+=Number(model);modelSamples++;}const now=performance.now();if(now-lastTiming<1000)return;const mean=totalSum/samples;timing.textContent=`Total ${Math.round(mean)} ms · ≈ ${mean>0?(1000/mean).toFixed(1):'—'} FPS · Model ${modelSamples?Math.round(modelSum/modelSamples):'—'} ms`;lastTiming=now;totalSum=modelSum=samples=modelSamples=0;}
 
  function button(glyph,title,fn){const b=document.createElement('button');b.type='button';b.textContent=glyph;b.title=b.ariaLabel=title;b.onclick=fn;bar.append(b);return b;}
  function state(){play.textContent=running?'Ⅱ':'▶';play.title=play.ariaLabel=running?'Pause image inference':'Start local image inference';play.setAttribute('aria-pressed',String(running));play.disabled=node._generetiExecutionMode==='Comfy Queue';promptToggle.setAttribute('aria-pressed',String(live));promptToggle.title=promptToggle.ariaLabel=live?'Apply prompt while typing':'Hold prompt draft until Send or Cmd/Ctrl+Enter';}
@@ -115,7 +115,7 @@ function attach(node){
  }
  let catalog,downloadPending=false,lastCatalogCheck=0;
  async function updateCatalog(){try{const r=await fetch('/genereticore/coreml/status');if(r.ok){catalog=await r.json();update();}}catch{}}
- function update(){bindEditor();const path=node.widgets?.find(w=>w.name==='model_path'),mode=node.widgets?.find(w=>w.name==='mode'),profile=catalog?.model_paths?.[path?.value];if(path&&catalog){path.options??={};path.options.values=Object.entries(catalog.model_paths).filter(([,p])=>p.family===families[node.comfyClass]).map(([p])=>p);if(!path.options.values.length)path.options.values=['not installed'];}if(mode&&profile){mode.options??={};mode.options.values=profile.modes;if(!profile.modes.includes(mode.value))mode.value=profile.modes[0];}}
+ function update(){bindEditor();const path=node.widgets?.find(w=>w.name==='model_path'),mode=node.widgets?.find(w=>w.name==='mode'),profile=catalog?.model_paths?.[path?.value];if(path&&catalog){path.options??={};const choices=Object.entries(catalog.model_paths).filter(([,p])=>p.family===families[node.comfyClass]).map(([p])=>p);if(!choices.length)choices.push('not installed');if(JSON.stringify(path.options.values)!==JSON.stringify(choices))path.options.values=choices;}if(mode&&profile){mode.options??={};if(JSON.stringify(mode.options.values)!==JSON.stringify(profile.modes))mode.options.values=profile.modes;if(!profile.modes.includes(mode.value))mode.value=profile.modes[0];}}
  const updateWidgets=update;
  update=function(){
   updateWidgets();

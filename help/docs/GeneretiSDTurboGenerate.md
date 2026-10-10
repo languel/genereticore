@@ -29,3 +29,5 @@ The bottom color dot shows the current state in its hover tip. Clicking it hides
 ## Native sizes
 
 Choose `256/unet.mlpackage` (SDXS) or `256/turbo_unet.mlpackage` (Turbo) for the faster 256px version. The corresponding `512/` path keeps 512px. Both use the same node; the explicit bundle download installs both size folders and shared text assets. 256px reuses the original 512-trained weights with smaller fixed shapes, so appearance can differ. Both resolutions were exercised on this Mac.
+
+Live timings: Total includes input capture, the local request, inference, image decoding and publication. The FPS estimate is 1000 divided by average Total milliseconds; the delay between requests and screen refresh are excluded. Model measures the native pipeline, including prompt encoding and image decoding. Values are averaged and refreshed once per second.
