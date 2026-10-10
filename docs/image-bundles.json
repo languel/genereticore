@@ -4,27 +4,29 @@
     {
       "family": "sdxs",
       "repo": "liuboto/genereticore-sdxs-coreml",
-      "revision": "c33a8705b08d5ebc30b7274da731f5ed3771fd7f",
-      "private": true,
+      "revision": "108d9bd18460c2b65d87fe8dea0e61ba43ce5cad",
+      "private": false,
       "size": 512,
       "modes": [
         "text",
         "sketch"
       ],
-      "download_bytes": 2135842879,
-      "status": "contributor staging; public license audit pending"
+      "download_bytes": 2135879895,
+      "manifest_sha256": "631f7506135ee71538497a2f1d3140732ee0dd3f1b687590b39112052f0075b8",
+      "status": "public evaluation bundle; upstream use terms retained"
     },
     {
       "family": "sd-turbo",
       "repo": "liuboto/genereticore-sd-turbo-coreml",
-      "revision": "7f6fae19e26d8194d9a1867f55b6c7d95b0d92db",
-      "private": true,
+      "revision": "983f426420362fda151adff2922d8f24d5f560b5",
+      "private": false,
       "size": 512,
       "modes": [
         "image"
       ],
-      "download_bytes": 3545737343,
-      "status": "contributor staging; public license audit pending"
+      "download_bytes": 3545775016,
+      "manifest_sha256": "6b7f87142b8f0c7f7029e9053e20be8d62f76fb9bf9d127d313a6c98a63c6bb0",
+      "status": "public evaluation bundle; upstream use terms retained"
     }
   ]
 }

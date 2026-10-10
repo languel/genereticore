@@ -114,7 +114,7 @@ class FamilyGenerator:
     FUNCTION = 'execute'
     RETURN_TYPES = ('IMAGE', 'STRING')
     RETURN_NAMES = ('image', 'metrics')
-    DESCRIPTION = 'Local Core ML on macOS 14+ Apple silicon. Choose installed packages. Live starts explicitly; Queue uses Comfy Run. Migration parity remains unverified.'
+    DESCRIPTION = 'Local Core ML on macOS 14+ Apple silicon. Choose installed packages. Live starts explicitly; Queue uses Comfy Run. Download 512px models explicitly with ↓; ⓘ opens credits and license terms. No automatic inference on load.'
     family = None
 
     @classmethod

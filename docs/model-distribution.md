@@ -20,7 +20,7 @@ Its first local run compiles the downloaded Core ML package and caches the resul
 That automatic on-device compilation is different from converting PyTorch weights.
 No separate Genereti hosting is needed for the existing upstream catalog entries.
 
-SDXS and SD Turbo now have complete **private contributor bundles** on Hugging
+SDXS and SD Turbo now have complete **public evaluation bundles** on Hugging
 Face: [SDXS](https://huggingface.co/liuboto/genereticore-sdxs-coreml) and
 [SD Turbo](https://huggingface.co/liuboto/genereticore-sd-turbo-coreml). Both include
 512px converted Core ML packages, tokenizer and text encoder. SDXS supports text
@@ -29,13 +29,19 @@ No Space or hosted endpoint is needed. Each bundle contains provenance, upstream
 notices and a byte-size/SHA-256 manifest. Pinned releases are recorded in
 [image-bundles.json](image-bundles.json).
 
-Use a Python environment with `huggingface-hub==0.36.2` and an existing SDK login
-that can read these private repositories. From this checkout, install both into
+Students can use the generator toolbar’s **↓ Download** action. It downloads the
+matching 512px family, shows download/verification/install status, checks bytes and
+SHA-256, retains licenses and refuses conflicting files. Workflow loading does not
+start a download or inference. Press **▶ Start** after installation. **ⓘ** opens
+credits, original sources and terms. No Hugging Face account or token is needed.
+
+For contributor command-line setup, use a Python environment with
+`huggingface-hub==0.36.2` (the existing Comfy Hub 1.30 also passed the download test). From this checkout, install both into
 Comfy's model directory (substitute your actual Comfy path):
 
 ```sh
-python scripts/image_bundle.py install liuboto/genereticore-sdxs-coreml c33a8705b08d5ebc30b7274da731f5ed3771fd7f /path/to/ComfyUI/models/genereticore/images
-python scripts/image_bundle.py install liuboto/genereticore-sd-turbo-coreml 7f6fae19e26d8194d9a1867f55b6c7d95b0d92db /path/to/ComfyUI/models/genereticore/images
+python scripts/image_bundle.py install liuboto/genereticore-sdxs-coreml 108d9bd18460c2b65d87fe8dea0e61ba43ce5cad /path/to/ComfyUI/models/genereticore/images
+python scripts/image_bundle.py install liuboto/genereticore-sd-turbo-coreml 983f426420362fda151adff2922d8f24d5f560b5 /path/to/ComfyUI/models/genereticore/images
 ```
 
 The installer validates the entire download before copying and refuses conflicting
@@ -47,29 +53,31 @@ and first-run compiler caches. Choose `512/unet.mlpackage` or
 first use compiles native packages locally and subsequent runs reuse that cache.
 No token belongs in a workflow, source file or command argument.
 
-Public redistribution clearance and an image-node Download button remain release
-work. SDXS/sketch upstream cards declare OpenRAIL++; Turbo includes its upstream
-Stability AI Community License. The Tiny VAE and all transitive dependencies need
-a complete notice audit before public publication. Canny weights were converted
-and tested locally but are excluded from hosting because the upstream terms are
-ambiguous. Turbo samples now default to image mode so they match the hosted bundle.
-See [realtime-image-demo.md](realtime-image-demo.md) for optional control packages.
-Native inference requires macOS 14+ Apple silicon; older supported OS versions
-have not been tested on this machine.
+The published bundles retain upstream model cards, full license reference copies,
+credits, backlinks and modification notices. See [image-license-review.md](image-license-review.md)
+for the source-by-source review and retained restrictions. **Powered by Stability AI**:
+Turbo retains its Community License, including its commercial-use conditions.
+Canny is available in the local contributor test but is not mirrored because its
+upstream terms are unclear. The license review links the original source and
+conversion recipe; SDXS sketch and Turbo image work without that component.
+
+Native inference requires macOS 14+ Apple silicon. Older supported OS versions and
+broad clean Manager installations remain untested. First compilation and the model
+cache need extra disk space beyond the download sizes.
 
 ## Distribution work next
 
-1. Extend the verified private 512px SDXS/Turbo bundles only after any added modes
+1. Extend the verified public 512px SDXS/Turbo bundles only after any added modes
    have complete dependencies, license clearance and local tests.
 2. Audit every component's redistribution terms and retain licenses, notices,
    upstream revisions, conversion recipe, supported sizes and local measurements.
-3. After license clearance, publish our converted bundles in versioned Hugging Face **model repositories**.
+3. Keep permitted converted bundles public in versioned Hugging Face **model repositories**.
    An organization is useful for shared ownership but not mandatory. These are
    downloadable files used for local inference; a Space or hosted inference
    endpoint is unnecessary. Hugging Face supports custom package files:
    [upload documentation](https://huggingface.co/docs/hub/models-uploading).
-4. Add pinned bundle manifests and explicit image-node Download controls, with
-   progress, useful missing-component errors and recovery after interruption.
+4. Keep download manifests revision-pinned and verify interrupted-download recovery
+   on a separate student machine. The image-node Download control is now implemented.
    Cache compilation on the student's machine rather than shipping one machine's
    compiler cache as universally portable.
 5. Package supported native helper binaries and verify installation, download,

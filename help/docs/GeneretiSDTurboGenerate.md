@@ -8,8 +8,8 @@ Inputs: model_path, prompt, mode, seed, preprocess, strength, influence (control
 
 ## Small example
 
-Open **11 - Livecode to SD Turbo** or **12 - Drawing to SD Turbo**. Choose a matching installed package and Canny mode, enable preprocessing, then press ▶. Use Queue plus Comfy Run for a single frame.
+Open **11 - Livecode to SD Turbo** or **12 - Drawing to SD Turbo**. Use ↓ to download the public 512px bundle, choose image mode and strength 0.95, then press ▶. Optional Canny needs separately sourced control weights. Use Queue plus Comfy Run for a single frame.
 
 ## Requirements and limits
 
-macOS 14+ Apple silicon and preexisting packages required. Guide modes need control_<mode> and turbo_residual_unet beside encoder/decoder/base UNet. Depth preprocessing requires its separately cached pinned model. Pose accepts a prepared guide and starts no device. Preview freeze/minimize does not stop inference. Pause prevents new requests and drops stale completion; it cannot interrupt an already running Core ML call. Migration parity has not been tested on Mac.
+macOS 14+ Apple silicon and optional image dependencies required. ↓ explicitly downloads the verified public bundle; no HF login or conversion is needed. ⓘ links credits, sources and license terms. Guide modes need control_<mode> and turbo_residual_unet beside encoder/decoder/base UNet. Depth preprocessing requires its separately cached pinned model. Pose accepts a prepared guide and starts no device. Preview freeze/minimize does not stop inference. Pause prevents new requests and drops stale completion; it cannot interrupt an already running Core ML call. 512px image and Canny were tested locally on one Mac; broader parity and older OS validation remain pending. Powered by Stability AI; upstream use terms apply.

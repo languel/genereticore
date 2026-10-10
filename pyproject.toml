@@ -21,6 +21,7 @@ packages = ["genereticore", "genereticore.image"]
 
 [tool.setuptools.package-data]
 genereticore = ["catalog.json"]
+"genereticore.image" = ["bundles.json"]
 
 [tool.comfy]
 PublisherId = "liuboto"

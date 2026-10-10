@@ -127,3 +127,33 @@ image contract checks also pass. Public model license/notice clearance, image-no
 Download UI, broad clean Manager installation, older macOS versions and sustained
 creative rendering benchmarks remain release work. No model weights, compiler
 caches, credentials or captures are committed.
+
+## Public image downloads — October 10, 2026
+
+Both image repositories are public and ungated. SDK reads with token=False confirmed
+anonymous access to the pinned releases in docs/image-bundles.json. Full public
+bundles include upstream cards, copyright/license copies, source links, conversion
+change notices and the required Turbo attribution. The license review distinguishes
+the SDXS card declaration from the OpenRAIL++ reference text source. Canny remains
+unmirrored; original-source conversion instructions and supported alternatives are
+in docs/image-license-review.md.
+
+The new downloader was exercised using Comfy's actual Python/Hub 1.30: anonymous
+reads, manifest digest verification, all file size/SHA checks, fresh installation of
+both families and retention of notices passed. Shared byte-identical assets were
+reused. The backend permits only the shipped catalog, one download at a time, and
+same-origin loopback requests. It does not accept arbitrary URLs or local paths.
+File copies publish atomically; retry uses cached Hub files and refuses conflicts.
+Installed receipts detect missing payload files without hashing multi-GB weights
+on every UI poll. Current shader/inference processing stays separate from download.
+
+The SDXS toolbar Download action in a fresh in-app browser session showed progress,
+changed to Installed, and then produced an image from the animated sketch after
+explicit Start. Pause held the last result. This is a download/UI check in the
+existing configured Comfy installation, not a clean Manager install on another Mac.
+31 Python tests cover anonymous pinning, notices, manifest tampering, unsupported
+catalog choices, concurrent-start rejection, conflicts, identical retries and corrupt-cache repair.
+Browser-module syntax and client/layout tests pass.
+
+The Turbo toolbar Download → Installed → Start flow also produced a visible
+512px image at strength 0.95. Both families were left paused after inspection.

@@ -19,7 +19,7 @@ class ImageBundleTests(unittest.TestCase):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(b'original')
             entries.append({'path': name, 'bytes': 8, 'sha256': bundle.digest(path)})
-        manifest = {'family': 'sdxs', 'files': entries}
+        manifest = {'format': 1, 'family': 'sdxs', 'files': entries}
         (root / 'manifest.json').write_text(json.dumps(manifest))
         return manifest
 
@@ -55,3 +55,61 @@ class ImageBundleTests(unittest.TestCase):
                 self.assertEqual((dest / '512/unet.mlpackage/data').read_bytes(), b'original')
                 with self.assertRaisesRegex(ValueError, 'pinned'):
                     bundle.install('owner/model', 'main', dest)
+
+class DownloadManagerTests(unittest.TestCase):
+    def test_anonymous_download_retains_notices_and_detects_missing_assets(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); source=root/'hub'; source.mkdir(); destination=root/'installed'
+            manifest=ImageBundleTests().fixture(source)
+            notice=source/'Notice.txt'; notice.write_text('Credits and source terms')
+            manifest['files'].append({'path':'Notice.txt','bytes':notice.stat().st_size,'sha256':bundle.digest(notice)})
+            (source/'manifest.json').write_text(json.dumps(manifest))
+            entry={'family':'sdxs','repo':'owner/test','revision':'b'*40,'private':False,
+                   'download_bytes':sum(x['bytes'] for x in manifest['files']),
+                   'manifest_sha256':bundle.digest(source/'manifest.json')}
+            calls=[]
+            def download(repo,path,**kwargs):
+                calls.append((repo,path,kwargs));return str(source/path)
+            from genereticore.image import bundles
+            manager=bundles.DownloadManager(lambda:destination)
+            with patch.object(bundles,'catalog',return_value=[entry]),patch.dict('sys.modules',{'huggingface_hub':SimpleNamespace(hf_hub_download=download),'tqdm.auto':SimpleNamespace(tqdm=object)}):
+                manager._run(entry)
+                self.assertEqual(manager.snapshot()[0]['phase'],'complete')
+                self.assertTrue(manager.installed(entry))
+                self.assertTrue(all(c[2]['token'] is False and c[2]['revision']==entry['revision'] for c in calls))
+                self.assertEqual((destination/'licenses/sdxs'/entry['revision']/'Notice.txt').read_text(),notice.read_text())
+                (destination/'512/unet.mlpackage/data').unlink()
+                self.assertFalse(manager.installed(entry))
+
+    def test_manifest_pin_blocks_download_and_catalog_limits_start(self):
+        from genereticore.image import bundles
+        with tempfile.TemporaryDirectory() as folder:
+            source=Path(folder); ImageBundleTests().fixture(source)
+            entry={'family':'sdxs','repo':'owner/test','revision':'c'*40,'private':False,'download_bytes':16,'manifest_sha256':'0'*64}
+            manager=bundles.DownloadManager(lambda:source/'installed')
+            sdk=SimpleNamespace(hf_hub_download=lambda *a,**kw:str(source/'manifest.json'))
+            with patch.object(bundles,'catalog',return_value=[entry]),patch.dict('sys.modules',{'huggingface_hub':sdk,'tqdm.auto':SimpleNamespace(tqdm=object)}):
+                manager._run(entry)
+                self.assertEqual(manager.snapshot()[0]['phase'],'error')
+                self.assertFalse((source/'installed').exists())
+                with self.assertRaises(ValueError):manager.start('https://untrusted.example/model')
+                manager.active='sdxs'
+                with self.assertRaises(RuntimeError):manager.start('sdxs')
+
+    def test_repairs_corrupt_download_cache_without_overwriting_install(self):
+        from genereticore.image import bundles
+        with tempfile.TemporaryDirectory() as folder:
+            source=Path(folder);manifest=ImageBundleTests().fixture(source)
+            bad=source/manifest['files'][0]['path'];bad.write_bytes(b'corrupt!')
+            entry={'family':'sdxs','repo':'owner/test','revision':'d'*40,'private':False,'download_bytes':16,'manifest_sha256':bundle.digest(source/'manifest.json')}
+            repairs=[]
+            def download(repo,path,**kw):
+                if kw.get('force_download'):
+                    repairs.append(path);(source/path).write_bytes(b'original')
+                return str(source/path)
+            manager=bundles.DownloadManager(lambda:source/'installed')
+            with patch.dict('sys.modules',{'huggingface_hub':SimpleNamespace(hf_hub_download=download),'tqdm.auto':SimpleNamespace(tqdm=object)}):
+                manager._run(entry)
+            self.assertEqual(repairs,[manifest['files'][0]['path']])
+            self.assertEqual(manager.states['sdxs']['phase'],'complete')
+            self.assertEqual((source/'installed'/manifest['files'][0]['path']).read_bytes(),b'original')

@@ -12,7 +12,7 @@ GeneretiCore's migrated native image generators:
 
 The workflows contain no weights. On October 10, 512px SDXS sketch and Turbo
 image/Canny produced visible images through the live Comfy bridge on one Apple
-silicon Mac. Turbo samples default to image mode to match the private hosted
+silicon Mac. Turbo samples default to image mode to match the public hosted
 bundle; optional Canny still requires separate control weights. Broader parity,
 older OS testing and sustained performance measurements remain pending. The image preview keeps the last completed frame during
 inference.
@@ -52,9 +52,9 @@ assets for `IDKiro/sdxs-512-dreamshaper` at revision
 `76f720262bb051da75666b22c902a78c8e16c763` and, for Turbo,
 `stabilityai/sd-turbo` at `b261bac6fd2cf515557d5d0707481eafa0485ec2`.
 Those reads use `local_files_only=True`; there is no implicit download. For complete
-pinned private downloads, use the contributor installer in
-[model-distribution.md](model-distribution.md). A student-facing Download button
-and public redistribution clearance remain pending. Conversion instructions and
+pinned public downloads, use ↓ on the generator toolbar or the contributor
+installer in [model-distribution.md](model-distribution.md). ⓘ opens retained
+credits and terms. Canny is not mirrored; see [source setup and alternatives](image-license-review.md). Conversion instructions and
 model provenance remain in Genereti's `integrations/legacy-generator/docs/models.md`.
 
 Restart Comfy after Python changes; refresh the frontend after browser changes.

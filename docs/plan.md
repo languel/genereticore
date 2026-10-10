@@ -60,3 +60,10 @@ bundles are uploaded, revision-pinned and validated through fresh downloads and
 offline local inference. Live Comfy source/generator/preview was exercised. See
 model-distribution.md and validation.md. Public notice/license clearance and an
 image-node Download UI are next; Canny hosting remains blocked by unclear terms.
+
+October 10 public-access update: SDXS/Turbo bundles are public with retained upstream
+terms and attribution; anonymous pinned downloads now have an explicit image-node
+control. Canny is not mirrored; original-source setup and compatible alternatives
+are documented. Verify broad student installation and interrupted downloads on a
+separate machine next. Never infer a legal prohibition merely from private staging;
+use the source-by-source published terms in image-license-review.md.

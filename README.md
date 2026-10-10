@@ -2,7 +2,7 @@
 
 Local asynchronous inference companion for [Genereti](https://github.com/languel/genereti) and ComfyUI.
 
-**Status: runnable experimental contributor milestone.** Core AI text, vision and scored decisions are implemented. The optional archived SDXS/SD Turbo image runtime is now ported with stable IDs; its Mac parity and the full shader-transition demo remain unverified. Student distribution and complete image bundle downloads remain on the [roadmap](docs/plan.md). Read the [implementation checkpoint](docs/implementation.md) and [local validation record](docs/validation.md) for measured behavior and limits.
+**Status: runnable experimental contributor milestone.** Core AI text, vision and scored decisions are implemented. The optional archived SDXS/SD Turbo image runtime is now ported with stable IDs; 512px SDXS/Turbo inference and the live Comfy bridge have been exercised on one Mac. Public converted bundles now download through the generator toolbar without an HF login. Broad student installation, older macOS and the full shader-transition demo remain on the [roadmap](docs/plan.md). Read the [implementation checkpoint](docs/implementation.md) and [local validation record](docs/validation.md) for measured behavior and limits.
 
 ## Learn by running a sample
 
@@ -64,4 +64,4 @@ Example: `python3 -m genereticore.cli decision --model d1-omni-600m --prompt 'A 
 
 ## Realtime SDXS and SD Turbo samples
 
-Samples 09–12 connect Genereti livecode/drawing to Core’s preserved native image IDs and a separate Genereti image preview. They need the updated companion bridge, macOS 14+ Apple silicon, optional image dependencies and your existing converted bundles. Inference starts explicitly with the generator play glyph; queued mode uses Comfy Run. Do not enable the legacy `genereti_comfy_coreml` pack alongside Core. See [setup and demo controls](docs/realtime-image-demo.md) and [help/UI adoption and validation](docs/help-ui-integration.md). Model workflows have not been run in the cloud.
+Samples 09–12 connect Genereti livecode/drawing to Core’s preserved native image IDs and a separate Genereti image preview. They need the updated companion bridge, macOS 14+ Apple silicon, optional image dependencies and the public converted bundles available through ↓. ⓘ links model credits, sources and terms. Students do not convert weights; first-use compilation happens locally. Inference starts explicitly with the generator play glyph; queued mode uses Comfy Run. Do not enable the legacy `genereti_comfy_coreml` pack alongside Core. See [setup and demo controls](docs/realtime-image-demo.md) and [help/UI adoption and validation](docs/help-ui-integration.md). Model workflows have not been run in the cloud.

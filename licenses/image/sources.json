@@ -1,0 +1,29 @@
+[
+  {
+    "file": "taesd-MIT.txt",
+    "url": "https://raw.githubusercontent.com/madebyollin/taesd/f38b7ed32dd0aa17cb8ead2f830ec5f9ecf3475b/LICENSE",
+    "revision": "f38b7ed32dd0aa17cb8ead2f830ec5f9ecf3475b"
+  },
+  {
+    "file": "CLIP-MIT.txt",
+    "url": "https://raw.githubusercontent.com/openai/CLIP/b1c4b6be5871f1b94359ba55901627f29ecc9ae9/LICENSE",
+    "revision": "b1c4b6be5871f1b94359ba55901627f29ecc9ae9"
+  },
+  {
+    "file": "OpenCLIP-MIT.txt",
+    "url": "https://raw.githubusercontent.com/mlfoundations/open_clip/7d63bcb1f2bcea6ec688da1de78d3f2afbf4cbd7/LICENSE",
+    "revision": "7d63bcb1f2bcea6ec688da1de78d3f2afbf4cbd7"
+  },
+  {
+    "file": "OpenRAIL-plus-plus.txt",
+    "repo": "stabilityai/stable-diffusion-xl-base-1.0",
+    "revision": "462165984030d82259a11f4367a4eed129e94a7b",
+    "url": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/462165984030d82259a11f4367a4eed129e94a7b/LICENSE.md"
+  },
+  {
+    "file": "OpenRAIL-M.txt",
+    "repo": "CompVis/stable-diffusion-license",
+    "revision": "14d42d09bffd871b1666a084fc954a50cff72ac0",
+    "url": "https://huggingface.co/spaces/CompVis/stable-diffusion-license/blob/14d42d09bffd871b1666a084fc954a50cff72ac0/license.txt"
+  }
+]

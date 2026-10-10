@@ -8,8 +8,8 @@ Inputs: model_path, prompt, mode (text/sketch), seed, influence (control_scale),
 
 ## Small example
 
-Open **09 - Livecode to SDXS** or **10 - Drawing to SDXS**. Choose an installed package, leave sketch selected, then press ▶. A connected ꘇ image preview holds the latest completed frame while the next computes.
+Open **09 - Livecode to SDXS** or **10 - Drawing to SDXS**. Use ↓ to download the public 512px bundle, leave sketch selected, then press ▶. A connected ꘇ image preview holds the latest completed frame while the next computes.
 
 ## Requirements and limits
 
-macOS 14+ Apple silicon and preexisting converted model bundles are required. Sketch needs controlled_unet; anime needs its own controlled package. Only the first queued IMAGE is used; alpha composites on white. In-flight native work completes after pause; stale results are discarded. Live inference is loopback-only, bounded to one request at a time. No cloud fallback or model downloads on workflow load. Local parity after migration remains unverified.
+macOS 14+ Apple silicon and optional image dependencies are required. ↓ explicitly downloads the verified public bundle; no HF login or conversion is needed. ⓘ links credits, sources and license terms. Sketch needs controlled_unet; anime needs its own controlled package. Only the first queued IMAGE is used; alpha composites on white. In-flight native work completes after pause; stale results are discarded. Live inference is loopback-only, bounded to one request at a time. No cloud fallback or model downloads on workflow load. 512px text/sketch and the live bridge were tested locally on one Mac; broader parity and older OS validation remain pending.

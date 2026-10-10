@@ -29,7 +29,19 @@ function attach(node){
  function commit(){applied=value(node,'prompt');node.properties.genereti_applied_prompt=applied;}
  const play=button('▶','Start local image inference',()=>{if(running)pause();else{running=true;epoch++;state();void tick();}});
  const promptToggle=button('ϟ','Apply prompt while typing',()=>{live=!live;node.properties.genereti_live_prompt=live;if(live)commit();state();});
- button('↑','Send held prompt · Cmd/Ctrl+Enter',commit);bar.append(status);bar.style.flexWrap='wrap';
+ button('↑','Send held prompt · Cmd/Ctrl+Enter',commit);
+ const download=button('↓','Download image model',async()=>{
+  const entry=catalog?.bundles?.find(b=>b.family===(families[node.comfyClass]==='sd_turbo'?'sd-turbo':'sdxs'));
+  if(!entry)return;
+  if(running)pause();
+  try{
+   const response=await fetch('/genereticore/coreml/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({family:entry.family})});
+   const data=await response.json();if(!response.ok)throw Error(data.detail??'Download could not start.');
+   downloadPending=true;await updateCatalog();
+  }catch(error){status.textContent=error.message;status.title=error.message;}
+ });
+ const terms=document.createElement('a');terms.textContent='ⓘ';terms.target='_blank';terms.rel='noopener';terms.title=terms.ariaLabel='Model credits, source links and license terms';bar.append(terms);
+ bar.append(status);bar.style.flexWrap='wrap';
  node._generetiLiveSource={retain(){},release(){}}; // Connecting/opening a viewer never starts inference.
  node._generetiSetExecutionMode=mode=>{if(mode==='Comfy Queue')pause();state();};
  node._generetiRestorePrompt=()=>{applied=node.properties.genereti_applied_prompt??value(node,'prompt');live=node.properties.genereti_live_prompt??true;state();};
@@ -55,9 +67,25 @@ function attach(node){
   }catch(error){if(!disposed&&session===epoch){pause();status.textContent=error.message;status.title=error.message;}}
   finally{pending=false;if(running&&!disposed&&session===epoch)timer=setTimeout(tick,delay);}
  }
- let catalog;async function updateCatalog(){try{const r=await fetch('/genereticore/coreml/status');if(r.ok){catalog=await r.json();update();}}catch{}}
+ let catalog,downloadPending=false,lastCatalogCheck=0;
+ async function updateCatalog(){try{const r=await fetch('/genereticore/coreml/status');if(r.ok){catalog=await r.json();update();}}catch{}}
  function update(){bindEditor();const path=node.widgets?.find(w=>w.name==='model_path'),mode=node.widgets?.find(w=>w.name==='mode'),profile=catalog?.model_paths?.[path?.value];if(path&&catalog){path.options??={};path.options.values=Object.entries(catalog.model_paths).filter(([,p])=>p.family===families[node.comfyClass]).map(([p])=>p);if(!path.options.values.length)path.options.values=['not installed'];}if(mode&&profile){mode.options??={};mode.options.values=profile.modes;if(!profile.modes.includes(mode.value))mode.value=profile.modes[0];}}
- const recovery=setInterval(update,500);void updateCatalog();state();status.textContent='Paused · press Start, or use Queue and Comfy Run';
+ const updateWidgets=update;
+ update=function(){
+  updateWidgets();
+  const entry=catalog?.bundles?.find(b=>b.family===(families[node.comfyClass]==='sd_turbo'?'sd-turbo':'sdxs'));
+  if(!entry){download.hidden=true;terms.hidden=true;return;}
+  download.hidden=false;terms.hidden=false;terms.href=`https://huggingface.co/${entry.repo}/blob/${entry.revision}/Notice.txt`;
+  const busy=['download','verify','install'].includes(entry.phase);
+  const anyBusy=catalog.bundles.some(b=>['download','verify','install'].includes(b.phase));
+  download.disabled=anyBusy||entry.installed;download.textContent=entry.installed?'✓':'↓';
+  const label=entry.family==='sdxs'?'SDXS':'SD Turbo';
+  download.title=download.ariaLabel=entry.installed?`${label} bundle installed`:`Download ${label} · ${(entry.download_bytes/1e9).toFixed(2)} GB · local model`;
+  if(busy){downloadPending=true;status.textContent=`${entry.phase==='verify'?'Verifying':entry.phase==='install'?'Installing':'Downloading'} ${label} · ${Math.round(100*entry.done/entry.total)}%`;}
+  else if(downloadPending){downloadPending=false;status.textContent=entry.phase==='error'?entry.detail:`${label} installed · choose 512px and press Start`;}
+  if(entry.installed){const widget=node.widgets?.find(w=>w.name==='model_path');if(widget&&(!catalog.model_paths?.[widget.value]||widget.value==='not installed')){widget.value=entry.family==='sdxs'?'512/unet.mlpackage':'512/turbo_unet.mlpackage';updateWidgets();}}
+ };
+ const recovery=setInterval(()=>{update();if(Date.now()-lastCatalogCheck>2000){lastCatalogCheck=Date.now();void updateCatalog();}},500);void updateCatalog();state();status.textContent='Paused · press Start, or use Queue and Comfy Run';
  const removed=node.onRemoved;node.onRemoved=function(){disposed=true;pause();clearInterval(recovery);window.removeEventListener('pagehide',pause);return removed?.apply(this,arguments);};window.addEventListener('pagehide',pause);
 }
 app.registerExtension({name:'GeneretiCore.NativeImages',setup(){window.addEventListener('genereti-companion-ready',()=>{for(const n of app.graph?._nodes??[])if(families[n.comfyClass])attach(n);});},nodeCreated(node){if(families[node.comfyClass]){requestAnimationFrame(()=>attach(node));}}});

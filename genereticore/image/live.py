@@ -11,8 +11,10 @@ import numpy as np
 import torch
 from PIL import Image
 from .nodes import generate as generate_frame, model_root, sizes, model_paths
+from .bundles import DownloadManager
 
 _BUSY = asyncio.Lock()
+DOWNLOADS = DownloadManager(model_root)
 
 
 def validate(data):
@@ -77,6 +79,8 @@ def local_only(request):
     origin = request.headers.get('Origin')
     if origin and urlparse(origin).netloc != request.host:
         raise web.HTTPForbidden(text='Cross-origin native inference is not allowed.')
+    if request.headers.get('Sec-Fetch-Site') == 'cross-site':
+        raise web.HTTPForbidden(text='Cross-origin native inference is not allowed.')
 
 
 def register_routes(routes):
@@ -86,7 +90,27 @@ def register_routes(routes):
         available = platform.system() == 'Darwin' and platform.machine() == 'arm64' and int(platform.mac_ver()[0].split('.')[0] or 0) >= 14
         return web.json_response({'ready':available and bool(sizes()), 'error':None if available else 'Core ML image generation requires macOS 14+ Apple silicon', 'size': int(sizes()[0]) if sizes() else 256,
             'model_root':str(model_root()), 'resolved_root':str(model_root().resolve()), 'sizes':sizes(),
-            'model_paths':model_paths(), 'packages':{s:sorted(p.name for p in (model_root()/s).glob('*.mlpackage')) for s in sizes()}})
+            'model_paths':model_paths(), 'bundles': DOWNLOADS.snapshot(),
+            'packages':{s:sorted(p.name for p in (model_root()/s).glob('*.mlpackage')) for s in sizes()}})
+
+    @routes.post('/genereticore/coreml/download')
+    async def download(request):
+        local_only(request)
+        if platform.system() != 'Darwin' or platform.machine() != 'arm64' or int(platform.mac_ver()[0].split('.')[0] or 0) < 14:
+            return web.json_response({'detail':'These image bundles require macOS 14+ Apple silicon.'}, status=400)
+        try:
+            raw = await request.content.read(1025)
+            if len(raw) > 1024:
+                raise ValueError('Download request is too large')
+            data = json.loads(raw)
+            if not isinstance(data, dict) or set(data) != {'family'} or not isinstance(data['family'], str):
+                raise ValueError('Choose a published image bundle')
+            DOWNLOADS.start(data['family'])
+            return web.json_response({'started':data['family']}, status=202)
+        except (ValueError, TypeError) as exc:
+            return web.json_response({'detail':str(exc)}, status=400)
+        except RuntimeError as exc:
+            return web.json_response({'detail':str(exc)}, status=409)
 
     @routes.post('/genereticore/coreml/generate')
     async def generate(request):

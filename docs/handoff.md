@@ -83,3 +83,22 @@ to match its hosted bundle. Canny remains available locally but its weights are
 excluded from hosting pending a license audit. Both HF repositories remain private.
 No student Download button or public release is claimed. Actual measurements and
 remaining checks are recorded in `docs/validation.md`.
+
+## Public model access and toolbar downloads (2026-10-10)
+
+User policy: keep all models public when their terms permit, with credits/backlinks;
+otherwise document the original source/setup or offer a compatible alternative.
+SDXS and Turbo repositories are now public/ungated with retained licenses, credits,
+conversion notices and source links. Pins changed only for metadata/notices; weights
+are unchanged. See docs/image-license-review.md. Canny stays outside mirrors; SDXS
+sketch and Turbo image are supported alternatives, and the original source plus
+conversion recipe are documented. No author was messaged and no commercial
+registration or enterprise agreement was submitted.
+
+The generator toolbar now has explicit ↓ Download and ⓘ credits/terms. Downloads
+are anonymous (token=False), catalog-limited, one at a time, progress-polled and
+fully checksum verified; atomic installation retains notices and leaves inference
+paused. No download on workflow load. Missing payloads invalidate the installed
+receipt; retry reuses the Hub cache and refuses conflicting existing files.
+Actual anonymous SDK installs and browser Download → Installed → Start flows
+for both bundles passed. Corrupt cached files get one fresh-download repair attempt. Broad Manager/older-macOS/install-interruption testing remains pending.

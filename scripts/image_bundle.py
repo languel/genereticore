@@ -1,10 +1,9 @@
-"""Prepare, privately upload, or install checksum-pinned local image bundles.
+"""Prepare, upload, or install checksum-pinned local image bundles.
 
 Contributor tool. Uses the Hugging Face SDK's existing login without reading or
 printing credential values. Model assets and generated manifests stay outside Git.
 """
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -14,12 +13,9 @@ SOURCES = {
     'sd-turbo': ('stabilityai/sd-turbo', 'b261bac6fd2cf515557d5d0707481eafa0485ec2'),
 }
 
-def digest(path):
-    with path.open('rb') as stream:
-        result = hashlib.sha256()
-        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
-            result.update(chunk)
-        return result.hexdigest()
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from genereticore.image.bundles import digest, verify, install
 
 def prepare(root, destination, family):
     from huggingface_hub import snapshot_download
@@ -80,49 +76,22 @@ are included. Manifest files record exact byte sizes and SHA-256 checksums.
     (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
     print(json.dumps({'bundle': str(destination), 'files': len(files), 'bytes': sum(f['bytes'] for f in files)}))
 
-def verify(directory):
-    manifest = json.loads((directory / 'manifest.json').read_text())
-    for entry in manifest['files']:
-        relative = Path(entry['path'])
-        if relative.is_absolute() or '..' in relative.parts:
-            raise ValueError('Unsafe bundle path')
-        path = directory / relative
-        if path.stat().st_size != entry['bytes'] or digest(path) != entry['sha256']:
-            raise ValueError(f'Bundle checksum failed: {relative}')
-    return manifest
-
-def upload(directory, repo):
+def upload(directory, repo, public=False):
     from huggingface_hub import HfApi
     verify(directory);api=HfApi()
-    if not api.repo_info(repo).private:
-        raise ValueError('This staging uploader only writes private model repositories')
+    if not api.repo_info(repo).private and not public:
+        raise ValueError('Public updates require explicit --public and retained licenses/notices')
+    if public and not ((directory/'Notice.txt').is_file() and (directory/'notices/licenses/sources.json').is_file()):
+        raise ValueError('Public bundles must retain credits and license sources')
     result=api.upload_folder(repo_id=repo, folder_path=directory, commit_message='Add verified 512px local image staging bundle')
     print(json.dumps({'repo': repo, 'revision': result.oid}))
-
-def install(repo, revision, destination):
-    from huggingface_hub import snapshot_download
-    if len(revision)!=40 or any(c not in '0123456789abcdef' for c in revision):
-        raise ValueError('Use a full pinned Hugging Face commit SHA')
-    source=Path(snapshot_download(repo,revision=revision));manifest=verify(source)
-    # Check every conflict before changing the installation. Existing byte-identical
-    # dependencies can be shared by SDXS/Turbo; never overwrite different files.
-    for entry in manifest['files']:
-        if not entry['path'].startswith(('512/','assets/')):continue
-        target=destination/entry['path']
-        if target.exists() and digest(target)!=entry['sha256']:
-            raise FileExistsError(f'Conflicting installed file: {target}')
-    for entry in manifest['files']:
-        if not entry['path'].startswith(('512/','assets/')):continue
-        target=destination/entry['path'];target.parent.mkdir(parents=True,exist_ok=True)
-        if not target.exists():shutil.copyfile(source/entry['path'],target)
-    print(json.dumps({'installed':manifest['family'],'root':str(destination),'revision':revision}))
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='action',required=True)
     p=sub.add_parser('prepare');p.add_argument('root',type=Path);p.add_argument('destination',type=Path);p.add_argument('--family',choices=list(SOURCES),required=True)
-    p=sub.add_parser('upload');p.add_argument('directory',type=Path);p.add_argument('repo')
+    p=sub.add_parser('upload');p.add_argument('directory',type=Path);p.add_argument('repo');p.add_argument('--public', action='store_true')
     p=sub.add_parser('install');p.add_argument('repo');p.add_argument('revision');p.add_argument('destination',type=Path)
     args=parser.parse_args()
     if args.action=='prepare':prepare(args.root,args.destination,args.family)
-    elif args.action=='upload':upload(args.directory,args.repo)
+    elif args.action=='upload':upload(args.directory,args.repo,args.public)
     else:install(args.repo,args.revision,args.destination)
