@@ -35,7 +35,7 @@ def validate(data):
     result['blank_prompt_enabled'] = data.get('blank_prompt_enabled', False)
     if not isinstance(result['blank_prompt_enabled'], bool):
         raise ValueError('Invalid blank-input toggle.')
-    result['blank_prompt'] = data.get('blank_prompt', 'solid white background, empty, no objects, no shadows')
+    result['blank_prompt'] = data.get('blank_prompt', 'closeup flat white blank paper space pristine smooth emptiness')
     if not isinstance(result['blank_prompt'], str) or len(result['blank_prompt']) > 2000:
         raise ValueError('Blank prompt must be text up to 2000 characters.')
     result['blank_action'] = data.get('blank_action', 'prompt')

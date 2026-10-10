@@ -40,7 +40,7 @@ function attach(node){
  const blankAction=document.createElement('select');blankAction.ariaLabel='Blank-input action';blankAction.style.cssText='background:transparent;color:inherit;border:0;font:inherit';
  for(const [v,label]of [['prompt','Alternate prompt'],['solid','Solid white']]){const o=document.createElement('option');o.value=v;o.textContent=label;blankAction.append(o);}
  blankAction.value=node.properties.genereticore_blank_action??'prompt';
- const blankEditor=document.createElement('textarea');blankEditor.ariaLabel='Blank-input prompt';blankEditor.maxLength=2000;blankEditor.rows=2;blankEditor.value=node.properties.genereticore_blank_prompt??'solid white background, empty, no objects, no shadows';blankEditor.style.cssText='width:100%;box-sizing:border-box;resize:vertical;background:transparent;color:inherit;border:0;font:inherit;min-height:48px';
+ const blankEditor=document.createElement('textarea');blankEditor.ariaLabel='Blank-input prompt';blankEditor.maxLength=2000;blankEditor.rows=2;blankEditor.value=node.properties.genereticore_blank_prompt??'closeup flat white blank paper space pristine smooth emptiness';blankEditor.style.cssText='width:100%;box-sizing:border-box;resize:vertical;background:transparent;color:inherit;border:0;font:inherit;min-height:48px';
  blankBody.append(blankAction,blankEditor);blankPanel.append(blankRow,blankBody);
  const blankWidget=node.addDOMWidget('genereticore_blank_controls','GENERETICORE_BLANK_CONTROLS',blankPanel,{serialize:false,hideOnZoom:false});
  const blankHeight=()=>blankBody.hidden?26:Math.max(100,blankPanel.scrollHeight);blankWidget.computeSize=width=>[width,blankHeight()];blankWidget.options.getMinHeight=blankHeight;blankWidget.options.getMaxHeight=blankHeight;

@@ -18,7 +18,7 @@ macOS 14+ Apple silicon and optional image dependencies are required. ↓ explic
 
 Enable **Blank input** to use a second prompt when the connected image is a uniform background. The chevron shows or hides its field; collapsing does not disable the option. It starts disabled and is saved with the workflow. This works in Live and Comfy Queue. Detection happens before guide preprocessing or inversion and requires every pixel to be nearly the same color; even a small contrasting mark keeps the normal prompt. Text mode has no image to check.
 
-Choose **Alternate prompt** to generate an empty scene (the default is “solid white background, empty, no objects, no shadows”). Models may still invent shadows or texture. Choose **Solid white** for an exact white frame without inference while the input is blank. Drawing again automatically resumes the main prompt. The main prompt and held draft remain unchanged.
+Choose **Alternate prompt** to generate an empty scene (the default is “closeup flat white blank paper space pristine smooth emptiness”). Models may still invent shadows or texture. Choose **Solid white** for an exact white frame without inference while the input is blank. Drawing again automatically resumes the main prompt. The main prompt and held draft remain unchanged.
 
 The bottom color dot shows the current state in its hover tip. Clicking it hides or shows the timings beside it. Timings are rounded averages updated once a second; errors remain visible.
 

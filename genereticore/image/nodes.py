@@ -79,7 +79,7 @@ def get_engine(root, size):
 
 def generate(model_path, prompt, mode, seed=42, control_scale=1., invert=False,
              movement=0., image=None, preprocess=False, strength=.65, noise_phase=0., family=None, blank_prompt_enabled=False,
-             blank_prompt='solid white background, empty, no objects, no shadows', blank_action='prompt'):
+             blank_prompt='closeup flat white blank paper space pristine smooth emptiness', blank_action='prompt'):
     if platform.system() != 'Darwin' or platform.machine() != 'arm64':
         raise RuntimeError('GeneretiCore image inference requires macOS 14+ on Apple silicon.')
     if int(platform.mac_ver()[0].split('.')[0]) < 14:
@@ -139,7 +139,7 @@ class FamilyGenerator:
             'model_path': (paths or ['not installed'], {'tooltip':'Installed denoiser path determines native size and variant; companion packages live beside it.'}),
             'prompt': ('STRING', {'default':'A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition', 'multiline':True}),
             'mode': (['image','canny','depth','pose'] if turbo else ['text','sketch'], {'default':'image' if turbo else 'sketch'}),
-            'seed': ('INT', {'default':42, 'min':0, 'max':4294967295})}
+            'seed': ('INT', {'default':42, 'min':0, 'max':4294967295, 'step':1, 'tooltip':'Click the number, select its text, type an integer and press Enter. Editable during Live; the next frame uses the new seed.'})}
         if turbo:
             required.update({
                 'preprocess': ('BOOLEAN', {'default':True,'tooltip':'Extract Canny edges or depth; disable for prepared guides.'}),
@@ -159,7 +159,7 @@ class FamilyGenerator:
             if str(node.get('id')) == str(unique_id):
                 props = node.get('properties', {})
                 kwargs.update(blank_prompt_enabled=bool(props.get('genereticore_blank_enabled', False)),
-                    blank_prompt=props.get('genereticore_blank_prompt', 'solid white background, empty, no objects, no shadows'),
+                    blank_prompt=props.get('genereticore_blank_prompt', 'closeup flat white blank paper space pristine smooth emptiness'),
                     blank_action=props.get('genereticore_blank_action', 'prompt'))
                 break
         return generate(**kwargs, family=cls.family)
