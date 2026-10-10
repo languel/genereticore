@@ -1,0 +1,97 @@
+{
+  "version": 0.4,
+  "last_node_id": 2,
+  "last_link_id": 0,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "GeneretiDocument",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        1160,
+        820
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "format",
+          "name": "format",
+          "type": "COMBO",
+          "widget": {
+            "name": "format"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeneretiDocument",
+        "generetiWebviewRendered": true,
+        "generetiWebviewHeight": 700
+      },
+      "widgets_values": [
+        "url",
+        "/extensions/genereti-core/blocks-beats.html?embed=1"
+      ],
+      "widgets_values_named": {
+        "text": "<!doctype html><html><head><title>Paper stage</title><style>\nbody{margin:0;background:#10151e;color:#eee;font-family:system-ui}button{font:inherit;color:inherit;background:#283344;border:0;border-radius:6px;padding:6px 10px}canvas{display:block;width:100%;height:240px}header{padding:12px}#status{margin-left:8px}\n</style></head><body><header><strong>Paper stage</strong> <button id=\"sound\">Start sound</button><span id=\"status\">Audio starts only when you click.</span></header><canvas id=\"stage\" width=\"640\" height=\"360\" aria-label=\"Interactive paper stage\"></canvas><p>Move over the stage to change its light and tone. Raw preserves this source; Rendered runs it.</p><script>\nconst canvas=document.querySelector('#stage'),ctx=canvas.getContext('2d');let pointer=.5,audio,osc,gain,active=false;window.startedAt=performance.now();window.draws=0;\ncanvas.onpointermove=e=>{pointer=(e.clientX-canvas.getBoundingClientRect().left)/canvas.getBoundingClientRect().width;if(osc)osc.frequency.setTargetAtTime(130+pointer*390,audio.currentTime,.05)};\ndocument.querySelector('#sound').onclick=async()=>{audio??=new AudioContext();await audio.resume();if(!osc){osc=audio.createOscillator();gain=audio.createGain();gain.gain.value=0;osc.type='sine';osc.connect(gain).connect(audio.destination);osc.start()}active=!active;gain.gain.setTargetAtTime(active?.06:0,audio.currentTime,.03);document.querySelector('#sound').textContent=active?'Mute sound':'Start sound';document.querySelector('#status').textContent=active?'Sound running · move on stage':'Muted';};\nfunction draw(now){window.draws++;ctx.fillStyle='#10151e';ctx.fillRect(0,0,640,360);for(let i=0;i<8;i++){ctx.save();ctx.translate(70+i*70,180+Math.sin(now*.001+i)*55);ctx.rotate(Math.sin(now*.0006+i)*.4);ctx.fillStyle=i%2?'#e5763b':'#315eca';ctx.globalAlpha=.35+pointer*.6;ctx.beginPath();ctx.moveTo(-40,70);ctx.lineTo(0,-80);ctx.lineTo(40,70);ctx.closePath();ctx.fill();ctx.restore()}requestAnimationFrame(draw)}requestAnimationFrame(draw);\n</script></body></html>\n",
+        "format": "html"
+      },
+      "title": "ꘇ webview · Blocks & Beats"
+    },
+    {
+      "id": 2,
+      "type": "Note",
+      "title": "Blocks & Beats · inside Comfy",
+      "pos": [
+        1190,
+        0
+      ],
+      "size": [
+        350,
+        380
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "properties": {},
+      "widgets_values": [
+        "Start game and Start audio are separate actions inside the webview. Loading this graph starts neither.\n\nChoose d1 for real local decisions, or Authored heuristic for a no-model comparison. Download d1 explicitly if missing.\n\nReset returns seed 7. Pause cancels pending decisions. Stop audio separately when finished.\n\nRaw shows the relative page URL; Rendered returns to the same running page. Reload restarts the demo.\n\nThis workflow needs both Genereti (webview) and GeneretiCore (arcade page/local inference). The text output is the page URL, not game telemetry."
+      ]
+    }
+  ],
+  "links": [],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        40,
+        40
+      ]
+    }
+  },
+  "id": "f5e488f1-d18c-4f5e-b745-3649598fc45d"
+}

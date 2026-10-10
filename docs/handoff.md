@@ -1,5 +1,9 @@
 # New-session handoff
 
+Latest browser checkpoint: [embedded-arcade.md](embedded-arcade.md). Sample 13
+embeds Blocks & Beats in Genereti's webview, with verified local d1 playback,
+user-started Web Audio scheduling, raw/rendered continuity and idle saved reload.
+
 Repository: /Users/liuboto/dev/genereticore
 Companion: **/Users/liuboto/dev/genereti-public** (user-confirmed).
 
