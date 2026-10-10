@@ -18,6 +18,9 @@ Add a minimal installable Comfy pack and one independently usable task node. Imp
 
 Prepare one complete SDXS bundle locally; audit redistribution terms for every component before uploading. Create Hugging Face model cards with upstream revisions, conversion recipe, license notices, model contract and tested hardware. Validate downloads and restart recovery using a clean Comfy installation. No scripts or Xcode build should be required from students for a distributed supported runtime.
 
+See [model-distribution.md](model-distribution.md) for today's download behavior,
+automatic local compilation versus developer conversion, and remaining release work.
+
 ## 4. Realtime image demo
 
 October 9 cloud update: four editable livecode/drawing → SDXS/Turbo → preview graphs and a stable-ID image-runtime source migration are now authored. See [realtime-image-demo.md](realtime-image-demo.md). Mac parity/performance and the complete current/next shader transition remain unverified.

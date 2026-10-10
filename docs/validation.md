@@ -1,5 +1,34 @@
 # Local validation — October 7, 2026
 
+## Desktop merge verification (October 9, 2026)
+
+The cloud Help/UI/image migration was merged locally into the contributor
+checkout and tested with Comfy Desktop on port 8188. Shared Help navigation,
+unsent guide-context drafts, validator recovery, viewer modes/freeze/minimize
+and all four migrated image graphs were exercised in the browser. A fresh browser
+session after the server restart was needed to register the migrated native nodes.
+All four graphs loaded without missing-node placeholders. Native image inference
+remains unverified: no complete image bundle is installed in this instance, and
+Start reported `Invalid model path.` without an implicit download.
+
+The arcade's explicit d1 Download button installed and verified the pinned
+769,088,919-byte package outside Git. Actual local d1 playback reached 35 pieces;
+one warm placement request reported 23.3 ms prediction / 24.9 ms end-to-end and a
+music request 9.2 / 10.1 ms. These are individual observations with canvas
+rendering active and audio off, not a throughput or decision-quality benchmark.
+The first run compiled locally; its complete cold timing was not captured.
+The run exposed a one-candidate edge case, now handled by taking the sole legal
+placement without calling a model that requires at least two options.
+Browser replay verified the sole placement was taken and the game stopped normally
+at top-out after 36 pieces. It cleared zero rows on this seed, so successful
+inference does not establish good gameplay. Rotation is chosen before each drop;
+the current demo does not animate turning or lateral movement.
+
+26 Python tests and the existing client/layout JavaScript checks passed.
+Comfy startup/asset console warnings were present, so this is not a clean-console
+claim. Clean student installation, helper distribution and image bundle downloads
+remain outstanding; see [model-distribution.md](model-distribution.md).
+
 Hardware: Apple silicon, 128 GiB unified memory. macOS 27.0.1 (26A434), Xcode 27.0 (27A266a). CoreAIKit 0.7.3, commit f32626037741222c17042cd1bc0301185c077e8e. ComfyUI 0.39.2, frontend 1.53.10, Python 3.12.11. Test Comfy ran on 127.0.0.1:8003 with an isolated `/tmp/genereticore-comfy-test` base; the companion and existing Comfy installations were not modified.
 
 ## Actual inference

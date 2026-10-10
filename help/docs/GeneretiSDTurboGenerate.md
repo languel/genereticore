@@ -8,7 +8,7 @@ Inputs: model_path, prompt, mode, seed, preprocess, strength, influence (control
 
 ## Small example
 
-Open **10 - Livecode to SD Turbo** or **11 - Drawing to SD Turbo**. Choose a matching installed package and Canny mode, enable preprocessing, then press ▶. Use Queue plus Comfy Run for a single frame.
+Open **11 - Livecode to SD Turbo** or **12 - Drawing to SD Turbo**. Choose a matching installed package and Canny mode, enable preprocessing, then press ▶. Use Queue plus Comfy Run for a single frame.
 
 ## Requirements and limits
 

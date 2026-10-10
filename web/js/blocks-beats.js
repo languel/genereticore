@@ -23,9 +23,9 @@ function showOptions(choice){$('options').replaceChildren(...options.map(c=>{con
 async function turn(myEpoch){
   const piece=pendingPiece??=nextPiece();options=candidates(board,piece);if(!options.length){pause();status('Top out · Reset to play the same seed again.');return;}
   const prompt=moveState(board,piece,options);$('state').textContent=prompt;showOptions(null);status('Choosing a legal '+piece+' placement…');
-  const decision=await decide(prompt,'Choose the best drop: maximize cleared rows; minimize holes, total column height and unevenness. Choose A, B, C or D.',options.map(c=>c.label),myEpoch,'move');
+  const decision=options.length===1?null:await decide(prompt,'Choose the best drop: maximize cleared rows; minimize holes, total column height and unevenness. Choose A, B, C or D.',options.map(c=>c.label),myEpoch,'move');
   if(myEpoch!==epoch)return;const choice=decision?.choice??options[0].label,selected=options.find(c=>c.label===choice);showOptions(choice);
-  if(!decision)moveView.show(JSON.stringify({source:'authored heuristic · no AI',choice,utility:selected.utility,features:{lines:selected.lines,holes:selected.holes,height:selected.height}}));
+  if(!decision)moveView.show(JSON.stringify({source:options.length===1?'only legal placement · no decision needed':'authored heuristic · no AI',choice,utility:selected.utility,features:{lines:selected.lines,holes:selected.holes,height:selected.height}}));
   const start=performance.now(),duration=Number($('pace').value);falling={...selected,piece,start,duration};
   await new Promise(resolve=>setTimeout(resolve,duration));if(myEpoch!==epoch)return;
   board=selected.board.map(row=>row.map(v=>v? v:0)); // placement occupancy is authoritative
