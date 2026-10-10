@@ -19,7 +19,7 @@ function draw(){
  rect(width*0.18,height*0.7,width*0.64,height*0.13,12);
 }'''
 prompt='A luminous abstract performance stage made from hand-cut paper shapes, cobalt blue and orange light, energetic theatrical composition'
-for number,kind,turbo in [(8,'Livecode',False),(9,'Drawing',False),(10,'Livecode',True),(11,'Drawing',True)]:
+for number,kind,turbo in [(9,'Livecode',False),(10,'Drawing',False),(11,'Livecode',True),(12,'Drawing',True)]:
  template=json.loads((base/('ꘇ-Livecode-Realtime.json' if kind=='Livecode' else 'ꘇ-Drawing-Source.json')).read_text())
  source=deepcopy(template['nodes'][0]);source['id']=1;source['pos']=[0,330];source['title']='ꘇ '+kind.lower()+' · live sketch';source['order']=0
  if kind=='Livecode':

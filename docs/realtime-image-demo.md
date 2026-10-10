@@ -5,10 +5,10 @@ GeneretiCore's migrated native image generators:
 
 | Workflow | Input | Generator mode |
 | --- | --- | --- |
-| 08 - Livecode to SDXS | Authored moving p5 sketch | SDXS sketch |
-| 09 - Drawing to SDXS | Interactive drawing | SDXS sketch |
-| 10 - Livecode to SD Turbo | Authored moving p5 sketch | SD Turbo Canny |
-| 11 - Drawing to SD Turbo | Interactive drawing | SD Turbo Canny |
+| 09 - Livecode to SDXS | Authored moving p5 sketch | SDXS sketch |
+| 10 - Drawing to SDXS | Interactive drawing | SDXS sketch |
+| 11 - Livecode to SD Turbo | Authored moving p5 sketch | SD Turbo Canny |
+| 12 - Drawing to SD Turbo | Interactive drawing | SD Turbo Canny |
 
 These are model-free workflow files, not cloud-tested inference demos. The
 migration preserves the archived engine's operations, IDs and package layout;

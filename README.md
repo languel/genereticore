@@ -6,7 +6,7 @@ Local asynchronous inference companion for [Genereti](https://github.com/languel
 
 ## Learn by running a sample
 
-Read [Tutorial 0](docs/tutorial-0.md), or open **Workflows → GeneretiCore → 00 - Tutorial 0 - decision models** and click its book button. Twelve installed samples explain the result contract, text generation, decisions, vision and Genereti walkthroughs. The d1 demo turns a scene description into an artwork palette through a bounded choice and authored numeric mapping. Each note defines its demo before giving instructions.
+Read [Tutorial 0](docs/tutorial-0.md), or open **Workflows → GeneretiCore → 00 - Tutorial 0 - decision models** and click its book button. Thirteen installed samples explain the result contract, text generation, decisions, vision and Genereti walkthroughs. The d1 demo turns a scene description into an artwork palette through a bounded choice and authored numeric mapping. Each note defines its demo before giving instructions.
 
 Read the [getting-started guide](docs/getting-started.md) for exact steps and troubleshooting. **▷ runs connected workflow outputs; ϟ previews locally inside the inference node.** The header **?** opens authored references in Genereti’s shared Help panel (Reference, Contents, Assistant), or a local reference without Genereti. Samples 05/06/07 use Genereti's p5 editor and step-by-step lesson player; samples 00–04 work without Genereti public.
 
@@ -64,4 +64,4 @@ Example: `python3 -m genereticore.cli decision --model d1-omni-600m --prompt 'A 
 
 ## Realtime SDXS and SD Turbo samples
 
-Samples 08–11 connect Genereti livecode/drawing to Core’s preserved native image IDs and a separate Genereti image preview. They need the updated companion bridge, macOS 14+ Apple silicon, optional image dependencies and your existing converted bundles. Inference starts explicitly with the generator play glyph; queued mode uses Comfy Run. Do not enable the legacy `genereti_comfy_coreml` pack alongside Core. See [setup and demo controls](docs/realtime-image-demo.md) and [help/UI adoption and validation](docs/help-ui-integration.md). Model workflows have not been run in the cloud.
+Samples 09–12 connect Genereti livecode/drawing to Core’s preserved native image IDs and a separate Genereti image preview. They need the updated companion bridge, macOS 14+ Apple silicon, optional image dependencies and your existing converted bundles. Inference starts explicitly with the generator play glyph; queued mode uses Comfy Run. Do not enable the legacy `genereti_comfy_coreml` pack alongside Core. See [setup and demo controls](docs/realtime-image-demo.md) and [help/UI adoption and validation](docs/help-ui-integration.md). Model workflows have not been run in the cloud.
