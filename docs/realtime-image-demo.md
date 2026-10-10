@@ -113,8 +113,7 @@ reference documentation rather than its toolbar.
 
 ## 256px native packages
 
-Public `languel/genereticore-sdxs-coreml` and
-`languel/genereticore-sd-turbo-coreml` now contain `256/` and `512/` packages in
+The public SDXS and SD Turbo bundles now contain `256/` and `512/` packages in
 the same repositories. No extra Comfy nodes are registered. Use the model path
 picker to select resolution; the pinned family download installs both sizes.
 The contributor converter is `scripts/convert_native_images.py`, with weights

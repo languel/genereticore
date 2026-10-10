@@ -4,8 +4,8 @@ Latest browser checkpoint: [embedded-arcade.md](embedded-arcade.md). Sample 13
 embeds Blocks & Beats in Genereti's webview, with verified local d1 playback,
 user-started Web Audio scheduling, raw/rendered continuity and idle saved reload.
 
-Repository: /Users/liuboto/dev/genereticore
-Companion: **/Users/liuboto/dev/genereti-public** (user-confirmed).
+Repository: ~/dev/genereticore
+Companion: **~/dev/genereti-public** (user-confirmed).
 
 ## Objective and current state
 
@@ -19,7 +19,7 @@ macOS 27.0.1, Xcode 27.0 (27A266a), 128 GiB Apple silicon. CoreAIKit exact 0.7.3
 
 Qwen3 0.6B and Qwen3-VL 2B pinned artifacts are downloaded into `~/Library/Application Support/CoreAIKit/Models` for experiments. Default standalone cache is instead `~/Library/Application Support/GeneretiCore/models`; Comfy uses its configured `models/genereticore`. Use `--model-dir` or `GENERETICORE_MODEL_DIR` to reuse the verified test cache.
 
-Isolated Comfy test base: `/tmp/genereticore-comfy-test`, node symlink to this checkout, loopback port 8003. It uses the installed Comfy Python at `/Users/liuboto/Documents/ComfyUI/.venv/bin/python` and source `/Users/liuboto/ComfyUI-Installs/ComfyUI/ComfyUI`. Existing production Comfy and companion checkouts were preserved. Tests: Comfy Python `-m unittest discover -s tests -v`; `node tests/test_client.mjs`; explicit live server `python3 scripts/smoke_comfy.py`.
+Isolated Comfy test base: `/tmp/genereticore-comfy-test`, node symlink to this checkout, loopback port 8003. It uses the installed Comfy Python at `~/Documents/ComfyUI/.venv/bin/python` and source `~/ComfyUI-Installs/ComfyUI/ComfyUI`. Existing production Comfy and companion checkouts were preserved. Tests: Comfy Python `-m unittest discover -s tests -v`; `node tests/test_client.mjs`; explicit live server `python3 scripts/smoke_comfy.py`.
 
 ## Key limitations
 
@@ -61,7 +61,7 @@ The archived native image source is ported into `genereticore/image` with stable
 
 ## Local/cloud integration checkpoint (2026-10-09)
 
-Local Blocks & Beats changes were committed before merging the cloud Help/UI and native image branch. Sample 08 remains the arcade; cloud image samples are now 09–12. The shared Help catalog includes Decision Arcade and Tutorial 8. The public companion currently resides at `/Users/liuboto/dev/genereti` on main; its cloud bridge was merged locally. The earlier `/Users/liuboto/dev/genereti-public` path and documented Comfy test Python are absent on this machine. Local model inference and full Comfy UI parity still require validation here.
+Local Blocks & Beats changes were committed before merging the cloud Help/UI and native image branch. Sample 08 remains the arcade; cloud image samples are now 09–12. The shared Help catalog includes Decision Arcade and Tutorial 8. The public companion currently resides at `~/dev/genereti` on main; its cloud bridge was merged locally. The earlier `~/dev/genereti-public` path and documented Comfy test Python are absent on this machine. Local model inference and full Comfy UI parity still require validation here.
 
 Post-merge checks passed: 26 Python unit tests, JS client/layout checks, browser-module syntax, workflow link integrity, 13 unique sample numbers, and authored Help coverage for all Core nodes. Companion reference index/context/follow/label tests and both catalog synchronization checks passed. Validation used a temporary Python 3.13 environment with aiohttp 3.13.3, NumPy 2.2.6 and Pillow 12.3.0; this does not validate the optional native image dependency pins or real inference. No models were downloaded or run.
 
@@ -105,19 +105,19 @@ for both bundles passed. Corrupt cached files get one fresh-download repair atte
 
 ## 256px bundles and account migration (2026-10-10)
 
-SDXS and SD Turbo public bundles now belong to `languel`, with both `256/` and
+SDXS and SD Turbo public bundles now belong to the current publishing account, with both `256/` and
 `512/` packages in each repository. Existing generator IDs select either size
 through `model_path`; no separate nodes are needed. Local 256px text, sketch and
 Turbo image inference passed on this Mac; timings and limitations are recorded
-in realtime-image-demo.md. Both pinned languel bundles passed anonymous clean
+in realtime-image-demo.md. Both pinned published bundles passed anonymous clean
 installation and checksum verification, and the active Comfy installation has
 updated receipts. Credits, upstream licenses and source backlinks are retained.
 
 See hugging-face-publishing.md for future local publishing and account/login
-troubleshooting. The saved languel login works; this running agent session still
-inherits an old liuboto HF_TOKEN override, so publishing used the saved login
+troubleshooting. The saved publishing login works; this running agent session still
+inherits an old-account HF_TOKEN override, so publishing used the saved login
 with that override unset. No credential values were inspected or printed.
 Python tests (36), JS client/layout checks and help synchronization passed.
 
-The two old liuboto model repositories were removed after destination verification
-and the updated Comfy links were pushed. The saved publishing login is languel.
+The two old-account model repositories were removed after destination verification
+and the updated Comfy links were pushed. The saved login belongs to the current publishing account.

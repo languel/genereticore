@@ -1,19 +1,19 @@
 # Local Hugging Face publishing
 
-Browser sign-in and local CLI/SDK sign-in are separate. GeneretiCore publishes to
-the `languel` Hugging Face account, matching its `languel` GitHub home.
+Browser sign-in and local CLI/SDK sign-in are separate. Publish bundles to your Hugging Face account. Using the same account name as
+your GitHub account can make ownership easier to recognize.
 Public student downloads use anonymous reads and need no account or token.
 
 ## One-time login
 
-1. Sign in as `languel` at https://huggingface.co/settings/tokens.
+1. Sign in to your account at https://huggingface.co/settings/tokens.
 2. Create a token named **GeneretiCore publishing** with **Write** permission.
    This permits creating and publishing your own model repositories. A scoped
    fine-grained token is also suitable once its repository permissions allow
    the intended publishing operations.
 3. In a local terminal run `hf auth login --force`. Paste the token only into
    the hidden prompt. Keep Git credential storage off for SDK/CLI publishing.
-4. Run `hf auth whoami`; the account should be `languel`.
+4. Run `hf auth whoami`; the reported account should be your publishing account.
 
 The CLI is already installed on this Mac at `~/.local/bin/hf`. Saved login is
 shared by the Hub CLI and Python SDK through their standard credential store.
@@ -38,7 +38,7 @@ and regenerate the checksum manifest after any documentation edits.
 
 Test native inference at each resolution before publishing. Then use
 `python scripts/image_bundle.py upload EXTERNAL_STAGING
-languel/genereticore-sdxs-coreml --public` (or the Turbo repo). This uses the saved
+YOUR_ACCOUNT/genereticore-sdxs-coreml --public` (or the Turbo repo). This uses the saved
 login. Public updates require retained notices and explicit `--public`.
 
 After an upload, pin the returned commit SHA, manifest SHA-256 and exact byte
@@ -59,8 +59,8 @@ The supported automated preparation is `scripts/migrate_image_repos.py`.
 Keep the source until the destination is public, complete, checksum-verified and
 usable anonymously. To retire the source, switch to its owning saved login,
 verify `hf auth whoami`, then delete only the specifically verified old repos.
-Return to the main `languel` publishing login afterward. GitHub repositories do
-not need moving: GeneretiCore already belongs to `languel` there.
+Return to your main publishing login afterward. Update GitHub ownership only
+if you also intend to move the code repositories.
 
 Official documentation: [Hub login](https://huggingface.co/docs/huggingface_hub/guides/cli#hf-auth-login),
 [repository transfer limits](https://huggingface.co/docs/hub/repositories-settings#renaming-or-transferring-a-repo).
@@ -70,14 +70,13 @@ Official documentation: [Hub login](https://huggingface.co/docs/huggingface_hub/
 
 If login reports `FileNotFoundError` from `os.getcwd()`, your terminal's current
 folder was removed. Run `cd ~` (or enter an existing project folder), then activate
-the already saved login with `hf auth switch --token-name GeneretiCore
---no-add-to-git-credential`. No new token is needed if it was already validated
-and saved.
+the already saved login with `hf auth switch --token-name YOUR_TOKEN_NAME
+--no-add-to-git-credential`. Replace `YOUR_TOKEN_NAME` with the name of your saved token. No new token is
+needed if it was already validated and saved.
 
 If `hf auth whoami` still shows another account, an inherited `HF_TOKEN` can
 override the saved login. For this setup use `env -u HF_TOKEN hf auth whoami` and
 prefix SDK publishing commands with `env -u HF_TOKEN`. This uses the saved login
 without reading, printing or changing the environment credential. If you manage
-your own shell setup, remove its obsolete override separately. The desired saved
-login is named `GeneretiCore`. The old liuboto model copies were deleted after
-verification; their saved publishing login is no longer available locally.
+your own shell setup or secrets manager, replace or remove its obsolete override
+separately. Verify that the selected login belongs to your publishing account.

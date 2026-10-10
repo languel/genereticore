@@ -16,7 +16,7 @@ Node toolbars use compact themed glyph actions with titles, accessible names, fo
 
 ## Preserved companion
 
-The companion is `/Users/liuboto/dev/genereti-public`. Its legacy generator is under `integrations/legacy-generator`; the lightweight public pack excludes its Core ML inference dependencies. Existing `GeneretiSDXSGenerate` and `GeneretiSDTurboGenerate` IDs remain owned by that pack. GeneretiCore does not register duplicates, remove its engine, change its checkout, or copy embedded Strudel.
+The companion is `~/dev/genereti-public`. Its legacy generator is under `integrations/legacy-generator`; the lightweight public pack excludes its Core ML inference dependencies. Existing `GeneretiSDXSGenerate` and `GeneretiSDTurboGenerate` IDs remain owned by that pack. GeneretiCore does not register duplicates, remove its engine, change its checkout, or copy embedded Strudel.
 
 The legacy engine imports NumPy, Pillow, Core ML tools, Torch, Transformers, huggingface_hub and its `postprocess` module. It uses local-only pinned SDXS tokenizer/text-encoder snapshots, `.mlpackage` encoder/decoder/denoiser companions and separate compiled caches. Text/sketch inputs are converted to fixed 256/384/512 sizes. Diffusers/PEFT are conversion tools and are not new runtime dependencies here. Its documented sizes/benchmarks remain historical measurements, not new GeneretiCore measurements.
 
