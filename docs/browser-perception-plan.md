@@ -150,3 +150,11 @@ that exact export/backend is supported. Never silently switch backend or cloud.
 
 Perception model selection, download, conversion, hosting and implementation
 remain future work; none is claimed as complete in this checkpoint. The existing browser ONNX upscaler and native image routes remain usable.
+
+## Investigation checkpoint
+
+See [perception-investigation.md](perception-investigation.md) for exact candidate
+revisions, license/export findings and the first local SlimSAM CPU contract probe.
+RF-DETR Nano/Seg Nano and Grounding DINO are the proposed first Core providers;
+MediaPipe implementation remains in the separate Genereti session. No new
+perception node, public model bundle or browser benchmark is claimed.

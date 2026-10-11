@@ -209,3 +209,17 @@ an explicit moving circle/line pattern and wired the output into Image Compare.
 The quoted 10–15 FPS samples are short window estimates; later concurrent browser
 activity fell to about 2.5 FPS / 171 ms model. Do not present the earlier rate as
 a sustained benchmark. The test copy was left paused holding its last result.
+
+## Core perception investigation (2026-10-10)
+
+Added perception-investigation.md, anonymous metadata inspector and local SlimSAM
+contract probe. Recorded full HF model revisions, file sizes/hashes and pinned
+RF-DETR source metadata in docs/research. The q8 SlimSAM split export passed CPU
+execution on synthetic input; warm encoder 869–948 ms, decoder 15–17 ms with
+ONNX Runtime 1.24.3 and two CPU threads. No browser or real-image quality claim.
+Weights are outside Git. RF-DETR Nano/Seg Nano are first fixed-label candidates;
+Grounding DINO is needed for arbitrary text queries such as pumpkin, absent from
+RF-DETR’s official COCO map. SAM 3 remains gated/custom-license/export research.
+Before implementing, split the monolithic browser asset installation by provider
+and reconcile observation/mask ports with the separate Genereti MediaPipe work.
+No Genereti files, Comfy process or published model bundles changed in this turn.

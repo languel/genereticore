@@ -1,0 +1,49 @@
+{
+  "scope": "synthetic local CPU contract probe; no quality or browser benchmark",
+  "machine": "arm64",
+  "os": "27.0.1",
+  "onnxruntime": "1.24.3",
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "intra_op_threads": 2,
+  "artifacts": [
+    {
+      "name": "vision_encoder_quantized.onnx",
+      "bytes": 8882165,
+      "sha256": "cce23c7b2e5d4f330932738fb67ba518e04b0d99ccdd1cccd22a7da4e01f2971"
+    },
+    {
+      "name": "prompt_encoder_mask_decoder_quantized.onnx",
+      "bytes": 4903810,
+      "sha256": "cb90b279f549d2cab7fd6e20c38522438c65d84bdcca3d2a764cff7d857fdce2"
+    }
+  ],
+  "load_ms": 145.26,
+  "first_encoder_and_decoder_ms": 957.8,
+  "warm_encoder_ms": [
+    947.66,
+    879.52,
+    868.79
+  ],
+  "warm_decoder_ms": [
+    16.86,
+    15.9,
+    14.59
+  ],
+  "output_shapes": {
+    "iou_scores": [
+      1,
+      1,
+      3
+    ],
+    "pred_masks": [
+      1,
+      1,
+      3,
+      256,
+      256
+    ]
+  },
+  "finite_outputs": true
+}
