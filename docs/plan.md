@@ -86,3 +86,5 @@ not a shipped capability.
 ## Browser perception and provider direction (2026-10-10)
 
 See browser-perception-plan.md for the agreed package boundary and perception → decision → action pipeline. Genereti owns interaction, assistant/tools and routing; Core owns optional model downloads, licenses and browser/native execution. Start with object detection, segmentation and structured vision analysis; pumpkin presence selects a Halloween palette and sends a prompt once on stable entry. Use deterministic rules before adding interpretive decision models. These browser features are planned and excluded from the 0.1.0 early-alpha Registry release. See release-0.1.0.md for shipped scope and platform/helper limitations.
+
+Browser ONNX milestone: a separate browser-only compact Real-ESRGAN node now uses explicit verified runtime/model downloads and a WebGPU/WASM worker. It exercises shared live stream/preview connections without changing native queued nodes. See browser-onnx.md and handoff.md for actual tests and measurements; perception and assistant integration remain next.

@@ -6,7 +6,7 @@ Local asynchronous inference companion for [Genereti](https://github.com/languel
 
 ## Learn by running a sample
 
-Read [Tutorial 0](docs/tutorial-0.md), or open **Workflows → GeneretiCore → 00 - Tutorial 0 - decision models** and click its book button. Thirteen installed samples explain the result contract, text generation, decisions, vision and Genereti walkthroughs. The d1 demo turns a scene description into an artwork palette through a bounded choice and authored numeric mapping. Each note defines its demo before giving instructions.
+Read [Tutorial 0](docs/tutorial-0.md), or open **Workflows → GeneretiCore → 00 - Tutorial 0 - decision models** and click its book button. Sixteen installed samples explain the result contract, text generation, decisions, vision and Genereti walkthroughs. The d1 demo turns a scene description into an artwork palette through a bounded choice and authored numeric mapping. Each note defines its demo before giving instructions.
 
 Read the [getting-started guide](docs/getting-started.md) for exact steps and troubleshooting. **▷ runs connected workflow outputs; ϟ previews locally inside the inference node.** The header **?** opens authored references in Genereti’s shared Help panel (Reference, Contents, Assistant), or a local reference without Genereti. Samples 05/06/07 use Genereti's p5 editor and step-by-step lesson player; samples 00–04 work without Genereti public.
 
@@ -73,3 +73,7 @@ The `ꘅ Real-ESRGAN upscale` node provides local AnimeVideo/General cleanup, so
 ## Direction and release status
 
 Genereti remains the lightweight realtime framework and assistant. GeneretiCore manages optional models, downloads, licenses and browser/native providers. The planned perception → decision → action pipeline is described in [browser-perception-plan.md](docs/browser-perception-plan.md); browser providers and segmentation are not yet implemented. See [0.1.0 early-alpha release scope](docs/release-0.1.0.md).
+
+## Browser ONNX upscaling
+
+Experimental **ꘅ ONNX upscale** runs compact Real-ESRGAN in a browser worker with explicit WebGPU or WASM CPU selection. Open **15 - Browser ONNX upscaling**, use the updated Genereti 2D stream/previews, then download ↓, load ↑ and start ▶. Inputs are 2–256px per side; source/2x/4x output. No native helper, HF login or student conversion is required for this browser node. It requires an active compatible browser and does not support queued Python execution. Native image nodes are preserved. See [setup, licenses, measurements and limits](docs/browser-onnx.md).

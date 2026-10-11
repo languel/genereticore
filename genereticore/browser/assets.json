@@ -1,0 +1,42 @@
+{
+  "ort.webgpu.bundle.min.mjs": {
+    "bytes": 113927,
+    "sha256": "4aa071e26a290e5147a07b39834fe923f1e810eb69a26faa7ca66ad811ba8ffd",
+    "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort.webgpu.bundle.min.mjs"
+  },
+  "animevideo.onnx": {
+    "bytes": 2492843,
+    "sha256": "0f651db3b0c36ed03de760177a750dec809444a545727073b900b481c5a37265",
+    "url": "https://huggingface.co/languel/genereticore-upscalers-coreml/resolve/300be594b8faf75dc297799c57950f763422bc89/onnx/animevideo/256.onnx"
+  },
+  "general.onnx": {
+    "bytes": 4866363,
+    "sha256": "91a52b366bbee9c2eec223a45e2bfa189ba31bca43e5072d3be9165b26093a69",
+    "url": "https://huggingface.co/languel/genereticore-upscalers-coreml/resolve/300be594b8faf75dc297799c57950f763422bc89/onnx/general/256.onnx"
+  },
+  "model-LICENSE": {
+    "bytes": 1519,
+    "sha256": "4a699ec4863d96a91fc265948a0c90033f7e8735d515524dcf3444736406e0c2",
+    "url": "https://huggingface.co/languel/genereticore-upscalers-coreml/resolve/300be594b8faf75dc297799c57950f763422bc89/onnx/LICENSE"
+  },
+  "model-provenance.json": {
+    "bytes": 1405,
+    "sha256": "1d697d3b8778fb4d498868735f725457b977f187bb9804a2388d3b8f7e763914",
+    "url": "https://huggingface.co/languel/genereticore-upscalers-coreml/resolve/300be594b8faf75dc297799c57950f763422bc89/onnx/provenance.json"
+  },
+  "model-README.md": {
+    "bytes": 543,
+    "sha256": "cc36064283736926c2094d5a119fae7dc80d3085e5bf197fe2298c4470395c4d",
+    "url": "https://huggingface.co/languel/genereticore-upscalers-coreml/resolve/300be594b8faf75dc297799c57950f763422bc89/onnx/README.md"
+  },
+  "ort-wasm-simd-threaded.asyncify.mjs": {
+    "bytes": 48533,
+    "sha256": "dee69056fbfedf946ba0d9026e191c1361c5455895355e03f4346bf9308e58eb",
+    "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort-wasm-simd-threaded.asyncify.mjs"
+  },
+  "ort-wasm-simd-threaded.asyncify.wasm": {
+    "bytes": 27190919,
+    "sha256": "f33595b9f7ea51aa6f646dd5a2bde6fbb1c7bcde0b9d2b5f240011a09c1830d0",
+    "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort-wasm-simd-threaded.asyncify.wasm"
+  }
+}

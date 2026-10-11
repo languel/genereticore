@@ -29,3 +29,7 @@ before distribution; the public bundle reviews are recorded in docs/image-licens
 ## Compact Real-ESRGAN
 
 The contributor SRVGG conversion follows the BSD-3-Clause Real-ESRGAN architecture by Xintao Wang and contributors. Full notice: licensing/Real-ESRGAN-LICENSE.txt. Official weights and independently converted packages remain outside Git; public model provenance and terms are in docs/esrgan.md and the HF bundle.
+
+## Optional ONNX browser execution
+
+ONNX Runtime Web 1.24.3, Microsoft and contributors, MIT. Exact npm-distributed browser artifact hashes are pinned in genereticore/browser/assets.json; runtime binaries are explicitly downloaded outside Git. Full runtime LICENSE and ThirdPartyNotices are retained in licensing/ONNX-Runtime-LICENSE.txt and licensing/ONNX-Runtime-ThirdPartyNotices.txt. ONNX compact Real-ESRGAN exports use the same official BSD-3-Clause AnimeVideo-v3/General-x4v3 weights and architecture as the independently exported native models; export source revisions, file checksums and actual CPU parity are recorded in the published ONNX provenance. No third-party converter binaries are mirrored. See docs/browser-onnx.md for the pinned model revision and upstream credits/backlinks.

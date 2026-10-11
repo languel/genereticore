@@ -21,11 +21,12 @@ Documentation = "https://github.com/languel/genereticore/blob/main/README.md"
 genereticore = "genereticore.cli:main"
 
 [tool.setuptools]
-packages = ["genereticore", "genereticore.image", "genereticore.upscale"]
+packages = ["genereticore", "genereticore.image", "genereticore.upscale", "genereticore.browser"]
 
 [tool.setuptools.package-data]
 genereticore = ["catalog.json"]
 "genereticore.image" = ["bundles.json"]
+"genereticore.browser" = ["assets.json"]
 
 [tool.comfy]
 PublisherId = "liuboto"

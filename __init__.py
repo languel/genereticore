@@ -13,7 +13,8 @@ try:
             raise RuntimeError('Duplicate native generator IDs: move genereti_comfy_coreml outside custom_nodes before enabling GeneretiCore. Keep workflows and models.')
     from .genereticore.image.nodes import NODE_CLASS_MAPPINGS as IMAGE_NODES, NODE_DISPLAY_NAME_MAPPINGS as IMAGE_LABELS
     from .genereticore.upscale.nodes import GeneretiCoreUpscale
-    IMAGE_NODES = {**IMAGE_NODES, "GeneretiCoreUpscale": GeneretiCoreUpscale}
+    from .genereticore.browser.nodes import GeneretiCoreBrowserUpscale
+    IMAGE_NODES = {**IMAGE_NODES, "GeneretiCoreUpscale": GeneretiCoreUpscale, "GeneretiCoreBrowserUpscale": GeneretiCoreBrowserUpscale}
     IMAGE_LABELS = {**IMAGE_LABELS, "GeneretiCoreUpscale": "ꘅ Real-ESRGAN upscale"}
     NODE_CLASS_MAPPINGS = {**NODE_CLASS_MAPPINGS, **IMAGE_NODES}
     NODE_DISPLAY_NAME_MAPPINGS = {**NODE_DISPLAY_NAME_MAPPINGS, **IMAGE_LABELS}
@@ -25,6 +26,8 @@ try:
         register_image_routes(PromptServer.instance.routes)
         from .genereticore.upscale.live import register_routes as register_upscale_routes
         register_upscale_routes(PromptServer.instance.routes)
+        from .genereticore.browser.assets import register_routes as register_browser_routes
+        register_browser_routes(PromptServer.instance.routes)
         from .genereticore.examples import install_for_profiles
         install_for_profiles(Path(__file__).resolve().parent)
 except ImportError:

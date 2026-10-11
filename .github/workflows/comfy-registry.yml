@@ -31,6 +31,10 @@ jobs:
           node tests/test_client.mjs
           node tests/test_layout.mjs
           node tests/test_live_image_input.mjs
+          node tests/test_upscale_live.mjs
+          node tests/test_onnx_image.mjs
+          node --check web/js/browser-upscale.js
+          node --check web/js/onnx-worker.mjs
           node --check web/js/upscale.js
       - name: Publish committed version
         env:

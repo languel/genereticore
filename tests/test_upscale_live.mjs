@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+let extension, callback, releases=0, copies=0, subscriptions=0, requests=0;
+const element=()=>({style:{},append(){},setAttribute(){},querySelector(){return element();},scrollHeight:26});
+const node={comfyClass:'GeneretiCoreUpscale',properties:{},widgets:[],inputs:[{name:'image',link:1}],graph:{links:{1:{origin_id:7,origin_slot:0}}},addDOMWidget(){return {};},_generetiExecutionModeElement:element()};
+const bridge={attachExecutionMode(){},publishLive(){},subscribeLive(n,accept,status,options){assert.equal(n,node);assert.equal(options.inputName,'image');subscriptions++;callback=accept;status('Browser clock · waiting for live frames');accept({bitmap:{width:512,height:512}});return()=>releases++;}};
+const context={app:{registerExtension(e){extension=e;}},window:{generetiCompanion:bridge,addEventListener(){},removeEventListener(){}},document:{createElement(tag){return tag==='canvas'?{getContext(){return{drawImage(){copies++;}}},toDataURL(){return 'data:image/png;base64,owned';}}:element();}},requestAnimationFrame(fn){fn();},setInterval(){return 1;},clearInterval(){},setTimeout(){return 1;},clearTimeout(){},performance:{now(){return 10;}},AbortSignal:{timeout(){return undefined;}},fetch(url){if(url.endsWith('/upscale'))requests++;return new Promise(()=>{});}};
+vm.runInNewContext(fs.readFileSync('web/js/upscale.js','utf8').replace(/^import .*\n/,''),context);
+extension.nodeCreated(node);
+node._generetiToggleTransport();assert.equal(copies,1);assert.equal(requests,1);assert.equal(subscriptions,1);
+callback({bitmap:{width:256,height:128}});assert.equal(copies,2);assert.equal(requests,1,'one request in flight; latest frame stays owned');
+node._generetiToggleTransport();assert.equal(releases,1);callback({bitmap:{width:256,height:128}});assert.equal(copies,2,'pause rejects frames');
+node._generetiToggleTransport();assert.equal(subscriptions,2);node.onRemoved();assert.equal(releases,2,'removal releases source');
+console.log('Native upscale shared IMAGE subscription, synchronous copying, bounded requests and release checks passed');

@@ -1,7 +1,8 @@
 # Optional browser models and realtime perception
 
-Agreed direction, October 10, 2026. This document is a plan: browser providers,
-perception nodes and the pumpkin workflow are not part of the 0.1.0 release.
+Agreed direction, October 10, 2026. Browser providers, perception nodes and the pumpkin workflow remain planned.
+The first ONNX browser upscaler milestone is documented in browser-onnx.md;
+it is not included in the previously published 0.1.0 Registry archive.
 
 Genereti stays a lightweight realtime framework and owns the assistant UI,
 workspace tools, review/apply/undo, thresholds, smoothing, event routing,

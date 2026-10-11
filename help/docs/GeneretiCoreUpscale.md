@@ -14,7 +14,7 @@ For one queued frame, pause both inference nodes, choose Comfy Queue delivery on
 
 ## Requirements and limits
 
-macOS 14+ Apple silicon, optional image dependencies and the Genereti companion for live delivery. ↓ installs both 256px and 512px model packages from the pinned public bundle. No student HF login or conversion is needed. Inputs must be 2–512px per side, including non-square images; larger input needs an explicit resize upstream. The appropriate package is selected automatically. Alpha composites on white. Queued batches are limited to four images. Live inputs require a bitmap IMAGE source; GPU-only textures need a conversion before this node.
+macOS 14+ Apple silicon, optional image dependencies and the Genereti companion for live delivery. ↓ installs both 256px and 512px model packages from the pinned public bundle. No student HF login or conversion is needed. Inputs must be 2–512px per side, including non-square images; larger input needs an explicit resize upstream. The appropriate package is selected automatically. Alpha composites on white. Queued batches are limited to four images. Live inputs use Genereti’s shared IMAGE subscription, including texture operators, streams and preview routing. GPU texture readback adds overhead; frames are copied before the callback returns.
 
 Only one live native request runs at a time across generators and upscalers. Waiting frames are replaced by the newest input. Pause lets an active native call finish and discards its stale output. First use can compile/load the model and take noticeably longer. Two passes cost another prediction. No cloud inference fallback.
 
