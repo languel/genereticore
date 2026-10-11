@@ -88,3 +88,17 @@ not a shipped capability.
 See browser-perception-plan.md for the agreed package boundary and perception → decision → action pipeline. Genereti owns interaction, assistant/tools and routing; Core owns optional model downloads, licenses and browser/native execution. Start with object detection, segmentation and structured vision analysis; pumpkin presence selects a Halloween palette and sends a prompt once on stable entry. Use deterministic rules before adding interpretive decision models. These browser features are planned and excluded from the 0.1.0 early-alpha Registry release. See release-0.1.0.md for shipped scope and platform/helper limitations.
 
 Browser ONNX milestone: a separate browser-only compact Real-ESRGAN node now uses explicit verified runtime/model downloads and a WebGPU/WASM worker. It exercises shared live stream/preview connections without changing native queued nodes. See browser-onnx.md and handoff.md for actual tests and measurements; perception and assistant integration remain next.
+
+
+## Next focus: realtime perception and tracking
+
+Use [browser-perception-plan.md](browser-perception-plan.md) as the implementation
+backlog and package boundary. Prioritize optional lightweight MediaPipe in
+Genereti, shared masks/landmarks/detections, then downloadable detection and
+segmentation providers in GeneretiCore. Evaluate SAM 3, RF-DETR, specific DINO
+family checkpoints and Roboflow local exports without assuming runtime or
+license compatibility. Genereti owns lightweight tracking, control rules and
+visualization; model-dependent tracking belongs in Core. Browser WebGPU/ONNX
+and native Core ML/Core AI are adapters to the same result contract, subject to
+actual supported exports and measured performance. No new perception capability
+or Registry release has been implemented by this documentation update.

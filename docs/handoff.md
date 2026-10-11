@@ -189,3 +189,23 @@ Live direct and preview-mediated streams, animated GIF, 128×96 cropping, 2x/4x/
 Read browser-onnx.md for setup, provenance, platform/lifecycle limits and future work. No browser assistant provider, detection, segmentation, SDXS/Turbo, recursive/temporal processing or Registry release is claimed. Next: optimize the browser baseline where useful, then add structured detection/segmentation on the worker/model-asset foundation. Genereti was not edited in this milestone.
 
 Native Real-ESRGAN live input now uses the shared Genereti subscription too, synchronously copying borrowed bitmap/GPU-presented frames and releasing on pause/removal. Tested the saved anti-aliasing lab’s 512px TOP expression input, pause/restart, and a focused local copy with moving circle/line input and the upscale output wired to Image Compare: approximately 10–15 total FPS (40–57 ms model in these runs). The original lab’s upscaler output was unconnected; its comparison was Expression versus Livecode. Original user workflow preserved.
+
+
+## Perception planning checkpoint (2026-10-10)
+
+User's next focus is MediaPipe, segmentation and tracking, with SAM 3, RF-DETR,
+DINO-family candidates and Roboflow. Updated browser-perception-plan.md with the
+package split, implementation sequence, result/track contracts and acceptance
+checks. Lightweight optional MediaPipe and model-free controls belong in Genereti
+when their measured footprint is suitable; specialized downloaded models and
+browser/native execution providers belong in Core. MediaPipe's assets still need
+explicit lifecycle and license handling. No candidate has been newly selected,
+converted or benchmarked. Preserve the other Genereti session's cleanup work.
+
+The preceding ONNX/GPU-input checkpoint is committed and pushed as 6e9271b.
+Native ESRGAN's saved anti-aliasing-lab input worked after the shared subscription
+fix; the original upscaler output was disconnected. The harness test copy used
+an explicit moving circle/line pattern and wired the output into Image Compare.
+The quoted 10–15 FPS samples are short window estimates; later concurrent browser
+activity fell to about 2.5 FPS / 171 ms model. Do not present the earlier rate as
+a sustained benchmark. The test copy was left paused holding its last result.
